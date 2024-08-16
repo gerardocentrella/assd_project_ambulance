@@ -1,0 +1,1 @@
+In questa cartella verranno definite le classi che definiranno i modelli per l'applicazione
