@@ -36,7 +36,7 @@ TextStyle customTextStyle(){
             color: Colors.indigoAccent,
             fontSize: 30,
             fontStyle: FontStyle.normal),
-          shadowColor: Colors.lightGreenAccent,
+          shadowColor: Colors.black,
           shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(25.0),
@@ -52,7 +52,7 @@ TextStyle customTextStyle(){
     ),
 
       body: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
                 Container(height: 100,),
                 Text(' Insert Ambulance ID:', textAlign: TextAlign.center, style: customTextStyle()),
