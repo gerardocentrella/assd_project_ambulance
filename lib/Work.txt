@@ -1,6 +1,14 @@
 Tecnologie da utilizzare:
 - Framework front-end: Flutter & Dart
 - Pattern Front End: MVC
+Prevediamo 3 macro-cartelle Model/Pages/controller.
+In controller prevediamo una sottocartella chiamata service.
+
+    Model: Oggetti-DTO,
+    View: Puramente pagine UI con Widget.
+    Controller: implementa la logica di business, avrà input dalla vista li processa, richiamerà metodi del service e processerà gli output ed aggiornerà la vista.
+    controller/service: ha all'interno una serie di chiamate API RestFul.
+
 
 Step:
 - 1) Creare progetto su GitHub. -- FATTO
