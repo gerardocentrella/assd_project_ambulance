@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Login extends StatefulWidget{
@@ -43,7 +44,7 @@ TextStyle customTextStyle(){
               bottomRight: Radius.circular(25.0)
             )),
           leading: Padding(
-            padding: const EdgeInsets.only(left: 20.0),
+            padding: const EdgeInsets.only(left: 10.0),
              child: Image.asset(
               'lib/assets/images/ambulance.png',
               fit: BoxFit.contain,
@@ -58,23 +59,44 @@ TextStyle customTextStyle(){
                 Text(' Insert Ambulance ID:', textAlign: TextAlign.center, style: customTextStyle()),
               const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-              child: TextField(
+                child: TextField(
                 decoration: InputDecoration(
-                  border: OutlineInputBorder(),
+                  filled: true,
+                  border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(15.0))),
                   hintText: ' type here',
+                  ),
                 ),
               ),
-              ),
-              Container(height: 50,),
+              Container(height: 10,),
                 Text(' Insert Password:', textAlign: TextAlign.center, style: customTextStyle()),
                   const Padding(padding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
                     child: TextField(
                     decoration: InputDecoration(
-                   border: OutlineInputBorder(),
-                   hintText: ' type here',
+                      filled: true,
+                      border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(15.0))),
+                      hintText: ' type here',
                    ),
                 ),
-          ),
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 15),
+                  child: ElevatedButton(
+                    style:  ElevatedButton.styleFrom(
+                      shadowColor: Colors.black,
+                      shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(15.0)), // Angoli squadrati
+                      ),
+                      padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0), // Spaziatura interna
+                      ),
+                    onPressed: (){
+
+                    },
+                    child: const Text('LogIn', style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 20.0,
+                    ),),
+                  ),
+              ),
             ],
           ),
     );
