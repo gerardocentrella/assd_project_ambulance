@@ -7,13 +7,19 @@ class Login extends StatefulWidget{
   _Login createState(){
     return _Login();
   }
+
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }
 
 class _Login extends State<Login> {
+
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.lightGreen,
+
+    return Scaffold(
+      backgroundColor: Colors.redAccent,
+      appBar: AppBar(title: const Text('LogIn'), centerTitle: true, backgroundColor: Colors.white, elevation: 100),
     );
   }
 }
