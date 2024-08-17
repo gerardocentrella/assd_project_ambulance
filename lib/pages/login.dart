@@ -32,16 +32,17 @@ TextStyle customTextStyle(){
           centerTitle: true,
           backgroundColor: Colors.white,
           elevation: 100,
-          toolbarHeight: 50,
+          toolbarHeight: 70,
           titleTextStyle: const TextStyle(
             color: Colors.indigoAccent,
             fontSize: 30,
             fontStyle: FontStyle.normal),
           shadowColor: Colors.lightGreenAccent,
-          shape: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20),
-            borderSide: const BorderSide(color: Colors.transparent, width: 5),
-            gapPadding: 120,)
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(25.0),
+              bottomRight: Radius.circular(25.0)
+            ))
           ),
 
       body: Container(
