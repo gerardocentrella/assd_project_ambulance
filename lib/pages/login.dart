@@ -13,13 +13,22 @@ class Login extends StatefulWidget{
 
 class _Login extends State<Login> {
 
+TextStyle customTextStyle(){
+  return const TextStyle(
+      fontSize: 30,
+      fontWeight: FontWeight.w500,
+      color: Colors.black,
+      fontStyle: FontStyle.italic
+    );
+}
+
 
   @override
   Widget build(BuildContext context) {
 
     return Scaffold(
       backgroundColor: Colors.redAccent,
-      appBar: AppBar(title: const Text('My App'),
+      appBar: AppBar(title: const Text('Login'),
           centerTitle: true,
           backgroundColor: Colors.white,
           elevation: 100,
@@ -33,8 +42,32 @@ class _Login extends State<Login> {
             borderRadius: BorderRadius.circular(20),
             borderSide: const BorderSide(color: Colors.transparent, width: 5),
             gapPadding: 120,)
-          )
+          ),
 
+      body: Container(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+                Container(
+                  height: 100,
+                ),
+                Text(' Inert Ambulance ID:', textAlign: TextAlign.left, style: customTextStyle()),
+              const TextField(
+                decoration: InputDecoration(
+                  border: UnderlineInputBorder(),
+                  hintText: ' type here',
+                ),
+              ),
+                Text(' Inert Password:', textAlign: TextAlign.left, style: customTextStyle()),
+            const TextField(
+              decoration: InputDecoration(
+               border: UnderlineInputBorder(),
+               hintText: ' type here',
+               ),
+              ),
+            ],
+          ),
+      ),
     );
   }
 }
