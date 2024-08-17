@@ -43,7 +43,7 @@ TextStyle customTextStyle(){
               bottomRight: Radius.circular(25.0)
             )),
           leading: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.only(left: 20.0),
              child: Image.asset(
               'lib/assets/images/ambulance.png',
               fit: BoxFit.contain,
@@ -55,21 +55,26 @@ TextStyle customTextStyle(){
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
                 Container(height: 100,),
-                Text(' Insert Ambulance ID:', textAlign: TextAlign.left, style: customTextStyle()),
-              const TextField(
+                Text(' Insert Ambulance ID:', textAlign: TextAlign.center, style: customTextStyle()),
+              const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+              child: TextField(
                 decoration: InputDecoration(
-                  border: UnderlineInputBorder(),
+                  border: OutlineInputBorder(),
                   hintText: ' type here',
                 ),
               ),
+              ),
               Container(height: 50,),
-                Text(' Insert Password:', textAlign: TextAlign.left, style: customTextStyle()),
-                  const TextField(
-                  decoration: InputDecoration(
-                   border: UnderlineInputBorder(),
+                Text(' Insert Password:', textAlign: TextAlign.center, style: customTextStyle()),
+                  const Padding(padding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+                    child: TextField(
+                    decoration: InputDecoration(
+                   border: OutlineInputBorder(),
                    hintText: ' type here',
                    ),
                 ),
+          ),
             ],
           ),
     );
