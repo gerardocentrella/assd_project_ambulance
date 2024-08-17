@@ -1,6 +1,45 @@
-Funzionalità:
+Tecnologie da utilizzare:
+- Framework front-end: Flutter & Dart
+- Pattern Front End: MVC
+
+Step:
+- 1) Creare progetto su GitHub. -- FATTO
+- 2) Definire le funzionalità principali.
+    • Funzionalità principali:
+        - signIn:  l'ambulanza effettuano il login per poter iniziare ad interagire con la CO.
+        - patient Reached: Quando l'ambulanza raggiunge l'utente, contatta la CO per poter ricevere le
+                          informazioni del PS presso cui recarsi.
+        - emergency Room Reached: Funzionalità che consente all’ambulanza di segnalare il raggiungimento del pronto
+                                soccorso.
+        - open Emergency Update Stream: Apre un canale di comunicazione full-duplex fra il richiedente (l'utente o
+                                        l'ambulanza) e la CO, in cui verranno trasmessi tutti gli aggiornamenti
+                                        sull'emergenza.
+        - open Path Update Stream: Apre un canale di comunicazione full-duplex fra l'ambulanza (o meglio il suo
+                                   Driver) e la CO, in cui verranno trasmessi tutti gli aggiornamenti sui nuovi Path che
+                                   una certa ambulanza deve seguire. Questo stream sarà utilizzato per il viaggio di
+                                   andata (verso il paziente), per il ritorno (verso il PS) e per eventuali ulteriori
+                                   aggiornamenti del path.
+    • Funzionalità Secondarie:
+
+Funzionalità Comuni:
+- signIn
+Funzionalità Ambulanza:
+- open Emergency Update Stream
+Funzionalità Driver:
+- patient Reached
+- emergency Room Reached
+- open Path Update Stream
+
+- 3) Definire lo stile di base dell’interfaccia.
+- 4) Pagine & Widget:
+	- Classi di colori da poter utilizzare.
+	- LogIn.
+	- Menu a comparsa che mi permette di: Scelta tipologia.
+	- HomePage.
+	- AppBar con bottoni di: menu (LogOut), search…
 
 
-
+Cose da ripassare:
+- WebSocket
 
 Workflow:
