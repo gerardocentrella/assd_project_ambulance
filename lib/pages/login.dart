@@ -22,7 +22,6 @@ TextStyle customTextStyle(){
     );
 }
 
-
   @override
   Widget build(BuildContext context) {
 
@@ -42,16 +41,20 @@ TextStyle customTextStyle(){
             borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(25.0),
               bottomRight: Radius.circular(25.0)
-            ))
+            )),
+          leading: Padding(
+            padding: const EdgeInsets.all(8.0),
+             child: Image.asset(
+              'lib/assets/images/ambulance.png',
+              fit: BoxFit.contain,
+              ),
           ),
+    ),
 
-      body: Container(
-          child: Column(
+      body: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-                Container(
-                  height: 100,
-                ),
+                Container(height: 100,),
                 Text(' Insert Ambulance ID:', textAlign: TextAlign.left, style: customTextStyle()),
               const TextField(
                 decoration: InputDecoration(
@@ -59,16 +62,16 @@ TextStyle customTextStyle(){
                   hintText: ' type here',
                 ),
               ),
+              Container(height: 50,),
                 Text(' Insert Password:', textAlign: TextAlign.left, style: customTextStyle()),
-            const TextField(
-              decoration: InputDecoration(
-               border: UnderlineInputBorder(),
-               hintText: ' type here',
-               ),
-              ),
+                  const TextField(
+                  decoration: InputDecoration(
+                   border: UnderlineInputBorder(),
+                   hintText: ' type here',
+                   ),
+                ),
             ],
           ),
-      ),
     );
   }
 }
