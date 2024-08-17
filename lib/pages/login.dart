@@ -51,14 +51,14 @@ TextStyle customTextStyle(){
                 Container(
                   height: 100,
                 ),
-                Text(' Inert Ambulance ID:', textAlign: TextAlign.left, style: customTextStyle()),
+                Text(' Insert Ambulance ID:', textAlign: TextAlign.left, style: customTextStyle()),
               const TextField(
                 decoration: InputDecoration(
                   border: UnderlineInputBorder(),
                   hintText: ' type here',
                 ),
               ),
-                Text(' Inert Password:', textAlign: TextAlign.left, style: customTextStyle()),
+                Text(' Insert Password:', textAlign: TextAlign.left, style: customTextStyle()),
             const TextField(
               decoration: InputDecoration(
                border: UnderlineInputBorder(),
