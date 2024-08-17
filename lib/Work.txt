@@ -4,7 +4,7 @@ Tecnologie da utilizzare:
 
 Step:
 - 1) Creare progetto su GitHub. -- FATTO
-- 2) Definire le funzionalità principali.
+- 2) Definire le funzionalità.
     • Funzionalità principali:
         - signIn:  l'ambulanza effettuano il login per poter iniziare ad interagire con la CO.
         - patient Reached: Quando l'ambulanza raggiunge l'utente, contatta la CO per poter ricevere le
@@ -20,9 +20,13 @@ Step:
                                    andata (verso il paziente), per il ritorno (verso il PS) e per eventuali ulteriori
                                    aggiornamenti del path.
     • Funzionalità Secondarie:
+    - AppBar con Menu
+    - LogOut
 
 Funzionalità Comuni:
 - signIn
+- AppBar con Menu
+- LogOut
 Funzionalità Ambulanza:
 - open Emergency Update Stream
 Funzionalità Driver:
@@ -35,11 +39,15 @@ Funzionalità Driver:
 	- Classi di colori da poter utilizzare.
 	- LogIn.
 	- Menu a comparsa che mi permette di: Scelta tipologia.
-	- HomePage.
-	- AppBar con bottoni di: menu (LogOut), search…
+	- HomePage ambulanza
+	- HomePage Driver
+	- AppBar con bottoni di: menu(LogOut), search…
 
 
 Cose da ripassare:
-- WebSocket
+- WebSocket & DTO
 
 Workflow:
+- Gerardo:
+- Francesco:
+- Raffaele:
