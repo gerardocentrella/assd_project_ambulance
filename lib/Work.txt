@@ -58,4 +58,4 @@ Cose da ripassare:
 Workflow:
 - Gerardo:
 - Francesco:
-- Raffaele:
+- Raffaele: Eccomi!
