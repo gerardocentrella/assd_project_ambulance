@@ -1,4 +1,5 @@
 class PositionDTO {
+
   double latitude;
   double longitude;
 
