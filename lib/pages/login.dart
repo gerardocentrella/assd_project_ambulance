@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Login extends StatefulWidget{
@@ -79,9 +78,16 @@ TextStyle customTextStyle(){
                 ),
               ),
               Container(
-                padding: const EdgeInsets.symmetric(vertical: 15),
-                  child: ElevatedButton(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                width: 150.0, // Set the desired width
+                height: 100.0, // Set the desired height
+                  child: ElevatedButton.icon(
                     style:  ElevatedButton.styleFrom(
+                      textStyle: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                      ),
+                      foregroundColor: Colors.black,
                       shadowColor: Colors.black,
                       shape: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(15.0)), // Angoli squadrati
@@ -91,10 +97,9 @@ TextStyle customTextStyle(){
                     onPressed: (){
 
                     },
-                    child: const Text('LogIn', style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20.0,
-                    ),),
+                    icon: const Icon(Icons.login),
+                    label: const Text('LogIn'),
+
                   ),
               ),
             ],
