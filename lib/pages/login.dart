@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:assd_project_ambulance/controllers/LoginContoller.dart';
 
 class Login extends StatefulWidget{
   const Login({super.key});
@@ -13,6 +14,7 @@ class Login extends StatefulWidget{
 
 class _Login extends State<Login> {
   bool _obscureText = true;
+  String _errorLogin = '';
 
 TextStyle customTextStyle(){
   return const TextStyle(
@@ -22,6 +24,25 @@ TextStyle customTextStyle(){
       fontStyle: FontStyle.italic
     );
 }
+
+final TextEditingController _idController = TextEditingController();
+final TextEditingController _pswController = TextEditingController();
+
+void _login(){
+  String idText = _idController.text;
+  String pswText = _pswController.text;
+  bool validate;
+  LoginController lgController = LoginController();
+
+  validate = lgController.login(idText, pswText);
+  if(validate){
+    Navigator.pushReplacementNamed(context, '/homepage');
+  }
+  else{
+    setState(() {_errorLogin = 'incorrect id or password';});
+  }
+}
+
 
   @override
   Widget build(BuildContext context) {
@@ -55,12 +76,13 @@ TextStyle customTextStyle(){
       body: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-                Container(height: 100,),
+                Container(height: 80,),
                 Text(' Insert Ambulance ID:', textAlign: TextAlign.center, style: customTextStyle()),
-              const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-                child: TextField(
-                decoration: InputDecoration(
+              Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+                child: TextFormField(
+                  controller: _idController,
+                  decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.person),
                   filled: true,
                   border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(15.0))),
@@ -71,9 +93,10 @@ TextStyle customTextStyle(){
               Container(height: 10,),
                 Text(' Insert Password:', textAlign: TextAlign.center, style: customTextStyle()),
                   Padding(padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
-                    child: TextField(
+                    child: TextFormField(
+                      controller: _pswController,
                       obscureText: _obscureText,
-                    decoration: InputDecoration(
+                      decoration: InputDecoration(
                       prefixIcon: const Icon(Icons.lock_clock_rounded, color: Colors.black54,),
                       suffixIcon: IconButton(
                           onPressed: (){
@@ -89,6 +112,7 @@ TextStyle customTextStyle(){
                    ),
                 ),
               ),
+              Text(_errorLogin,  textAlign: TextAlign.center, style: TextStyle(color: Colors.black),),
               Container(
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 width: 150.0, // Set the desired width
@@ -107,8 +131,7 @@ TextStyle customTextStyle(){
                       padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0), // Spaziatura interna
                       ),
                     onPressed: (){
-                      Navigator.pushReplacementNamed(context, '/homepage');
-
+                      _login();
                     },
                     icon: const Icon(Icons.login),
                     label: const Text('LogIn'),
