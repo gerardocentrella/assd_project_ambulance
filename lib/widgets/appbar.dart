@@ -1,16 +1,35 @@
 import 'package:flutter/material.dart';
 
-class MyAppbar extends StatefulWidget implements PreferredSizeWidget{
-  _MyAppbar createState(){
-    return _MyAppbar();
+class MyAppbar extends StatelessWidget implements PreferredSizeWidget {
+  final String title;
+
+  const MyAppbar({super.key, required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return AppBar(
+      title: Text(title),
+      centerTitle: true,
+      backgroundColor: Colors.white,
+      elevation: 100,
+      toolbarHeight: 70,
+      titleTextStyle: const TextStyle(
+          color: Colors.indigoAccent,
+          fontSize: 30,
+          fontStyle: FontStyle.normal),
+      shadowColor: Colors.black,
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(25.0),
+              bottomRight: Radius.circular(25.0)
+          )),
+      leading: const Padding(
+          padding: EdgeInsets.only(left: 10.0),
+          child: Icon(Icons.menu)
+      ),
+    );
   }
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
-}
-
-class _MyAppbar extends State<MyAppbar> {
-  Widget build(BuildContext context) {
-    return AppBar();
-  }
 }
