@@ -28,14 +28,14 @@ TextStyle customTextStyle(){
 final TextEditingController _idController = TextEditingController();
 final TextEditingController _pswController = TextEditingController();
 
-void _login(){
+void _login() async{
   String idText = _idController.text;
   String pswText = _pswController.text;
-  bool validate;
+  AuthEnum validate;
   LoginController lgController = LoginController();
 
-  validate = lgController.login(idText, pswText);
-  if(validate){
+  validate = await lgController.login(idText, pswText);
+  if(validate == AuthEnum.success){
     Navigator.pushReplacementNamed(context, '/homepage');
   }
   else{

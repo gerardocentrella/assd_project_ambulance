@@ -23,5 +23,4 @@ class Position {
   String toString() {
     return 'Position{_latitude: $_latitude, _longitude: $_longitude}';
   }
-
 }

@@ -2,17 +2,21 @@ class LoginController {
 
   late int _code;
 
-  bool login(String ambulanceId, String password) {
-
-    // invocazione metodo specifico di login del servizio RESTFul
-    if(/*_code == 200*/ true) {
-      // successo --> LOGIN
-
-      return true;
-    } else {
-      // errore
-      return false;
+  Future<AuthEnum> login(String ambulanceId, String password) async {
+    if (_code == 200) {
+      return AuthEnum.success;
     }
-
+    else {
+      return AuthEnum.invalidCredentials;
+    }
   }
+
+}
+
+// auth enum
+enum AuthEnum {
+  success,
+  invalidCredentials,
+  networkError,
+  unexpectedError,
 }
