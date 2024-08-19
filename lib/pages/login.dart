@@ -1,3 +1,4 @@
+import 'package:assd_project_ambulance/pages/home.dart';
 import 'package:flutter/material.dart';
 
 class Login extends StatefulWidget{
@@ -95,6 +96,7 @@ TextStyle customTextStyle(){
                       padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0), // Spaziatura interna
                       ),
                     onPressed: (){
+                      Navigator.pushNamed(context, '/homepage');
 
                     },
                     icon: const Icon(Icons.login),
