@@ -12,6 +12,7 @@ class Login extends StatefulWidget{
 }
 
 class _Login extends State<Login> {
+  bool _obscureText = true;
 
 TextStyle customTextStyle(){
   return const TextStyle(
@@ -60,7 +61,7 @@ TextStyle customTextStyle(){
                   padding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
                 child: TextField(
                 decoration: InputDecoration(
-                  icon: Icon(Icons.person),
+                  prefixIcon: Icon(Icons.person),
                   filled: true,
                   border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(15.0))),
                   hintText: ' type here',
@@ -69,13 +70,21 @@ TextStyle customTextStyle(){
               ),
               Container(height: 10,),
                 Text(' Insert Password:', textAlign: TextAlign.center, style: customTextStyle()),
-                  const Padding(padding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
+                  Padding(padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 16),
                     child: TextField(
-                      obscureText: true,
+                      obscureText: _obscureText,
                     decoration: InputDecoration(
-                      icon: Icon(Icons.password),
+                      prefixIcon: const Icon(Icons.lock_clock_rounded, color: Colors.black54,),
+                      suffixIcon: IconButton(
+                          onPressed: (){
+                            setState(() {
+                              _obscureText =! _obscureText;
+                            });
+                          },
+                          icon: Icon(_obscureText? Icons.visibility: Icons.visibility_off),
+                      ),
                       filled: true,
-                      border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(15.0))),
+                      border: const OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(15.0))),
                       hintText: ' type here',
                    ),
                 ),
