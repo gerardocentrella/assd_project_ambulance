@@ -1,4 +1,3 @@
-import 'package:assd_project_ambulance/pages/home.dart';
 import 'package:flutter/material.dart';
 
 class Login extends StatefulWidget{
@@ -61,6 +60,7 @@ TextStyle customTextStyle(){
                   padding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
                 child: TextField(
                 decoration: InputDecoration(
+                  icon: Icon(Icons.person),
                   filled: true,
                   border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(15.0))),
                   hintText: ' type here',
@@ -71,7 +71,9 @@ TextStyle customTextStyle(){
                 Text(' Insert Password:', textAlign: TextAlign.center, style: customTextStyle()),
                   const Padding(padding: EdgeInsets.symmetric(horizontal: 12, vertical: 16),
                     child: TextField(
+                      obscureText: true,
                     decoration: InputDecoration(
+                      icon: Icon(Icons.password),
                       filled: true,
                       border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(15.0))),
                       hintText: ' type here',
@@ -96,7 +98,7 @@ TextStyle customTextStyle(){
                       padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 12.0), // Spaziatura interna
                       ),
                     onPressed: (){
-                      Navigator.pushNamed(context, '/homepage');
+                      Navigator.pushReplacementNamed(context, '/homepage');
 
                     },
                     icon: const Icon(Icons.login),
