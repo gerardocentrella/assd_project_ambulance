@@ -12,21 +12,35 @@ class Home extends StatefulWidget{
 }
 
 class _HomeState extends State<Home> {
+  int currentCardIndex = 0;
+
   @override
   Widget build(BuildContext context) {
    return Scaffold(
-     appBar: MyAppbar(title: 'home page'),
-     body: Column(
-        children:[
-          Text('Chose your area', textAlign: TextAlign.center, style: TextStyle(
-         fontSize: 20.0,)),
-          ElevatedButton(
-            onPressed: () {
-              Navigator.pushReplacementNamed(context, '/login');
-          }, 
-            child: Text('torna al login'),),
-        ],
-    ),
+     appBar: const MyAppbar(title: 'Home Page'),
+     bottomNavigationBar: NavigationBar(
+       height: 100.0,
+       onDestinationSelected: (int index){
+         setState(() {
+           currentCardIndex = index;
+         });
+       },
+       indicatorColor: Colors.amber,
+       selectedIndex: currentCardIndex,
+       destinations: const <Widget>[
+         NavigationDestination(
+           icon: Icon(Icons.map),
+           label: 'Driver',
+         ),
+         NavigationDestination(
+             icon: Icon(Icons.medical_services),
+             label: 'Operator',),
+         NavigationDestination(
+             label: ('LogOut'),
+             icon: Icon(Icons.logout),
+         )
+       ],
+     ),
    );
   }
 }
