@@ -6,11 +6,21 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../controllers/auth/bloc/auth_bloc.dart';
 import '../models/repository/src/authentication_repository.dart';
 import '../utils/di/dependency_injector.dart';
+import 'home.dart';
 import 'home_page.dart';
+import 'package:assd_project_ambulance/pages/login.dart';
 
-/*
-class MyApp extends StatelessWidget {
+
+
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _AppViewState();
+}
+
+class _AppViewState extends State<MyApp> {
+  _AppViewState();
 
   // This widget is the root of your application.
   @override
@@ -24,8 +34,8 @@ class MyApp extends StatelessWidget {
     )
   );
 }
-*/
 
+/*
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
@@ -66,3 +76,4 @@ class _AppViewState extends State<MyApp> {
       onGenerateRoute: (_) => SplashPage.route(),
     ));
 }
+*/
