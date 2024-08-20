@@ -11,14 +11,11 @@ class PatientReachedNotificationDTO{
     Position _position;
     Patient _patient;
 
-    PatientReachedNotificationDTO.name(
-      this._emergencyCode,
-      this._emergencyDescription,
-      this._emergencyType,
-      this._position,
-      this._patient);
 
-    Patient get patient => _patient;
+    PatientReachedNotificationDTO(this._emergencyCode, this._emergencyDescription,
+      this._emergencyType, this._position, this._patient);
+
+  Patient get patient => _patient;
 
     set patient(Patient value) {
       _patient = value;
