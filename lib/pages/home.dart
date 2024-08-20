@@ -2,10 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:assd_project_ambulance/widgets/appbar.dart';
 import 'package:assd_project_ambulance/pages/cards/driver_card.dart';
 import 'package:assd_project_ambulance/pages/cards/operator_card.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../controllers/auth/bloc/auth_bloc.dart';
 
 
 class Home extends StatefulWidget{
   const Home({super.key});
+
+  static Route<void> route() {
+    return MaterialPageRoute<void>(builder: (_) => const Home());
+  }
+
 
   @override
   _HomeState createState(){
@@ -34,7 +42,7 @@ class _HomeState extends State<Home> {
                      children: [
                        TextButton(
                         onPressed: () {
-                          Navigator.pushReplacementNamed(context, '/login');
+                            context.read<AuthenticationBloc>().add(AuthenticationLogoutPressed());
                         },
                         child: const Text('YES', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
                       ),

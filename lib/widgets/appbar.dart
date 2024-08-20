@@ -23,10 +23,6 @@ class MyAppbar extends StatelessWidget implements PreferredSizeWidget {
               bottomLeft: Radius.circular(25.0),
               bottomRight: Radius.circular(25.0)
           )),
-      leading: const Padding(
-          padding: EdgeInsets.only(left: 10.0),
-          child: Icon(Icons.menu)
-      ),
     );
   }
 
