@@ -23,6 +23,7 @@ class _HomeState extends State<Home> {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            const SizedBox(height: 30),
             const Text('Do you want logout?', style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold,
                 fontSize: 20,),
                 textAlign: TextAlign.center),
@@ -35,13 +36,13 @@ class _HomeState extends State<Home> {
                         onPressed: () {
                           Navigator.pushReplacementNamed(context, '/login');
                         },
-                        child: const Text('YES'),
+                        child: const Text('YES', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
                       ),
                        TextButton(
                          onPressed: () {
                            Navigator.pop(context);
                          },
-                         child: const Text('NO'),
+                         child: const Text('NO',style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
                        ),
                      ],
                 ),
