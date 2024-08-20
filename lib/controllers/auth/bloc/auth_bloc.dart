@@ -3,16 +3,16 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-import '../../../models/entities/user.dart';
-import '../../../models/repository/src/authentication_repository.dart';
-import '../../../models/repository/src/user_repository.dart';
+import '../../../models/entities/User.dart';
+import '../../../models/repository/authentication_repository.dart';
+import '../../../models/repository/user_repository.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
 
 
-class AuthenticationBloc
-    extends Bloc<AuthEvent, AuthState> {
+class AuthenticationBloc extends Bloc<AuthEvent, AuthState> {
+
   AuthenticationBloc({
     required AuthenticationRepository authenticationRepository,
     required UserRepository userRepository,
@@ -37,12 +37,14 @@ class AuthenticationBloc
           case AuthenticationStatus.unauthenticated:
             return emit(const AuthState.unauthenticated());
           case AuthenticationStatus.authenticated:
+            //in questo caso togliere le parti dell'user se non ce, e toglierli anche da authstate
             final user = await _tryGetUser();
             return emit(
               user != null
                   ? AuthState.authenticated(user)
                   : const AuthState.unauthenticated(),
             );
+
           case AuthenticationStatus.unknown:
             return emit(const AuthState.unknown());
         }

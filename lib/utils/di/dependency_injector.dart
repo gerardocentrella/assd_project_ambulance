@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../controllers/auth/bloc/auth_bloc.dart';
-import '../../models/repository/src/authentication_repository.dart';
-import '../../models/repository/src/user_repository.dart';
+import '../../models/repository/authentication_repository.dart';
+import '../../models/repository/user_repository.dart';
 
 class DependencyInjector extends StatelessWidget {
   final Widget child;
@@ -25,7 +25,6 @@ class DependencyInjector extends StatelessWidget {
     child: child,
   );
   */
-
 
   Widget _repositories({required Widget child}) => MultiRepositoryProvider(
     providers:[

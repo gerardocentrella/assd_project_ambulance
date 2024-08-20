@@ -1,12 +1,13 @@
 
-import 'package:assd_project_ambulance/pages/login_page.dart';
+
 import 'package:assd_project_ambulance/pages/splash_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../controllers/auth/bloc/auth_bloc.dart';
-import '../models/repository/src/authentication_repository.dart';
+import '../models/repository/authentication_repository.dart';
 import '../utils/di/dependency_injector.dart';
 import 'home_page.dart';
+import 'login.dart';
 
 /*
 class MyApp extends StatelessWidget {
@@ -53,7 +54,7 @@ class _AppViewState extends State<MyApp> {
                 );
               case AuthenticationStatus.unauthenticated:
                 _navigator.pushAndRemoveUntil<void>(
-                  LoginPage.route(),
+                  Login.route(),
                       (route) => false,
                 );
               case AuthenticationStatus.unknown:

@@ -1,7 +1,8 @@
 import 'dart:async';
 
-import 'package:assd_project_ambulance/models/entities/user.dart';
+import 'package:assd_project_ambulance/models/entities/User.dart';
 
+//forse inutile
 
 class UserRepository {
   User? _user;

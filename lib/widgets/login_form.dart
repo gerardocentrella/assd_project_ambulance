@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:formz/formz.dart';
 
 import '../controllers/login/login_bloc.dart';
@@ -49,8 +50,8 @@ class _UsernameInput extends StatelessWidget {
         context.read<LoginBloc>().add(LoginUsernameChanged(username));
       },
       decoration: InputDecoration(
-        labelText: 'username',
-        errorText: displayError != null ? 'invalid username' : null,
+        labelText: 'Ambulance-id',
+        errorText: displayError != null ? 'invalid id' : null,
       ),
     );
   }
