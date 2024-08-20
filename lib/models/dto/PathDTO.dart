@@ -4,8 +4,6 @@ class PathDTO{
 
     List<Position> _path;
 
-    PathDTO();
-
     PathDTO(this._path);
 
     List<Position> get path => _path;

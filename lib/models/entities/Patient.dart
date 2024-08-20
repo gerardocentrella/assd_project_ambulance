@@ -49,5 +49,4 @@ class Patient {
     return 'Patient{_name: $_name, _surname: $_surname, _city: $_city, _address: $_address, _age: $_age}';
   }
 
-
 }
