@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:assd_project_ambulance/widgets/appbar.dart';
 import 'package:assd_project_ambulance/pages/cards/driver_card.dart';
 import 'package:assd_project_ambulance/pages/cards/operator_card.dart';
-import 'package:assd_project_ambulance/pages/cards/logout_card.dart';
 
 
 class Home extends StatefulWidget{
@@ -18,13 +17,46 @@ class _HomeState extends State<Home> {
   int _currentCardIndex = 0;
 
   void _onNavigationButtonPressed(int index) {
-    setState(() {
-      _currentCardIndex = index;
-    });
-  }
+    if(index == 2){
+      showDialog(context: context, builder:  (BuildContext context) => Dialog(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const SizedBox(height: 30),
+            const Text('Do you want logout?', style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold,
+                fontSize: 20,),
+                textAlign: TextAlign.center),
+            const SizedBox(height: 30),
+             Center(
+                 child: Row(
+                   mainAxisAlignment: MainAxisAlignment.center,
+                     children: [
+                       TextButton(
+                        onPressed: () {
+                          Navigator.pushReplacementNamed(context, '/login');
+                        },
+                        child: const Text('YES', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+                      ),
+                       TextButton(
+                         onPressed: () {
+                           Navigator.pop(context);
+                         },
+                         child: const Text('NO',style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+                       ),
+                     ],
+                ),
+             ),
+          ],
+        ),
+        ),
+      );
+    }else{
+      setState(() {
+        _currentCardIndex = index;
+      });
+    }
 
-  void logOut(){
-    Navigator.pushReplacementNamed(context, '/login');
   }
 
   @override
@@ -34,6 +66,7 @@ class _HomeState extends State<Home> {
      bottomNavigationBar: NavigationBar(
        height: 100.0,
        onDestinationSelected: (int index){
+         print(index);
          _onNavigationButtonPressed(index);
        },
        indicatorColor: Colors.amber,
@@ -57,7 +90,6 @@ class _HomeState extends State<Home> {
        children: const [
            DriverCard(),
            OperatorCard(),
-           LogoutCard()
        ],
      ),
    );

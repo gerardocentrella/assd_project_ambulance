@@ -6,12 +6,22 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../controllers/auth/bloc/auth_bloc.dart';
 import '../models/repository/authentication_repository.dart';
 import '../utils/di/dependency_injector.dart';
+import 'home.dart';
 import 'home_page.dart';
 import 'login.dart';
+import 'package:assd_project_ambulance/pages/login.dart';
 
-/*
-class MyApp extends StatelessWidget {
+
+
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
+
+  @override
+  State<MyApp> createState() => _AppViewState();
+}
+
+class _AppViewState extends State<MyApp> {
+  _AppViewState();
 
   // This widget is the root of your application.
   @override
@@ -25,8 +35,9 @@ class MyApp extends StatelessWidget {
     )
   );
 }
-*/
 
+
+/*
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
@@ -54,7 +65,7 @@ class _AppViewState extends State<MyApp> {
                 );
               case AuthenticationStatus.unauthenticated:
                 _navigator.pushAndRemoveUntil<void>(
-                  Login.route(),
+                  LoginPage.route(),
                       (route) => false,
                 );
               case AuthenticationStatus.unknown:
@@ -67,3 +78,4 @@ class _AppViewState extends State<MyApp> {
       onGenerateRoute: (_) => SplashPage.route(),
     ));
 }
+*/
