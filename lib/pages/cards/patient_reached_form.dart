@@ -69,6 +69,7 @@ class PatientReachedFormState extends State<PatientReachedForm> {
               }
               return null;
             },
+
           ),
           SizedBox(height: height*0.05,),
           TextFormField(
