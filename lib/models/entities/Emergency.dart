@@ -1,3 +1,7 @@
+import 'dart:ui';
+
+import 'package:flutter/material.dart';
+
 import 'Position.dart';
 
 class Emergency {
@@ -80,10 +84,12 @@ class Emergency {
 
 }
 
-// enum code
 enum EmergencyCode {
   RED, ORANGE, BLUE, GREEN, WHITE
 }
+
+// enum code
+
 
 // enum status
 enum EmergencyStatus {
