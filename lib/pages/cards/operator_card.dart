@@ -8,7 +8,7 @@ class OperatorCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Card(
-        color: Colors.lightBlue,
+        color: Colors.white,
         elevation: 5,
         margin: const EdgeInsets.all(16),
         shape: RoundedRectangleBorder(
@@ -16,27 +16,33 @@ class OperatorCard extends StatelessWidget {
         ),
         child:  Column(
           children: [
-            Container(/*corpo della card*/child: const Text('Eccomi')),
-            const Padding(padding: EdgeInsets.symmetric(vertical: 10),),
+            const Padding(padding: EdgeInsets.all(10.0),),
             Container(
-              alignment: Alignment.bottomCenter,
+
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
+              //alignment: Alignment.bottomCenter,
                  child: Row(
+                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.lightGreen, // Colore di sfondo
-                          foregroundColor: Colors.white, // Colore del testo
+                            minimumSize: const Size(100, 50),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            )
                         ),
                         child: const Text('Patient reached', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold,)),
                         onPressed: () {
                           Navigator.pushNamed(context, '/patientreached');
                         },
                       ),
-                      const Padding(padding: EdgeInsets.symmetric(horizontal: 53)),
+                      //const SizedBox(width: 50,),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.lightGreen, // Colore di sfondo
-                          foregroundColor: Colors.white, // Colore del testo
+                            minimumSize: const Size(100, 50),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            )
                         ),
                         child: const Text('PS Reached', style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold,)),
                         onPressed: () {

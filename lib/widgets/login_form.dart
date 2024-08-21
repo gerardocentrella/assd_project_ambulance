@@ -94,6 +94,12 @@ class _LoginButton extends StatelessWidget {
       onPressed: isValid
           ? () => context.read<LoginBloc>().add(const LoginSubmitted())
           : null,
+      style: ElevatedButton.styleFrom(
+        minimumSize: const Size(100, 50),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        )
+      ),
       child: const Text('Login'),
     );
   }

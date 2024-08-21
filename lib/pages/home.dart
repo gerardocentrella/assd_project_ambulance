@@ -70,7 +70,21 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
    return Scaffold(
-     appBar: const MyAppbar(title: 'Home Page'),
+     appBar: AppBar(title: const Text('Home Page'),
+       centerTitle: true,
+       backgroundColor: Colors.red,
+       elevation: 100,
+       toolbarHeight: 70,
+       titleTextStyle: const TextStyle(
+           color: Colors.white,
+           fontSize: 30,
+           fontStyle: FontStyle.normal),
+       shape: const RoundedRectangleBorder(
+           borderRadius: BorderRadius.only(
+               bottomLeft: Radius.circular(15.0),
+               bottomRight: Radius.circular(15.0)
+           )),
+     ),
      bottomNavigationBar: NavigationBar(
        height: 100.0,
        onDestinationSelected: (int index){

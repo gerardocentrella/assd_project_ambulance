@@ -23,174 +23,306 @@ class PatientReachedFormState extends State<PatientReachedForm> {
 
   @override
   Widget build(BuildContext context) {
-    final double height= 1;//MediaQuery.of(context).size.height;
+    final double height= MediaQuery.of(context).size.height;
     // Build a Form widget using the _formKey created above.
     return Scaffold(
-        appBar: const MyAppbar(title: 'Patient Data'),
-         body:  Form(
-          key: _formKey,
-          child: Container(color: Colors.lightBlue,
-          child:  Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Text("Insert patient data",style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color:Color(0xFF363f93)),),
-              TextFormField(
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(15.0))),
-                  labelText: ' patient name',
+      appBar: AppBar(title: const Text('Patient Data'),
+        centerTitle: true,
+        backgroundColor: Colors.red,
+        elevation: 100,
+        toolbarHeight: 70,
+        titleTextStyle: const TextStyle(
+            color: Colors.white,
+            fontSize: 30,
+            fontStyle: FontStyle.normal),
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(15.0),
+                bottomRight: Radius.circular(15.0)
+            )),
+      ),
+         body:  Scrollbar(
+           thickness: 15,
+           thumbVisibility: true,
+           trackVisibility: true,
+           radius: const Radius.circular(10.0),
+           child: SingleChildScrollView(
+             padding: const EdgeInsets.all(20.0),
+             child: Form(
+              key: _formKey,
+              child: Container(
+                decoration: BoxDecoration(
+                  boxShadow: const [BoxShadow(
+                    color: Colors.grey,
+                    spreadRadius: 1,
+                    blurRadius: 15
+                  )],
+                  //border: Border.all(width: 2.0),
+                  color: Colors.white,
+                    borderRadius: BorderRadius.circular(15.0)
                 ),
-                // The validator receives the text that the user has entered.
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
-              ),
-             TextFormField(
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(15.0))),
-                  labelText: 'Patient Surname',
-                ),
-                // The validator receives the text that the user has entered.
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(15.0))),
-                  labelText: 'City',
-                ),
-                // The validator receives the text that the user has entered.
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
+                padding: const EdgeInsets.all(10.0),
+              child:  Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(10.0),
+                    decoration: BoxDecoration(
+                      //border: Border.all(width: 2.0),
+                      borderRadius: BorderRadius.circular(10.0)
+                    ),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                      const Text("Insert patient data",style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color:Colors.red),),
+                      SizedBox(height: height*0.02,),
+                      TextFormField(
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(15.0))),
+                          labelText: 'Patient name',
+                          labelStyle: TextStyle(
+                            color: Colors.black,
+                            fontStyle: FontStyle.normal,
+                          )
+                      ),
+                      // The validator receives the text that the user has entered.
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter some text';
+                        }
+                          return null;
+                      },
+                      ),
+                      SizedBox(height: height*0.03,),
+                      TextFormField(
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(15.0))),
+                          labelText: 'Patient Surname',
+                            labelStyle: TextStyle(
+                              color: Colors.black,
+                              fontStyle: FontStyle.normal,
+                            )
+                        ),
+                        // The validator receives the text that the user has entered.
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter some text';
+                          }
+                            return null;
+                        },
+                      ),
+                      SizedBox(height: height*0.03,),
+                      TextFormField(
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(15.0))),
+                          labelText: 'City',
+                            labelStyle: TextStyle(
+                              color: Colors.black,
+                              fontStyle: FontStyle.normal,
+                            )
+                        ),
+                        // The validator receives the text that the user has entered.
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter some text';
+                          }
+                            return null;
+                        },
+                      ),
+                      SizedBox(height: height*0.03,),
+                      TextFormField(
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(15.0))),
+                          labelText: 'Address',
+                            labelStyle: TextStyle(
+                              color: Colors.black,
+                              fontStyle: FontStyle.normal,
+                            )
+                        ),
+                        // The validator receives the text that the user has entered.
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter some text';
+                          }
+                            return null;
+                        },
+                      ),
+                      SizedBox(height: height*0.03,),
+                      TextFormField(
+                        keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(15.0))),
+                          labelText: 'Age',
+                            labelStyle: TextStyle(
+                              color: Colors.black,
+                              fontStyle: FontStyle.normal,
+                            )
+                        ),
+                        // The validator receives the text that the user has entered.
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter some text';
+                          }
+                            return null;
+                        },
+                      ),
+                    ]),
+                  ),
+                  SizedBox(height: height*0.01,),
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(10.0),
+                    decoration: BoxDecoration(
+                        //border: Border.all(width: 2.0),
+                        borderRadius: BorderRadius.circular(10.0)
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                      const Text("Insert current position", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color:Colors.red),),
+                      SizedBox(height: height*0.02,),
+                      TextFormField(
+                        keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(15.0))),
+                          labelText: 'Latitude',
+                            labelStyle: TextStyle(
+                              color: Colors.black,
+                              fontStyle: FontStyle.normal,
+                            )
+                        ),
+                        // The validator receives the text that the user has entered.
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter some text';
+                          }
+                          return null;
+                        },
+                      ),
+                      SizedBox(height: height*0.03,),
+                      TextFormField(
+                        keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(15.0))),
+                          labelText: 'Longitude',
+                            labelStyle: TextStyle(
+                              color: Colors.black,
+                              fontStyle: FontStyle.normal,
+                            )
+                        ),
+                        // The validator receives the text that the user has entered.
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter some text';
+                          }
+                          return null;
+                        },
+                      ),
+                    ]
+                    ),
+                  ),
+                  SizedBox(height: height*0.01,),
+                  Container(
+                    width: double.infinity,
+                      padding: const EdgeInsets.all(10.0),
+                      decoration: BoxDecoration(
+                          //border: Border.all(width: 2.0),
+                          borderRadius: BorderRadius.circular(10.0)
+                      ),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          const Text("Insert emergency data", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color:Colors.red),),
+                          SizedBox(height: height*0.03,),
+                          TextFormField(
+                            decoration: const InputDecoration(
+                              border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(15.0))),
+                              labelText: 'Emergency Code',
+                                labelStyle: TextStyle(
+                                  color: Colors.black,
+                                  fontStyle: FontStyle.normal,
+                                )
+                            ),
+                            // The validator receives the text that the user has entered.
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter some text';
+                              }
+                              return null;
+                            },
+                          ),
+                          SizedBox(height: height*0.03,),
+                          TextFormField(
+                            decoration: const InputDecoration(
+                              border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(15.0))),
+                              labelText: 'Emergency Type',
+                                labelStyle: TextStyle(
+                                  color: Colors.black,
+                                  fontStyle: FontStyle.normal,
+                                )
+                            ),
+                            // The validator receives the text that the user has entered.
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter some text';
+                              }
+                              return null;
+                            },
+                          ),
+                          SizedBox(height: height*0.03,),
+                          TextFormField(
+                            decoration: const InputDecoration(
+                              border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(15.0))),
+                              labelText: 'Emergency Description',
+                                labelStyle: TextStyle(
+                                  color: Colors.black,
+                                  fontStyle: FontStyle.normal,
+                                )
+                            ),
+                            // The validator receives the text that the user has entered.
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Please enter some text';
+                              }
+                              return null;
+                            },
+                          ),]
+                    )
 
+                  ),
+
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(100, 50),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0),
+                          )
+                      ),
+                      onPressed: () {
+                        // Validate returns true if the form is valid, or false otherwise.
+                        if (_formKey.currentState!.validate()) {
+                          // If the form is valid, display a snackbar. In the real world,
+                          // you'd often call a server or save the information in a database.
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(content: Text('Processing Data')),
+                          );
+                        }
+                      },
+                      child: const Text('Submit', style: TextStyle(
+                          color: Colors.black,
+                          fontStyle: FontStyle.normal
+                      ),),
+                    ),
+                  ),
+                ],
               ),
-              //SizedBox(height: height*0.05,),
-              TextFormField(
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(15.0))),
-                  labelText: 'Address',
-                ),
-                // The validator receives the text that the user has entered.
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
               ),
-              TextFormField(
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(15.0))),
-                  labelText: 'Age',
-                ),
-                // The validator receives the text that the user has entered.
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
               ),
-              const Text("Insert current position", style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color:Color(0xFF363f93)),),
-              TextFormField(
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(15.0))),
-                  labelText: 'Latitude',
-                ),
-                // The validator receives the text that the user has entered.
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                keyboardType: TextInputType.number,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(15.0))),
-                  labelText: 'Longitude',
-                ),
-                // The validator receives the text that the user has entered.
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
-              ),
-              const Text("Insert emergency data", style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold, color:Color(0xFF363f93)),),
-              TextFormField(
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(15.0))),
-                  labelText: 'Emergency Code',
-                ),
-                // The validator receives the text that the user has entered.
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(15.0))),
-                  labelText: 'Emergency Type',
-                ),
-                // The validator receives the text that the user has entered.
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(15.0))),
-                  labelText: 'Emergency Description',
-                ),
-                // The validator receives the text that the user has entered.
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                child: ElevatedButton(
-                  onPressed: () {
-                    // Validate returns true if the form is valid, or false otherwise.
-                    if (_formKey.currentState!.validate()) {
-                      // If the form is valid, display a snackbar. In the real world,
-                      // you'd often call a server or save the information in a database.
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('Processing Data')),
-                      );
-                    }
-                  },
-                  child: const Text('Submit'),
-                ),
-              ),
-            ],
-          ),
-          ),
-          ),
+           ),
+         ),
     );
   }
 }
