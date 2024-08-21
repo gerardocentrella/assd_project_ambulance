@@ -2,10 +2,11 @@
 import 'package:flutter/material.dart';
 
 class OperatorCard extends StatelessWidget {
-  const OperatorCard({Key? key}) : super(key: key);
+  const OperatorCard({super.key});
 
   @override
   Widget build(BuildContext context) {
+
     return Center(
       child: Card(
         color: Colors.white,
@@ -16,11 +17,21 @@ class OperatorCard extends StatelessWidget {
         ),
         child:  Column(
           children: [
-            const Padding(padding: EdgeInsets.all(10.0),),
+            //const Padding(padding: EdgeInsets.all(10.0),),
             Container(
-
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              //alignment: Alignment.bottomCenter,
+              width: double.infinity,
+              padding: const EdgeInsets.all(20.0),
+              decoration: BoxDecoration(
+                  boxShadow: const [BoxShadow(
+                      color: Colors.grey,
+                      spreadRadius: 1,
+                      blurRadius: 15
+                  )],
+                  //border: Border.all(width: 2.0),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15.0)
+              ),
+              //padding: const EdgeInsets.symmetric(horizontal: 20.0),
                  child: Row(
                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -36,7 +47,6 @@ class OperatorCard extends StatelessWidget {
                           Navigator.pushNamed(context, '/patientreached');
                         },
                       ),
-                      //const SizedBox(width: 50,),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             minimumSize: const Size(100, 50),
@@ -51,6 +61,138 @@ class OperatorCard extends StatelessWidget {
                     ],
               ),
           ),
+            const SizedBox(height: 20,),
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(20.0),
+              decoration: BoxDecoration(
+                  boxShadow: const [BoxShadow(
+                      color: Colors.grey,
+                      spreadRadius: 1,
+                      blurRadius: 15
+                  )],
+                  //border: Border.all(width: 2.0),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15.0)
+              ),
+              child: const Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    'Emergency Information',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: Colors.red,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 28.0
+                    ),
+                  ),
+                  SizedBox(height: 10,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'ID',
+                        textAlign: TextAlign.start,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20.0
+                        ),
+                      ),
+                      Text(
+                        'sd',
+                        textAlign: TextAlign.start,
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 20.0
+                        ),
+                      ),
+
+                    ],
+                  ),
+                  SizedBox(height: 10,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Code',
+                        textAlign: TextAlign.start,
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20.0
+                        ),
+                      ),
+                      Text(
+                        'ads',
+                        textAlign: TextAlign.start,
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 20.0
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Status',
+                        textAlign: TextAlign.start,
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20.0
+                        ),
+                      ),
+                      Text(
+                        'ads',
+                        textAlign: TextAlign.start,
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 20.0
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'Description',
+                        textAlign: TextAlign.start,
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20.0
+                        ),
+                      ),
+                      Text(
+                        'ads',
+                        textAlign: TextAlign.start,
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontStyle: FontStyle.italic,
+                            fontWeight: FontWeight.w500,
+                            fontSize: 20.0
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 10,)
+
+                ],
+              ),
+            )
         ]
       ),
       ),
