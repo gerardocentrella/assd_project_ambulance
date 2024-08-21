@@ -1,4 +1,5 @@
-import 'package:assd_project_ambulance/widgets/appbar.dart';
+import 'package:assd_project_ambulance/models/entities/Emergency.dart';
+import 'package:assd_project_ambulance/utils/enum_menu_code.dart';
 import 'package:flutter/material.dart';
 
 // Create a Form widget.
@@ -20,6 +21,8 @@ class PatientReachedFormState extends State<PatientReachedForm> {
   // Note: This is a GlobalKey<FormState>,
   // not a GlobalKey<MyCustomFormState>.
   final _formKey = GlobalKey<FormState>();
+  EmergencyCodeLabel? selectedCode;
+  EmergencyType? selectedType;
 
   @override
   Widget build(BuildContext context) {
@@ -235,41 +238,62 @@ class PatientReachedFormState extends State<PatientReachedForm> {
                         children: [
                           const Text("Insert emergency data", style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color:Colors.red),),
                           SizedBox(height: height*0.03,),
-                          TextFormField(
-                            decoration: const InputDecoration(
-                              border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(15.0))),
-                              labelText: 'Emergency Code',
+                          DropdownMenu<EmergencyCodeLabel>(
+
+                            inputDecorationTheme: const InputDecorationTheme(
+                                border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(15.0))),
                                 labelStyle: TextStyle(
                                   color: Colors.black,
                                   fontStyle: FontStyle.normal,
                                 )
                             ),
-                            // The validator receives the text that the user has entered.
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter some text';
+                            width: double.infinity,
+                            requestFocusOnTap: true,
+                            label: const Text('Code'),
+                            onSelected: (EmergencyCodeLabel? code) {
+                              setState(() {
+                                selectedCode = code;
+                              });
+                            }, dropdownMenuEntries: EmergencyCodeLabel.values
+                            .map<DropdownMenuEntry<EmergencyCodeLabel>>(
+                              (EmergencyCodeLabel code) {
+                                return DropdownMenuEntry<EmergencyCodeLabel>(
+                                value: code,
+                                    label: code.label,
+                                    style: MenuItemButton.styleFrom(
+                                      foregroundColor: code.color,
+                                      backgroundColor: Colors.black12
+                                    )
+                                );
                               }
-                              return null;
-                            },
+                            ).toList(),
                           ),
                           SizedBox(height: height*0.03,),
-                          TextFormField(
-                            decoration: const InputDecoration(
-                              border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(15.0))),
-                              labelText: 'Emergency Type',
+                          DropdownMenu<EmergencyType>(
+                            inputDecorationTheme: const InputDecorationTheme(
+                                border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(15.0))),
                                 labelStyle: TextStyle(
                                   color: Colors.black,
                                   fontStyle: FontStyle.normal,
                                 )
                             ),
-                            // The validator receives the text that the user has entered.
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter some text';
+                            width: double.infinity,
+                            initialSelection: EmergencyType.C01_TRAUMATICA,
+                            requestFocusOnTap: true,
+                            label: const Text('Code'),
+                            onSelected: (EmergencyType? type) {
+                              setState(() {
+                                selectedType = type;
+                              });
+                            }, dropdownMenuEntries: EmergencyType.values
+                              .map<DropdownMenuEntry<EmergencyType>>(
+                                  (EmergencyType code) {
+                                return DropdownMenuEntry<EmergencyType>(
+                                    value: code, label: code.name);
                               }
-                              return null;
-                            },
+                          ).toList(),
                           ),
+
                           SizedBox(height: height*0.03,),
                           TextFormField(
                             decoration: const InputDecoration(
@@ -289,9 +313,7 @@ class PatientReachedFormState extends State<PatientReachedForm> {
                             },
                           ),]
                     )
-
                   ),
-
                   Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     child: ElevatedButton(
