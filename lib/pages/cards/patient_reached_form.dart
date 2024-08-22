@@ -275,63 +275,67 @@ class PatientReachedFormState extends State<PatientReachedForm> {
                             SizedBox(
                               height: height * 0.03,
                             ),
-                            DropdownMenu<EmergencyCodeLabel>(
-                              inputDecorationTheme: const InputDecorationTheme(
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(15.0))),
-                                  labelStyle: TextStyle(
-                                    color: Colors.black,
-                                    fontStyle: FontStyle.normal,
-                                  )),
-                              width: double.infinity,
-                              requestFocusOnTap: true,
-                              initialSelection: EmergencyCodeLabel.red,
-                              label: const Text('Code'),
-                              onSelected: (EmergencyCodeLabel? code) {
-                                setState(() {
-                                  selectedCode = code;
-                                });
-                              },
-                              dropdownMenuEntries: EmergencyCodeLabel.values
-                                  .map<DropdownMenuEntry<EmergencyCodeLabel>>(
-                                      (EmergencyCodeLabel code) {
-                                return DropdownMenuEntry<EmergencyCodeLabel>(
-                                    value: code,
-                                    label: code.label,
-                                    style: MenuItemButton.styleFrom(
-                                        foregroundColor: code.color,
-                                        backgroundColor: Colors.black12));
-                              }).toList(),
-                            ),
+                            InputDecorator(
+                              decoration: InputDecoration(
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15.0),
+                              ),
+                                labelStyle: const TextStyle(
+                                  color: Colors.black,
+                                  fontStyle: FontStyle.normal,
+                                )),
+                               child: DropdownMenu<EmergencyCodeLabel>(
+                                  width: double.maxFinite,
+                                  requestFocusOnTap: true,
+                                  initialSelection: EmergencyCodeLabel.red,
+                                  label: const Text('Code'),
+                                  onSelected: (EmergencyCodeLabel? code) {
+                                    setState(() {
+                                      selectedCode = code;
+                                    });
+                                  },
+                                  dropdownMenuEntries: EmergencyCodeLabel.values
+                                      .map<DropdownMenuEntry<EmergencyCodeLabel>>(
+                                          (EmergencyCodeLabel code) {
+                                    return DropdownMenuEntry<EmergencyCodeLabel>(
+                                        value: code,
+                                        label: code.label,
+                                        style: MenuItemButton.styleFrom(
+                                            foregroundColor: code.color,
+                                            backgroundColor: Colors.black12));
+                                  }).toList(),
+                                ),),
                             SizedBox(
                               height: height * 0.03,
                             ),
-                            DropdownMenu<EmergencyType>(
-                              inputDecorationTheme: const InputDecorationTheme(
-                                  border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(15.0))),
-                                  labelStyle: TextStyle(
-                                    color: Colors.black,
-                                    fontStyle: FontStyle.normal,
-                                  )),
-                              width: double.infinity,
-                              initialSelection: EmergencyType.C01_TRAUMATICA,
-                              requestFocusOnTap: true,
-                              label: const Text('Type'),
-                              onSelected: (EmergencyType? type) {
-                                setState(() {
-                                  selectedType = type;
-                                });
-                              },
-                              dropdownMenuEntries: EmergencyType.values
-                                  .map<DropdownMenuEntry<EmergencyType>>(
-                                      (EmergencyType type) {
-                                return DropdownMenuEntry<EmergencyType>(
-                                    value: type, label: type.name);
-                              }).toList(),
-                            ),
+                             InputDecorator(
+                               decoration: InputDecoration(
+                                   border: OutlineInputBorder(
+                                     borderRadius: BorderRadius.circular(15.0),
+                                   ),
+                                   labelStyle: const TextStyle(
+                                     color: Colors.black,
+                                     fontStyle: FontStyle.normal,
+                                   )
+                               ),
+                               child:  DropdownMenu<EmergencyType>(
+                                  width: double.maxFinite,
+                                  initialSelection: EmergencyType.C01_TRAUMATICA,
+                                  requestFocusOnTap: true,
+                                  label: const Text('Type'),
+                                  onSelected: (EmergencyType? type) {
+                                    setState(() {
+                                      selectedType = type;
+                                    });
+                                  },
+                                  dropdownMenuEntries: EmergencyType.values
+                                      .map<DropdownMenuEntry<EmergencyType>>(
+                                          (EmergencyType type) {
+                                    return DropdownMenuEntry<EmergencyType>(
+                                        value: type, label: type.name);
+                                  }).toList(),
+                                ),
+                             ),
                             SizedBox(
                               height: height * 0.03,
                             ),
