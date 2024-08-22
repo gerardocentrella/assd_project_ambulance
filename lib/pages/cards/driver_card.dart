@@ -1,8 +1,10 @@
 // Classe per la prima Card: card del guidatore
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class DriverCard extends StatelessWidget {
   const DriverCard({Key? key}) : super(key: key);
+
 
 @override
 Widget build(BuildContext context) {
@@ -17,7 +19,16 @@ Widget build(BuildContext context) {
       ),
       child: const Padding(
         padding: EdgeInsets.all(16.0),
-        child: Text('This is Content 1 inside a Card', style: TextStyle(fontSize: 24),),
+        child: GoogleMap(
+          onMapCreated: (controller) {
+            _mapController = controller;
+          },
+          initialCameraPosition: CameraPosition(
+            target: currentLocation,
+            zoom: 8.0,
+          ),
+          markers: _markers,
+        ),
       ),
     ),
   );

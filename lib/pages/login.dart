@@ -52,7 +52,7 @@ class Login extends StatelessWidget{
               create: (context) => LoginBloc(
                 authenticationRepository: context.read<AuthenticationRepository>(),
               ),
-              child: const LoginForm(),
+              child: const Scrollbar(child: LoginForm()),
             ),
           ),
         ],
