@@ -11,6 +11,7 @@ class DriverCard extends StatelessWidget {
 
 @override
 Widget build(BuildContext context) {
+
   Stream<Position> positionAmb = context.read<PositionRepository>().status;
 
   return Center(
@@ -24,19 +25,27 @@ Widget build(BuildContext context) {
       ),
       child: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: GoogleMap(
+        child: StreamBuilder<Position>(
+            stream: positionAmb,
+            builder: (BuildContext context, AsyncSnapshot<Position> snapshot) {
+              Position position = snapshot.requireData;
+              if (snapshot.hasData){
+                return GoogleMap(
+                  initialCameraPosition: CameraPosition(
+                    target: LatLng(position.latitude, position.longitude),
+                    zoom: 8.0,
+                  ),
+                  markers: {
 
-          initialCameraPosition: CameraPosition(
-            target:
-          ),
-          markers: {
-            Marker(
-              markerId: MarkerId('user'),
+                  },
+                );
+              }
+              else {
+                return const Text("successe cose");
+              }
+            }
 
-              icon: BitmapDescriptor.defaultMarker,
-            ),
-          },
-        ),
+        )
       ),
     ),
   );

@@ -6,7 +6,15 @@ import 'package:geolocator/geolocator.dart';
 class PositionRepository {
 
   Stream<Position> get status async* {
-    yield* Geolocator.getPositionStream();
+    LocationPermission permission;
+    permission = await Geolocator.requestPermission();
+
+    if (permission.index>=2){
+      yield* Geolocator.getPositionStream();
+    } else {
+      yield* const Stream.empty();
+    }
+
   }
 
 }
