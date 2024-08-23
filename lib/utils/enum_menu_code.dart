@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../models/entities/Emergency.dart';
+
 enum EmergencyCodeLabel {
   red('RED', Colors.red),
   orange('ORANGE', Colors.orange),
@@ -11,3 +13,16 @@ enum EmergencyCodeLabel {
   final String label;
   final Color color;
 }
+
+/* funzione */
+EmergencyCode getEmergencyCode(String label){
+  switch(label){
+    case 'RED' : return EmergencyCode.RED;
+    case 'ORANGE': return EmergencyCode.ORANGE;
+    case 'BLUE': return EmergencyCode.BLUE;
+    case 'GREEN': return EmergencyCode.GREEN;
+    case 'WHITE': return EmergencyCode.WHITE;
+    default: throw Exception();
+  }
+}
+

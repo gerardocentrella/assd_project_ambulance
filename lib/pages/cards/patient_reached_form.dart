@@ -1,3 +1,4 @@
+import 'package:assd_project_ambulance/controllers/patient_controller.dart';
 import 'package:assd_project_ambulance/models/entities/Emergency.dart';
 import 'package:assd_project_ambulance/utils/enum_menu_code.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,31 @@ class PatientReachedFormState extends State<PatientReachedForm> {
   // not a GlobalKey<MyCustomFormState>.
   final _formKey = GlobalKey<FormState>();
   EmergencyCodeLabel? selectedCode;
-  EmergencyType? selectedType;
+  late EmergencyType selectedType;
+  late EmergencyCode emerCode;
+
+  TextEditingController nameController = new TextEditingController();
+  TextEditingController surnameController = new TextEditingController();
+  TextEditingController cityController = new TextEditingController();
+  TextEditingController addressController = new TextEditingController();
+  TextEditingController ageController = new TextEditingController();
+  TextEditingController latitudeController = new TextEditingController();
+  TextEditingController longitudeController = new TextEditingController();
+  TextEditingController emerDescController = new TextEditingController();
+
+  void submit(){
+
+    PatientController patController = new PatientController();
+
+    double latitude = double.parse(latitudeController.text);
+    double longitude = double.parse(longitudeController.text);
+    int age = int.parse(ageController.text);
+
+    patController.sendNotification(emerCode, emerDescController.text,
+        selectedType, latitude, longitude, nameController.text,
+        surnameController.text, cityController.text,
+        addressController.text, age);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,6 +109,7 @@ class PatientReachedFormState extends State<PatientReachedForm> {
                             height: height * 0.02,
                           ),
                           TextFormField(
+                            controller: nameController,
                             decoration: const InputDecoration(
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.all(
@@ -105,6 +131,7 @@ class PatientReachedFormState extends State<PatientReachedForm> {
                             height: height * 0.03,
                           ),
                           TextFormField(
+                            controller: surnameController,
                             decoration: const InputDecoration(
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.all(
@@ -126,6 +153,7 @@ class PatientReachedFormState extends State<PatientReachedForm> {
                             height: height * 0.03,
                           ),
                           TextFormField(
+                            controller: cityController,
                             decoration: const InputDecoration(
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.all(
@@ -147,6 +175,7 @@ class PatientReachedFormState extends State<PatientReachedForm> {
                             height: height * 0.03,
                           ),
                           TextFormField(
+                            controller: addressController,
                             decoration: const InputDecoration(
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.all(
@@ -168,6 +197,7 @@ class PatientReachedFormState extends State<PatientReachedForm> {
                             height: height * 0.03,
                           ),
                           TextFormField(
+                            controller: ageController,
                             keyboardType: TextInputType.number,
                             decoration: const InputDecoration(
                                 border: OutlineInputBorder(
@@ -211,6 +241,7 @@ class PatientReachedFormState extends State<PatientReachedForm> {
                             height: height * 0.02,
                           ),
                           TextFormField(
+                            controller: latitudeController,
                             keyboardType: TextInputType.number,
                             decoration: const InputDecoration(
                                 border: OutlineInputBorder(
@@ -233,6 +264,7 @@ class PatientReachedFormState extends State<PatientReachedForm> {
                             height: height * 0.03,
                           ),
                           TextFormField(
+                            controller: longitudeController,
                             keyboardType: TextInputType.number,
                             decoration: const InputDecoration(
                                 border: OutlineInputBorder(
@@ -292,6 +324,7 @@ class PatientReachedFormState extends State<PatientReachedForm> {
                                   onSelected: (EmergencyCodeLabel? code) {
                                     setState(() {
                                       selectedCode = code;
+                                      emerCode = getEmergencyCode(code!.label);
                                     });
                                   },
                                   dropdownMenuEntries: EmergencyCodeLabel.values
@@ -340,6 +373,7 @@ class PatientReachedFormState extends State<PatientReachedForm> {
                               height: height * 0.03,
                             ),
                             TextFormField(
+                              controller: emerDescController,
                               decoration: const InputDecoration(
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.all(
@@ -375,6 +409,7 @@ class PatientReachedFormState extends State<PatientReachedForm> {
                             const SnackBar(content: Text('Processing Data')),
                           );
                         }
+                        submit();
                       },
                       child: const Text(
                         'Submit',
