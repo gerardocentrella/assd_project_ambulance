@@ -8,7 +8,7 @@ class PatientController{
 
   PatientController();
 
-  void sendNotification(EmergencyCode emrcode, String emrdesc, EmergencyType emrtype,
+  Future<void> sendNotification(EmergencyCode emrcode, String emrdesc, EmergencyType emrtype,
       double latitude, double longitude, String name, String surname, String city,
       String address, int age) async{
 
