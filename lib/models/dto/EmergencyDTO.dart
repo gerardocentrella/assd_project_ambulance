@@ -4,16 +4,16 @@ import 'package:assd_project_ambulance/models/entities/Position.dart';
 
 class EmergencyDTO {
 
-  String _id;
-  Position _userPosition;
-  EmergencyCode _emergencyCode;
-  String _description;
-  EmergencyStatus _emergencyStatus;
-  EmergencyType _emergencyType;
-  String _ambulanceId;
-  String _erId; // emergency Room
-  String _emergencyUpdateURL;
-  String _ambulancePositionUpdateURL;
+  late String _id;
+  late Position _userPosition;
+  late EmergencyCode _emergencyCode;
+  late String _description;
+  late EmergencyStatus _emergencyStatus;
+  late EmergencyType _emergencyType;
+  late String _ambulanceId;
+  late String _erId; // emergency Room
+  late String _emergencyUpdateURL;
+  late String _ambulancePositionUpdateURL;
 
 
   EmergencyDTO(
@@ -93,4 +93,71 @@ class EmergencyDTO {
   set emergencyUpdateURL(String value) {
     _emergencyUpdateURL = value;
   }
+
+  EmergencyDTO.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    userPosition = (json['userPosition'] != null
+        ? Position.fromJson(json['userPosition'])
+        : null)!;
+    emergencyCode = json['emergencyCode'];
+    emergencyStatus = json['emergencyStatus'];
+    description = json['emergencyDescription'];
+    emergencyType = json['emergencyType'];
+    ambulanceId = json['ambulanceId'];
+    erId = json['erId'];
+    emergencyUpdateURL = json['emergencyUpdateURL'];
+    ambulancePositionUpdateURL = json['ambulancePositionUpdateURL'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['id'] = id;
+    data['userPosition'] = userPosition.toJson();
+      data['emergencyCode'] = emergencyCode;
+    data['emergencyStatus'] = emergencyStatus;
+    data['emergencyDescription'] = description;
+    data['emergencyType'] = emergencyType;
+    data['ambulanceId'] = ambulanceId;
+    data['erId'] = erId;
+    data['emergencyUpdateURL'] = emergencyUpdateURL;
+    data['ambulancePositionUpdateURL'] = ambulancePositionUpdateURL;
+    return data;
+  }
+
+/* codice originale
+  EmergencyDTO.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    userPosition = json['userPosition'] != null
+        ? new UserPosition.fromJson(json['userPosition'])
+        : null;
+    emergencyCode = json['emergencyCode'];
+    emergencyStatus = json['emergencyStatus'];
+    emergencyDescription = json['emergencyDescription'];
+    emergencyType = json['emergencyType'];
+    ambulanceId = json['ambulanceId'];
+    emergencyid = json['emergencyid'];
+    emergencyUpdateURL = json['emergencyUpdateURL'];
+    ambulancePositionUpdateURL = json['ambulancePositionUpdateURL'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    if (this.userPosition != null) {
+      data['userPosition'] = this.userPosition!.toJson();
+    }
+    data['emergencyCode'] = this.emergencyCode;
+    data['emergencyStatus'] = this.emergencyStatus;
+    data['emergencyDescription'] = this.emergencyDescription;
+    data['emergencyType'] = this.emergencyType;
+    data['ambulanceId'] = this.ambulanceId;
+    data['emergencyid'] = this.emergencyid;
+    data['emergencyUpdateURL'] = this.emergencyUpdateURL;
+    data['ambulancePositionUpdateURL'] = this.ambulancePositionUpdateURL;
+    return data;
+  }
+
+ */
 }
+
+

@@ -1,7 +1,7 @@
 class Position {
 
- double _latitude;
- double _longitude;
+ late double _latitude;
+ late double _longitude;
 
   Position({required double latitude, required double longitude})
   : this._latitude = latitude,
@@ -23,4 +23,18 @@ class Position {
   String toString() {
     return 'Position{_latitude: $_latitude, _longitude: $_longitude}';
   }
+
+
+ Position.fromJson(Map<String, dynamic> json) {
+   latitude = json['latitude'];
+   longitude = json['longitude'];
+ }
+
+ Map<String, dynamic> toJson() {
+   final Map<String, dynamic> data = <String, dynamic>{};
+   data['latitude'] = latitude;
+   data['longitude'] = longitude;
+   return data;
+ }
+
 }
