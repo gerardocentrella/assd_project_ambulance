@@ -23,7 +23,7 @@ class PatientReachedFormState extends State<PatientReachedForm> {
   // not a GlobalKey<MyCustomFormState>.
   final _formKey = GlobalKey<FormState>();
   EmergencyCodeLabel? selectedCode;
-  late EmergencyType selectedType;
+  EmergencyType? selectedType;
   late EmergencyCode emerCode;
 
   TextEditingController nameController = new TextEditingController();
@@ -44,9 +44,10 @@ class PatientReachedFormState extends State<PatientReachedForm> {
     int age = int.parse(ageController.text);
 
     patController.sendNotification(emerCode, emerDescController.text,
-        selectedType, latitude, longitude, nameController.text,
+        selectedType!, latitude, longitude, nameController.text,
         surnameController.text, cityController.text,
         addressController.text, age);
+
   }
 
   @override
