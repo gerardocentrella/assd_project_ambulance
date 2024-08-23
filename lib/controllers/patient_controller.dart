@@ -10,7 +10,7 @@ class PatientController{
 
   void sendNotification(EmergencyCode emrcode, String emrdesc, EmergencyType emrtype,
       double latitude, double longitude, String name, String surname, String city,
-      String address, int age){
+      String address, int age) async{
 
     Patient pat = new Patient(name: name,surname:  surname,city:  city, address: address, age: age);
     Position pos = new Position(latitude: latitude, longitude: longitude);
