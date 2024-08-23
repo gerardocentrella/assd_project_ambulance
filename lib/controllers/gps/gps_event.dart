@@ -6,18 +6,18 @@ abstract class GpsEvent extends Equatable {
 
 final class PatientReached extends GpsEvent {
   @override
-  // TODO: implement props
-  List<Object?> get props => throw UnimplementedError();
+
+  List<Object?> get props => [];
 }
 
 final class PSReached extends GpsEvent {
   @override
-  // TODO: implement props
-  List<Object?> get props => throw UnimplementedError();
+
+  List<Object?> get props => [];
 }
 
 final class InitEmergency extends GpsEvent {
   @override
-  // TODO: implement props
-  List<Object?> get props => throw UnimplementedError();
+
+  List<Object?> get props => [];
 }

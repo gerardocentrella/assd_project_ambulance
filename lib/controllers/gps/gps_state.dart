@@ -4,17 +4,21 @@ abstract class GpsState extends Equatable {
   const GpsState();
 }
 
-class GpsPatient extends GpsState {
+class GpsOnPatient extends GpsState {
+  late final Emergency emergency;
+
+
+
   @override
   List<Object> get props => [];
 }
 
-class GpsPS extends GpsState {
+class GpsOnPS extends GpsState {
   @override
   List<Object> get props => [];
 }
 
-class GpsPause extends GpsState {
+class GpsOnPause extends GpsState {
   @override
   List<Object> get props => [];
 }
