@@ -35,7 +35,7 @@ Widget build(BuildContext context) {
                     target: LatLng(position.latitude, position.longitude),
                     zoom: 8.0,
                   ),
-                  markers: {
+                  markers: const {
 
                   },
                 );
