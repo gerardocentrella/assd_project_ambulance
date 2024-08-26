@@ -2,7 +2,7 @@ part of 'gps_bloc.dart';
 
 abstract class GpsState extends Equatable {
 
-  final List<Marker> markers;
+  final Set<Marker> markers;
    const GpsState(this.markers);
 }
 

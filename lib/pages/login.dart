@@ -30,32 +30,37 @@ class Login extends StatelessWidget{
             borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(15.0),
               bottomRight: Radius.circular(15.0)
+
             )),
     ),
 
-      body:Column(
-        children: [
-          Padding(
-            padding:const EdgeInsets.all(70),
-            child: Center(
-              child: Image.asset(
-                'lib/assets/images/logo.png',
-                fit: BoxFit.contain,
+      body:SingleChildScrollView(
+        physics: const NeverScrollableScrollPhysics(),
+        child: Column(
+          children: [
+            Padding(
+              padding:const EdgeInsets.all(70),
+              child: Center(
+                child: Image.asset(
+                  'lib/assets/images/logo.png',
+                  fit: BoxFit.contain,
+                ),
+                //Icon(Icons.emergency_sharp, color: Colors.red, size: 400,)
               ),
-              //Icon(Icons.emergency_sharp, color: Colors.red, size: 400,)
             ),
-          ),
 
-          Padding(
-            padding: const EdgeInsets.all(12),
-            child: BlocProvider(
-              create: (context) => LoginBloc(
-                authenticationRepository: context.read<AuthenticationRepository>(),
+
+            Padding(
+              padding: const EdgeInsets.all(12),
+              child: BlocProvider(
+                create: (context) => LoginBloc(
+                  authenticationRepository: context.read<AuthenticationRepository>(),
+                ),
+                child: const Scrollbar(child: LoginForm()),
               ),
-              child: const Scrollbar(child: LoginForm()),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

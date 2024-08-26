@@ -16,7 +16,7 @@ class GpsBloc extends Bloc<GpsEvent, GpsState> {
   GpsBloc({required PositionRepository positionRepository, required EmergencyRepository emergencyRepository})
       : _positionRepository = positionRepository,
         _emergencyRepository = emergencyRepository,
-        super(GpsOnPause([])) {
+        super(GpsOnPause({})) {
     on<InitEmergency>(_onInitEmergency);
     on<PatientReached>(_onPatientReached);
     on<PSReached>(_onPSReached);
@@ -28,7 +28,7 @@ class GpsBloc extends Bloc<GpsEvent, GpsState> {
   void _onInitEmergency(InitEmergency event,
       Emitter<GpsState> emit,) {
     List<Position> positions = [];
-    List<Marker> _markers = [];
+    Set<Marker> _markers = {};
     
     // retrive list of position
     int i = 0;
@@ -36,14 +36,13 @@ class GpsBloc extends Bloc<GpsEvent, GpsState> {
       _markers.add(Marker(position: LatLng(pos.latitude, pos.longitude), markerId: MarkerId(i.toString())));
       i++;
     }
-    
     emit.call(GpsOnPatient(_markers));
   }
 
   void _onPatientReached(PatientReached event,
       Emitter<GpsState> emit,) {
     List<Position> positions = [];
-    List<Marker> _markers = [];
+    Set<Marker> _markers = {};
 
     // retrive list of position
     int i = 0;
@@ -51,14 +50,12 @@ class GpsBloc extends Bloc<GpsEvent, GpsState> {
       _markers.add(Marker(position: LatLng(pos.latitude, pos.longitude), markerId: MarkerId(i.toString())));
       i++;
     }
-
     emit.call(GpsOnPS(_markers));
   }
 
   void _onPSReached(PSReached event,
       Emitter<GpsState> emit,) {
-
-    emit.call(GpsOnPause(const []));
+    emit.call(GpsOnPause(const {}));
     // reset
 
   }

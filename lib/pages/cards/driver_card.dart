@@ -12,7 +12,7 @@ class DriverCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Stream<Position> positionAmb = context.read<PositionRepository>().status;
-    List<Marker> _markers = [];
+    Set<Marker> _markers = {};
 
     return Center(
         child: BlocListener<GpsBloc, GpsState>(
@@ -21,7 +21,7 @@ class DriverCard extends StatelessWidget {
           _markers = state.markers;
         }
         if (state is GpsOnPause) {
-          _markers = [];
+          _markers = {};
         }
       },
       child: Card(
@@ -59,5 +59,17 @@ class DriverCard extends StatelessWidget {
                 })),
       ),
     ));
+  }
+
+  Future<void> generatePolyLineFromPoints(
+      List<LatLng> polylineCoordinates) async {
+    const id = PolylineId('polyline');
+
+    final polyline = Polyline(
+      polylineId: id,
+      color: Colors.blueAccent,
+      points: polylineCoordinates,
+      width: 5,
+    );
   }
 }
