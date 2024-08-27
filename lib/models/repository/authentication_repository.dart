@@ -7,9 +7,8 @@ import 'dart:async';
 
 import 'package:assd_project_ambulance/controllers/services/HttpResult.dart';
 import 'package:assd_project_ambulance/controllers/services/login_service.dart';
-import 'package:assd_project_ambulance/models/repository/user_repository.dart';
+import 'package:assd_project_ambulance/models/repository/token_repository.dart';
 
-import '../entities/User.dart';
 
 enum AuthenticationStatus { unknown, authenticated, unauthenticated }
 
@@ -17,7 +16,7 @@ class AuthenticationRepository {
 
   final _controller = StreamController<AuthenticationStatus>();
   final httpService = LoginService();
-  final UserRepository userRepository = UserRepository();
+  final TokenRepository tokenRepository = TokenRepository();
 
   Stream<AuthenticationStatus> get status async* {
     await Future<void>.delayed(const Duration(seconds: 1));
@@ -36,9 +35,7 @@ class AuthenticationRepository {
       if (result.httpStatusCode == 201 && result.data != null) {
         String token = result.data!;
 
-        // Crea un nuovo utente e memorizzalo nel UserRepository
-        //await userRepository.fetchUser(token);
-
+        tokenRepository.saveToken(token);
         // Aggiungi lo stato autenticato al stream
         await Future.delayed(const Duration(milliseconds: 300),
               () => _controller.add(AuthenticationStatus.authenticated),
@@ -54,7 +51,7 @@ class AuthenticationRepository {
   }
   void logOut() {
     // Rimuovi l'utente dal UserRepository
-    userRepository.removeUser();
+    tokenRepository.removeToken();
     _controller.add(AuthenticationStatus.unauthenticated);
   }
 

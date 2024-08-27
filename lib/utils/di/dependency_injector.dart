@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../controllers/auth/bloc/auth_bloc.dart';
 import '../../models/repository/authentication_repository.dart';
-import '../../models/repository/user_repository.dart';
+import '../../models/repository/token_repository.dart';
 
 class DependencyInjector extends StatelessWidget {
   final Widget child;
@@ -19,7 +19,8 @@ class DependencyInjector extends StatelessWidget {
 
   /*
   Widget _providers({required Widget child}) => MultiProvider(
-    providers:const [],
+    providers:const [
+    ],
     child: child,
   );
 
@@ -32,10 +33,9 @@ class DependencyInjector extends StatelessWidget {
   Widget _repositories({required Widget child}) => MultiRepositoryProvider(
         providers: [
           RepositoryProvider(create: (context) => PositionRepository()),
-          RepositoryProvider(
-              create: (context) => EmergencyRepository("baseURL")),
+          RepositoryProvider(create: (context) => EmergencyRepository("baseURL")),
           RepositoryProvider(create: (context) => AuthenticationRepository()),
-          RepositoryProvider(create: (context) => UserRepository()),
+          RepositoryProvider(create: (context) => TokenRepository()),
         ],
         child: child,
       );
@@ -53,7 +53,7 @@ class DependencyInjector extends StatelessWidget {
             create: (context) => AuthenticationBloc(
               authenticationRepository:
                   context.read<AuthenticationRepository>(),
-              userRepository: context.read<UserRepository>()
+              tokenRepository: context.read<TokenRepository>()
             )..add(AuthenticationSubscriptionRequested()),
           ),
           BlocProvider<GpsBloc>(
