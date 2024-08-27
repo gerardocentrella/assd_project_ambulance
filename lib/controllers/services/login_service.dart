@@ -4,8 +4,6 @@ import 'package:assd_project_ambulance/controllers/services/HttpResult.dart';
 import 'package:http/http.dart' as http;
 
 class LoginService {
-  LoginService();
-
   Future<HttpResult<String>> signIn(String userId, String password) async {
     final url =
         Uri.parse('http://example.com/api/endpoint/users/$userId/sessions');
@@ -15,33 +13,45 @@ class LoginService {
     };
     final body = jsonEncode(<String, String>{'password': password});
 
-    final response = await http.post(url, headers: headers, body: body);
-
     try {
+      final response = await http.post(url, headers: headers, body: body);
+
       if (response.statusCode == 201) {
-        // If the server did return a 201 CREATED response,
-        // then parse the JSON.
         final data = jsonDecode(response.body);
         String token = data['token'];
         return HttpResult<String>(data: token, httpStatusCode: 201);
       } else {
-        // If the server did not return a 201 CREATED response,
-        // then throw an exception.
+        // Additional error handling based on status code
         return HttpResult<String>(
             httpStatusCode: response.statusCode,
-            error: 'Login Failed. Status code: ${response.statusCode}');
+            error: _handleHttpError(response.statusCode));
       }
     } catch (e) {
-      if (e is http.ClientException) {
-        return HttpResult<String>(
-            httpStatusCode: 0,
-            // Client level fail
-            error: 'Network error: ${e.message}');
-      } else {
-        return HttpResult<String>(
-            httpStatusCode: -1, // Unknown errors
-            error: 'An unknown error occurred: ${e.toString()}');
-      }
+      return _handleException(e);
+    }
+  }
+
+  String _handleHttpError(int statusCode) {
+    switch (statusCode) {
+      case 400:
+        return 'Bad Request. Please check your data.';
+      case 401:
+        return 'Unauthorized. Incorrect login credentials.';
+      case 500:
+        return 'Internal Server Error. Please try again later.';
+      default:
+        return 'Login Failed. Status code: $statusCode';
+    }
+  }
+
+  HttpResult<String> _handleException(dynamic e) {
+    if (e is http.ClientException) {
+      return HttpResult<String>(
+          httpStatusCode: 0, error: 'Network error: ${e.message}');
+    } else {
+      return HttpResult<String>(
+          httpStatusCode: -1, // Unknown errors
+          error: 'An unknown error occurred: ${e.toString()}');
     }
   }
 }

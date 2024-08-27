@@ -12,12 +12,11 @@ class EmergencyDTO {
   late EmergencyType _emergencyType;
   late String _ambulanceId;
   late String _erId; // emergency Room
-  late String _emergencyUpdateURL;
-  late String _ambulancePositionUpdateURL;
+
 
 
   EmergencyDTO(
-      {required Emergency emergency, required String emergencyUpdateURL, required String ambulancePositionUpdateURL}
+      {required Emergency emergency}
       ) :
     _id = emergency.id,
     _userPosition = emergency.userPosition,
@@ -26,9 +25,7 @@ class EmergencyDTO {
     _emergencyStatus = emergency.emergencyStatus,
     _emergencyType = emergency.emergencyType,
     _ambulanceId = emergency.ambulanceId,
-    _erId = emergency.erId,
-    _emergencyUpdateURL = emergencyUpdateURL,
-    _ambulancePositionUpdateURL = ambulancePositionUpdateURL;
+    _erId = emergency.erId;
 
 
 
@@ -82,17 +79,6 @@ class EmergencyDTO {
     _emergencyCode = value;
   }
 
-  String get ambulancePositionUpdateURL => _ambulancePositionUpdateURL;
-
-  set ambulancePositionUpdateURL(String value) {
-    _ambulancePositionUpdateURL = value;
-  }
-
-  String get emergencyUpdateURL => _emergencyUpdateURL;
-
-  set emergencyUpdateURL(String value) {
-    _emergencyUpdateURL = value;
-  }
 
   EmergencyDTO.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -105,8 +91,6 @@ class EmergencyDTO {
     emergencyType = json['emergencyType'];
     ambulanceId = json['ambulanceId'];
     erId = json['erId'];
-    emergencyUpdateURL = json['emergencyUpdateURL'];
-    ambulancePositionUpdateURL = json['ambulancePositionUpdateURL'];
   }
 
   Map<String, dynamic> toJson() {
@@ -119,8 +103,6 @@ class EmergencyDTO {
     data['emergencyType'] = emergencyType;
     data['ambulanceId'] = ambulanceId;
     data['erId'] = erId;
-    data['emergencyUpdateURL'] = emergencyUpdateURL;
-    data['ambulancePositionUpdateURL'] = ambulancePositionUpdateURL;
     return data;
   }
 
