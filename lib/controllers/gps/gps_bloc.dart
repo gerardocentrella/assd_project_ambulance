@@ -55,7 +55,7 @@ class GpsBloc extends Bloc<GpsEvent, GpsState> {
     return [
       Position(
         latitude: 40.851775, // Naples
-        longitude: 14.268124,
+        longitude: 13.268124,
         timestamp: DateTime.now(),
         accuracy: 10.0,
         altitude: 0.0,
@@ -67,7 +67,7 @@ class GpsBloc extends Bloc<GpsEvent, GpsState> {
       ),
       Position(
         latitude: 40.682441, // Pompeii
-        longitude: 14.505223,
+        longitude: 16.505223,
         timestamp: DateTime.now(),
         accuracy: 10.0,
         altitude: 0.0,
@@ -78,8 +78,8 @@ class GpsBloc extends Bloc<GpsEvent, GpsState> {
         headingAccuracy: 0.0,
       ),
       Position(
-        latitude: 40.630387, // Amalfi
-        longitude: 14.602920,
+        latitude: 0.630387, // Amalfi
+        longitude: 0.602920,
         timestamp: DateTime.now(),
         accuracy: 10.0,
         altitude: 0.0,

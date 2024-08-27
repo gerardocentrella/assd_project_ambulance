@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -18,24 +17,94 @@ class _DriverCardState extends State<DriverCard> {
   Set<Marker> _markers = {};
   Set<Polyline> _polylines = {};
   GoogleMapController? _mapController;
-  LatLng? _currentPosition;
-  Timer? _timer;
+  StreamSubscription<Position>? _positionSubscription;
+  LatLng? _initialPosition;
+
+  @override
+  void initState() {
+    super.initState();
+    _subscribeToPositionStream();
+  }
+
+  @override
+  void dispose() {
+    _positionSubscription?.cancel();
+    super.dispose();
+  }
+
+  void _subscribeToPositionStream() {
+    _positionSubscription = context.read<PositionRepository>().positionStream.listen((Position position) {
+      final LatLng currentPosition = LatLng(position.latitude, position.longitude);
+
+      if (_initialPosition == null) {
+        _initialPosition = currentPosition; // Set the initial position
+        _generateRoute(); // Generate the route based on the initial position
+      }
+
+      setState(() {
+        _markers.add(
+          Marker(
+            markerId: const MarkerId('current_position'),
+            position: currentPosition,
+            infoWindow: const InfoWindow(title: 'Ambulanza'),
+          ),
+        );
+
+        if (_mapController != null) {
+          _mapController!.animateCamera(CameraUpdate.newLatLng(currentPosition));
+        }
+      });
+    });
+  }
+
+  void _generateRoute() {
+    if (_initialPosition == null) return;
+
+    // Define a few waypoints for the route as an example
+    List<LatLng> routePoints = [
+      _initialPosition!,
+      LatLng(40.682441, 14.505223), // Example: Pompeii
+      LatLng(40.630387, 14.602920), // Example: Amalfi
+    ];
+
+    setState(() {
+      _polylines = {
+        Polyline(
+          polylineId: const PolylineId('route'),
+          color: Colors.blueAccent,
+          points: routePoints,
+          width: 5,
+        ),
+      };
+
+      // Create markers for the route
+      for (var i = 0; i < routePoints.length; i++) {
+        _markers.add(
+          Marker(
+            markerId: MarkerId('marker_$i'),
+            position: routePoints[i],
+            infoWindow: InfoWindow(title: 'Point ${i + 1}'),
+          ),
+        );
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: BlocListener<GpsBloc, GpsState>(
-        listener: (context, state) async {
+        listener: (context, state) {
           if (state is GpsOnPatient || state is GpsOnPS) {
-            _markers = state.markers;
-            _polylines = _createPolylineFromMarkers(_markers);
-            setState(() {});
+            setState(() {
+              _markers = state.markers;
+              _polylines = _createPolylineFromMarkers(_markers);
+            });
 
             if (_markers.isNotEmpty) {
               _startNavigation(_markers);
             }
           } else if (state is GpsOnPause) {
-            _stopNavigation();
             setState(() {
               _markers.clear();
               _polylines.clear();
@@ -52,49 +121,32 @@ class _DriverCardState extends State<DriverCard> {
           ),
           child: Padding(
             padding: const EdgeInsets.all(16.0),
-            child: FutureBuilder<Position?>(
-              future: context.read<PositionRepository>().status,
-              builder: (BuildContext context, AsyncSnapshot<Position?> snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const CircularProgressIndicator();
-                } else if (snapshot.hasError) {
-                  return const Text("Errore nel recupero della posizione");
-                } else if (snapshot.hasData && snapshot.data != null) {
-                  Position position = snapshot.data!;
-                  _currentPosition = LatLng(position.latitude, position.longitude);
-
-                  _markers.add(
-                    Marker(
-                      markerId: const MarkerId('current_position'),
-                      position: _currentPosition!,
-                      infoWindow: const InfoWindow(title: 'Ambulanza'),
-                    ),
-                  );
-
-                  _polylines = _createPolylineFromMarkers(_markers);
-
-                  return GoogleMap(
-                    initialCameraPosition: CameraPosition(
-                      target: _currentPosition!,
-                      zoom: 14.0,
-                    ),
-                    markers: _markers,
-                    polylines: _polylines,
-                    onMapCreated: (controller) {
-                      _mapController = controller;
-                    },
-                  );
-                } else {
-                  return const Text("Non hai i permessi");
-                }
-              },
-            ),
+            child: _buildGoogleMap(),
           ),
         ),
       ),
     );
   }
 
+  Widget _buildGoogleMap() {
+    if (_initialPosition == null) {
+      return const Center(child: CircularProgressIndicator());
+    }
+
+    return GoogleMap(
+      initialCameraPosition: CameraPosition(
+        target: _initialPosition!,
+        zoom: 14.0,
+      ),
+      markers: _markers,
+      polylines: _polylines,
+      onMapCreated: (controller) {
+        _mapController = controller;
+      },
+    );
+  }
+
+  // Funzione per creare una polilinea dai markers
   Set<Polyline> _createPolylineFromMarkers(Set<Marker> markers) {
     final polylineCoordinates = markers.map((marker) => marker.position).toList();
 
@@ -108,38 +160,15 @@ class _DriverCardState extends State<DriverCard> {
     return {polyline};
   }
 
+  // Funzione per avviare la navigazione basata sui markers
   Future<void> _startNavigation(Set<Marker> markers) async {
     if (_mapController == null || markers.isEmpty) return;
 
-    List<LatLng> route = markers.map((marker) => marker.position).toList();
-    int index = 0;
+    List<Marker> sortedMarkers = markers.toList();
 
-    _timer = Timer.periodic(const Duration(seconds: 2), (timer) async {
-      if (index < route.length) {
-        _currentPosition = route[index];
-        setState(() {
-          _markers.add(Marker(
-            markerId: const MarkerId('current_position'),
-            position: _currentPosition!,
-          ));
-        });
-        await _mapController!.animateCamera(CameraUpdate.newLatLng(_currentPosition!));
-        index++;
-      } else {
-        _stopNavigation();
-      }
-    });
-  }
-
-  void _stopNavigation() {
-    _timer?.cancel();
-    _timer = null;
-  }
-
-  @override
-  void dispose() {
-    _stopNavigation();
-    super.dispose();
+    for (var marker in sortedMarkers) {
+      await Future.delayed(const Duration(seconds: 2));
+      await _mapController!.animateCamera(CameraUpdate.newLatLng(marker.position));
+    }
   }
 }
-
