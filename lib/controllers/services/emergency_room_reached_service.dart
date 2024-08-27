@@ -2,7 +2,7 @@ import 'package:assd_project_ambulance/controllers/services/HttpResult.dart';
 import 'package:http/http.dart' as http;
 
 class EmergencyRoomReachedService {
-  Future<HttpResult> sendEmergencyRoomReached(String emergencyId) async {
+  Future<HttpResult> sendEmergencyRoomReachedNotification(String emergencyId) async {
 
     final url =
     Uri.parse('http://example.com/api/endpoint/emergencies/$emergencyId/status');
