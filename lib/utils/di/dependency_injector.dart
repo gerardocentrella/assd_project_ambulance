@@ -7,6 +7,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 import '../../controllers/auth/bloc/auth_bloc.dart';
+import '../../controllers/patient_controller.dart';
+import '../../controllers/patient_reached/patient_reached_bloc.dart';
 import '../../models/repository/authentication_repository.dart';
 import '../../models/repository/token_repository.dart';
 
@@ -64,26 +66,10 @@ class DependencyInjector extends StatelessWidget {
               emergencyRepository: context.read<EmergencyRepository>(),
             ),
           ),
+          BlocProvider<PatientReachedBloc>(
+            create: (context) => PatientReachedBloc(context.read<PatientReachedController>()),
+          ),
         ],
         child: child,
       );
-    providers: [
-      BlocProvider<AuthenticationBloc>(
-        create: (context) => AuthenticationBloc(
-            authenticationRepository: context.read<AuthenticationRepository>(),
-            userRepository: context.read<UserRepository>(),
-        )..add(AuthenticationSubscriptionRequested()),
-      ),
-      BlocProvider<GpsBloc>(
-        create: (context) => GpsBloc(
-          positionRepository: context.read<PositionRepository>(),
-          emergencyRepository: context.read<EmergencyRepository>(),
-        ),
-      ),
-      BlocProvider<PatientReachedBloc>(
-        create: (context) => PatientReachedBloc(context.read<PatientReachedController>()),
-      ),
-    ],
-    child: child,
-  );
 }
