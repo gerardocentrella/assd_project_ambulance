@@ -1,4 +1,5 @@
 
+import 'package:assd_project_ambulance/controllers/services/patient_reached_service.dart';
 import 'package:assd_project_ambulance/models/entities/Emergency.dart';
 import 'package:assd_project_ambulance/utils/enum_menu_code.dart';
 import 'package:flutter/material.dart';
@@ -62,19 +63,22 @@ class PatientReachedFormState extends State<PatientReachedForm> {
                 bottomRight: Radius.circular(15.0))),
       ),
       body:  BlocProvider(
-        //create: (_) => PatientReachedBloc(),
-        create: (context) => PatientReachedBloc.of(context),
+        create: (context) => PatientReachedBloc(PatientReachedController(PatientReachedService())),
           child: BlocListener<PatientReachedBloc, PatientReachedState>(
               listener: (context, state) {
-                print("sono nel listener");
-                if (state is PatientReachedSuccess) {
-                  print("sono nel if del form");
+                print(state);
+                if (state is PatientReachedLoading) {
+                  // Potresti voler mostrare un indicatore di caricamento
+                  print("Loading...");
+                } else if (state is PatientReachedSuccess) {
+                  print("Dati inviati con successo!");
                   ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Data submitted successfully!')),
+                    const SnackBar(content: Text('Data submitted successfully!')),
                   );
                 } else if (state is PatientReachedFailure) {
+                  print("Errore: ${state.error}");
                   ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Error: ${state.error}')),
+                    SnackBar(content: Text('Error: ${state.error}')),
                   );
                 }
               },

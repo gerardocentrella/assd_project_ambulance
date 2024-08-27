@@ -1,8 +1,6 @@
 // patient_reached_state.dart
 import 'package:equatable/equatable.dart';
 
-import '../../models/entities/Emergency.dart';
-import '../../utils/enum_menu_code.dart';
 
 abstract class PatientReachedState extends Equatable {
   const PatientReachedState();

@@ -2,7 +2,6 @@
 import 'package:equatable/equatable.dart';
 
 import '../../models/entities/Emergency.dart';
-import '../../utils/enum_menu_code.dart';
 
 abstract class PatientReachedEvent extends Equatable {
   const PatientReachedEvent();
@@ -10,6 +9,11 @@ abstract class PatientReachedEvent extends Equatable {
   @override
   List<Object?> get props => [];
 }
+
+
+
+
+
 
 class SubmitPatientData extends PatientReachedEvent {
   final String name;

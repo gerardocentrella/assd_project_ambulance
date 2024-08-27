@@ -28,7 +28,9 @@ class AuthenticationRepository {
     required String username,
     required String password,
   }) async {
+    print("Sono in logIn");
     try {
+
       // Chiama il service specico per effettuare la chiamata API di login
       HttpResult<String> result = await httpService.signIn(username, password);
 
@@ -46,6 +48,7 @@ class AuthenticationRepository {
       // Gestisci errori
       _controller.add(AuthenticationStatus.unauthenticated);
     }
+
 
   }
 

@@ -7,9 +7,6 @@ import '../models/entities/Emergency.dart';
 import '../models/entities/Patient.dart';
 
 class PatientReachedController {
-  // vediamo sono soltanto due approcci semplici
-  // in seguito vedere approcci più complessi tra cui uno impiegante ControllerMVC e l'altro che prevede il concetto di Provider!
-
   // Iniettiamo il servizio tramite il costruttore: dependency injection
   final PatientReachedService _service;
 
@@ -34,11 +31,11 @@ class PatientReachedController {
         name: name, surname: surname, city: city, address: address, age: age);
     Position pos = Position(latitude: latitude, longitude: longitude);
     PatientReachedNotificationDTO pdto =
-    PatientReachedNotificationDTO(emrcode, emrdesc, emrtype, pos, pat);
+        PatientReachedNotificationDTO(emrcode, emrdesc, emrtype, pos, pat);
 
     try {
       final result =
-      await _service.sendPatientReachedNotification2(pdto, emergencyId);
+          await _service.sendPatientReachedNotification2(pdto, emergencyId);
       return result; // Restituire il risultato
     } catch (e) {
       _error = e.toString(); // Gestire il possibile errore
