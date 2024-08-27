@@ -9,4 +9,6 @@ class User extends Equatable {
   List<Object> get props => [token];
 
   static const empty = User('-');
+
+
 }

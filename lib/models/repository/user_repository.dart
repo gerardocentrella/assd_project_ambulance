@@ -7,12 +7,21 @@ import 'package:assd_project_ambulance/models/entities/User.dart';
 class UserRepository {
   User? _user;
 
+  Future<User?> getUser() async {
+    return Future.delayed(
+        const Duration(milliseconds: 300), () {
+        _user = User('-');
+        return _user;
+    }
+    );
+  }
+
   // Fetches the user based on the provided token
   Future<User?> fetchUser(String token) async {
     // Recupero dell'utente
     return Future.delayed(
       const Duration(milliseconds: 300),
-      () {
+          () {
         // Salviamo l'utente
         _user = User(token);
         return _user;
