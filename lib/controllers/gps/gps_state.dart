@@ -7,7 +7,6 @@ abstract class GpsState extends Equatable {
 }
 
 class GpsOnPatient extends GpsState {
-
   @override
   List<Object> get props => [];
 
@@ -15,7 +14,6 @@ class GpsOnPatient extends GpsState {
 }
 
 class GpsOnPS extends GpsState {
-
   @override
   List<Object> get props => [];
 
