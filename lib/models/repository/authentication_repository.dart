@@ -34,7 +34,6 @@ class AuthenticationRepository {
 
       if (result.httpStatusCode == 201 && result.data != null) {
         String token = result.data!;
-
         tokenRepository.saveToken(token);
         // Aggiungi lo stato autenticato al stream
         await Future.delayed(const Duration(milliseconds: 300),
@@ -47,6 +46,17 @@ class AuthenticationRepository {
       // Gestisci errori
       _controller.add(AuthenticationStatus.unauthenticated);
     }
+
+  }
+
+  Future<void> logInMok({
+    required String username,
+    required String password,
+  }) async {
+        // Aggiungi lo stato autenticato al stream
+        await Future.delayed(const Duration(milliseconds: 300),
+              () => _controller.add(AuthenticationStatus.authenticated),
+        );
 
   }
   void logOut() {

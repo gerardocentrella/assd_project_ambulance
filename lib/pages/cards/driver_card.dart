@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -16,6 +18,8 @@ class _DriverCardState extends State<DriverCard> {
   Set<Marker> _markers = {};
   Set<Polyline> _polylines = {};
   GoogleMapController? _mapController;
+  LatLng? _currentPosition;
+  Timer? _timer;
 
   @override
   Widget build(BuildContext context) {
@@ -23,17 +27,15 @@ class _DriverCardState extends State<DriverCard> {
       child: BlocListener<GpsBloc, GpsState>(
         listener: (context, state) async {
           if (state is GpsOnPatient || state is GpsOnPS) {
-            // Fetch positions from a method like `_retrievePositions()`
-            _markers =  state.markers;
+            _markers = state.markers;
             _polylines = _createPolylineFromMarkers(_markers);
-
             setState(() {});
 
-            // Start navigation after setting the markers and polylines
             if (_markers.isNotEmpty) {
               _startNavigation(_markers);
             }
           } else if (state is GpsOnPause) {
+            _stopNavigation();
             setState(() {
               _markers.clear();
               _polylines.clear();
@@ -59,13 +61,12 @@ class _DriverCardState extends State<DriverCard> {
                   return const Text("Errore nel recupero della posizione");
                 } else if (snapshot.hasData && snapshot.data != null) {
                   Position position = snapshot.data!;
-                  LatLng currentPosition = LatLng(position.latitude, position.longitude);
+                  _currentPosition = LatLng(position.latitude, position.longitude);
 
-                  // Add the current position marker
                   _markers.add(
                     Marker(
                       markerId: const MarkerId('current_position'),
-                      position: currentPosition,
+                      position: _currentPosition!,
                       infoWindow: const InfoWindow(title: 'Ambulanza'),
                     ),
                   );
@@ -74,7 +75,7 @@ class _DriverCardState extends State<DriverCard> {
 
                   return GoogleMap(
                     initialCameraPosition: CameraPosition(
-                      target: currentPosition,
+                      target: _currentPosition!,
                       zoom: 14.0,
                     ),
                     markers: _markers,
@@ -94,21 +95,6 @@ class _DriverCardState extends State<DriverCard> {
     );
   }
 
-  // Function to create markers from positions
-  Set<Marker> _createMarkersFromPositions(List<Position> positions) {
-    Set<Marker> markers = {};
-    for (var i = 0; i < positions.length; i++) {
-      markers.add(
-        Marker(
-          markerId: MarkerId('marker_$i'),
-          position: LatLng(positions[i].latitude, positions[i].longitude),
-        ),
-      );
-    }
-    return markers;
-  }
-
-  // Function to create polyline from markers
   Set<Polyline> _createPolylineFromMarkers(Set<Marker> markers) {
     final polylineCoordinates = markers.map((marker) => marker.position).toList();
 
@@ -122,18 +108,38 @@ class _DriverCardState extends State<DriverCard> {
     return {polyline};
   }
 
-  // Function to start navigation from start to end position
   Future<void> _startNavigation(Set<Marker> markers) async {
     if (_mapController == null || markers.isEmpty) return;
 
-    // Convert markers to a sorted list based on a logical path (if required)
-    List<Marker> sortedMarkers = markers.toList();
+    List<LatLng> route = markers.map((marker) => marker.position).toList();
+    int index = 0;
 
-    // Simulate navigation by moving the camera along the route
-    for (var marker in sortedMarkers) {
-      await Future.delayed(const Duration(seconds: 2));
-      await _mapController!.animateCamera(CameraUpdate.newLatLng(marker.position));
-    }
+    _timer = Timer.periodic(const Duration(seconds: 2), (timer) async {
+      if (index < route.length) {
+        _currentPosition = route[index];
+        setState(() {
+          _markers.add(Marker(
+            markerId: const MarkerId('current_position'),
+            position: _currentPosition!,
+          ));
+        });
+        await _mapController!.animateCamera(CameraUpdate.newLatLng(_currentPosition!));
+        index++;
+      } else {
+        _stopNavigation();
+      }
+    });
   }
 
+  void _stopNavigation() {
+    _timer?.cancel();
+    _timer = null;
+  }
+
+  @override
+  void dispose() {
+    _stopNavigation();
+    super.dispose();
+  }
 }
+

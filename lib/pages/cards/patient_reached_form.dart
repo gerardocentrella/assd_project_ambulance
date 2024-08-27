@@ -5,6 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../controllers/patient_controller.dart';
+import '../../controllers/patient_reached/patient_reached_bloc.dart';
+import '../../controllers/patient_reached/patient_reached_event.dart';
+import '../../controllers/patient_reached/patient_reached_state.dart';
 
 
 // Create a Form widget.

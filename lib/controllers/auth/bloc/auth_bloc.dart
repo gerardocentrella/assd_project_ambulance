@@ -36,11 +36,13 @@ class AuthenticationBloc extends Bloc<AuthEvent, AuthState> {
           case AuthenticationStatus.unauthenticated:
             return emit(const AuthState.unauthenticated());
           case AuthenticationStatus.authenticated:
-            //in questo caso togliere le parti dell'user se non ce, e toglierli anche da authstate
-            final user = await _tryGetUser();
+
+            //final token = await _tryGetToken();
+
+            const token = "prova";
             return emit(
-              user != null
-                  ? AuthState.authenticated(user)
+              token != null
+                  ? AuthState.authenticated(token)
                   : const AuthState.unauthenticated(),
             );
 
@@ -59,10 +61,10 @@ class AuthenticationBloc extends Bloc<AuthEvent, AuthState> {
     _authenticationRepository.logOut();
   }
 
-  Future<String?> _tryGetUser() async {
+  Future<String?> _tryGetToken() async {
     try {
-      final user = await _tokenRepository.getToken();
-      return user;
+      final token = await _tokenRepository.getToken();
+      return token;
     } catch (_) {
       return null;
     }

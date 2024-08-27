@@ -39,7 +39,7 @@ class DependencyInjector extends StatelessWidget {
           RepositoryProvider(create: (context) => PositionRepository()),
           RepositoryProvider(create: (context) => EmergencyRepository("baseURL")),
           RepositoryProvider(create: (context) => AuthenticationRepository()),
-          RepositoryProvider(create: (context) => UserRepository()),
+          RepositoryProvider(create: (context) => TokenRepository()),
         ],
         child: child,
       );

@@ -9,7 +9,6 @@ import '../../models/repository/position_repository.dart';
 
 part 'gps_event.dart';
 part 'gps_state.dart';
-
 class GpsBloc extends Bloc<GpsEvent, GpsState> {
   GpsBloc({
     required PositionRepository positionRepository,
@@ -29,7 +28,6 @@ class GpsBloc extends Bloc<GpsEvent, GpsState> {
       InitEmergency event,
       Emitter<GpsState> emit,
       ) async {
-    // Retrieve list of positions from repository or some other source
     List<Position> positions = await _retrievePositions();
     Set<Marker> _markers = _createMarkersFromPositions(positions);
 
@@ -40,7 +38,6 @@ class GpsBloc extends Bloc<GpsEvent, GpsState> {
       PatientReached event,
       Emitter<GpsState> emit,
       ) async {
-    // Retrieve updated list of positions when patient is reached
     List<Position> positions = await _retrievePositions();
     Set<Marker> _markers = _createMarkersFromPositions(positions);
 
@@ -51,13 +48,10 @@ class GpsBloc extends Bloc<GpsEvent, GpsState> {
       PSReached event,
       Emitter<GpsState> emit,
       ) {
-    // Clear markers and pause GPS updates
     emit(GpsOnPause(const {}));
   }
 
-  // Example method to simulate retrieving positions from the repository
   Future<List<Position>> _retrievePositions() async {
-    // Replace this with your actual retrieval logic
     return [
       Position(
         latitude: 40.851775, // Naples
@@ -97,7 +91,6 @@ class GpsBloc extends Bloc<GpsEvent, GpsState> {
       ),
     ];
   }
-
 
   Set<Marker> _createMarkersFromPositions(List<Position> positions) {
     Set<Marker> markers = {};
