@@ -1,12 +1,11 @@
-import 'package:assd_project_ambulance/controllers/patient_controller.dart';
+
 import 'package:assd_project_ambulance/models/entities/Emergency.dart';
 import 'package:assd_project_ambulance/utils/enum_menu_code.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../controllers/patient_reached/patient_reached_bloc.dart';
-import '../../controllers/patient_reached/patient_reached_event.dart';
-import '../../controllers/patient_reached/patient_reached_state.dart';
+import '../../controllers/patient_controller.dart';
+
 
 // Create a Form widget.
 class PatientReachedForm extends StatefulWidget {
@@ -381,7 +380,6 @@ class PatientReachedFormState extends State<PatientReachedForm> {
                                           height: height * 0.03,
                                         ),
                                         TextFormField(
-                                          controller: emerDescController,
                                           decoration: const InputDecoration(
                                               border: OutlineInputBorder(
                                                   borderRadius: BorderRadius.all(

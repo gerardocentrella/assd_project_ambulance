@@ -3,9 +3,8 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-import '../../../models/entities/User.dart';
 import '../../../models/repository/authentication_repository.dart';
-import '../../../models/repository/user_repository.dart';
+import '../../../models/repository/token_repository.dart';
 
 part 'auth_event.dart';
 part 'auth_state.dart';
@@ -15,16 +14,16 @@ class AuthenticationBloc extends Bloc<AuthEvent, AuthState> {
 
   AuthenticationBloc({
     required AuthenticationRepository authenticationRepository,
-    required UserRepository userRepository,
+    required TokenRepository tokenRepository,
   })  : _authenticationRepository = authenticationRepository,
-        _userRepository = userRepository,
+        _tokenRepository = tokenRepository,
         super(const AuthState.unknown()) {
     on<AuthenticationSubscriptionRequested>(_onSubscriptionRequested);
     on<AuthenticationLogoutPressed>(_onLogoutPressed);
   }
 
   final AuthenticationRepository _authenticationRepository;
-  final UserRepository _userRepository;
+  final TokenRepository _tokenRepository;
 
   Future<void> _onSubscriptionRequested(
       AuthenticationSubscriptionRequested event,
@@ -60,9 +59,9 @@ class AuthenticationBloc extends Bloc<AuthEvent, AuthState> {
     _authenticationRepository.logOut();
   }
 
-  Future<User?> _tryGetUser() async {
+  Future<String?> _tryGetUser() async {
     try {
-      final user = await _userRepository.getUser();
+      final user = await _tokenRepository.getToken();
       return user;
     } catch (_) {
       return null;
