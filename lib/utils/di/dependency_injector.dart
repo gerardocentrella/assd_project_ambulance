@@ -86,9 +86,7 @@ class DependencyInjector extends StatelessWidget {
         ),
       ),
       BlocProvider<PatientReachedBloc>(
-        create: (context) => PatientReachedBloc(
-         // PatientController: context.read<PatientController>(),
-        ),
+        create: (context) => PatientReachedBloc(context.read<PatientReachedController>()),
       ),
     ],
     child: child,

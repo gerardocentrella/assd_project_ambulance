@@ -6,41 +6,17 @@ import '../models/dto/PathDTO.dart';
 import '../models/entities/Emergency.dart';
 import '../models/entities/Patient.dart';
 
-class PatientController {
+class PatientReachedController {
   // vediamo sono soltanto due approcci semplici
   // in seguito vedere approcci più complessi tra cui uno impiegante ControllerMVC e l'altro che prevede il concetto di Provider!
 
-  PatientController();
+  // Iniettiamo il servizio tramite il costruttore: dependency injection
+  final PatientReachedService _service;
 
-  // primo approccio di controllo
-  Future<void> sendNotification(
-      EmergencyCode emrcode,
-      String emrdesc,
-      EmergencyType emrtype,
-      double latitude,
-      double longitude,
-      String name,
-      String surname,
-      String city,
-      String address,
-      int age) async {
-    Patient pat = Patient(
-        name: name, surname: surname, city: city, address: address, age: age);
-    Position pos = Position(latitude: latitude, longitude: longitude);
-    PatientReachedNotificationDTO pdto =
-        PatientReachedNotificationDTO(emrcode, emrdesc, emrtype, pos, pat);
+  PatientReachedController(this._service);
 
-    /*chiamare il servizio restful nella cartella services e passare il dto*/
-    PathDTO path =
-        PatientReachedService.sendPatientReachedNotification(pdto) as PathDTO;
-    List<Position> positions = path.path;
-  }
-
-  //--------------------------------------------secondo approccio------------------------------------------------------
-
-  // creazione oggetto qui oppure ricorso alla dependency injection
-  final PatientReachedService _service = PatientReachedService();
   String emergencyId = '';
+  late String _error;
 
   Future<HttpResult<PathDTO>> sendNotification2(
       EmergencyCode emrcode,
@@ -53,12 +29,20 @@ class PatientController {
       String city,
       String address,
       int age) async {
+    print("Sono in PatientReachedController");
     Patient pat = Patient(
         name: name, surname: surname, city: city, address: address, age: age);
     Position pos = Position(latitude: latitude, longitude: longitude);
     PatientReachedNotificationDTO pdto =
-        PatientReachedNotificationDTO(emrcode, emrdesc, emrtype, pos, pat);
+    PatientReachedNotificationDTO(emrcode, emrdesc, emrtype, pos, pat);
 
-    return await _service.sendPatientReachedNotification2(pdto, emergencyId);
+    try {
+      final result =
+      await _service.sendPatientReachedNotification2(pdto, emergencyId);
+      return result; // Restituire il risultato
+    } catch (e) {
+      _error = e.toString(); // Gestire il possibile errore
+      throw _error; // rimanere con la gestione dell'errore
+    }
   }
 }

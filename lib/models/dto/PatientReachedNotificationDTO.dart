@@ -58,9 +58,9 @@ class PatientReachedNotificationDTO{
 
     Map<String, dynamic> toJson() {
       final Map<String, dynamic> data = <String, dynamic>{};
-      data['emergencyCode'] = emergencyCode;
+      data['emergencyCode'] = emergencyCode.toString();
       data['emergencyDescription'] = emergencyDescription;
-      data['emergencyType'] = emergencyType;
+      data['emergencyType'] = emergencyType.toString();
       data['position'] = position.toJson();
       data['patient'] = patient.toJson();
           return data;

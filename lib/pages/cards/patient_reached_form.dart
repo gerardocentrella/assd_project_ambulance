@@ -40,22 +40,9 @@ class PatientReachedFormState extends State<PatientReachedForm> {
   TextEditingController longitudeController = new TextEditingController();
   TextEditingController emerDescController = new TextEditingController();
 
-  void submit(PatientReachedController controller){
-
-    double latitude = double.parse(latitudeController.text);
-    double longitude = double.parse(longitudeController.text);
-    int age = int.parse(ageController.text);
-
-    controller.sendNotification2(emerCode, emerDescController.text,
-        selectedType!, latitude, longitude, nameController.text,
-        surnameController.text, cityController.text,
-        addressController.text, age);
-
-  }
 
   @override
   Widget build(BuildContext context) {
-    final controller = context.watch<PatientReachedController>();
     final double height = MediaQuery.of(context).size.height;
     // Build a Form widget using the _formKey created above.
     return Scaffold(
@@ -73,10 +60,13 @@ class PatientReachedFormState extends State<PatientReachedForm> {
                 bottomRight: Radius.circular(15.0))),
       ),
       body:  BlocProvider(
-        create: (_) => PatientReachedBloc(/*PatientController: PatientController()*/),
+        //create: (_) => PatientReachedBloc(),
+        create: (context) => PatientReachedBloc.of(context),
           child: BlocListener<PatientReachedBloc, PatientReachedState>(
               listener: (context, state) {
+                print("sono nel listener");
                 if (state is PatientReachedSuccess) {
+                  print("sono nel if del form");
                   ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(content: Text('Data submitted successfully!')),
                   );
@@ -128,6 +118,7 @@ class PatientReachedFormState extends State<PatientReachedForm> {
                                         height: height * 0.02,
                                       ),
                                       TextFormField(
+                                        controller: nameController,
                                         decoration: const InputDecoration(
                                             border: OutlineInputBorder(
                                                 borderRadius: BorderRadius.all(
@@ -149,6 +140,7 @@ class PatientReachedFormState extends State<PatientReachedForm> {
                                         height: height * 0.03,
                                       ),
                                       TextFormField(
+                                        controller: surnameController,
                                         decoration: const InputDecoration(
                                             border: OutlineInputBorder(
                                                 borderRadius: BorderRadius.all(
@@ -170,6 +162,7 @@ class PatientReachedFormState extends State<PatientReachedForm> {
                                         height: height * 0.03,
                                       ),
                                       TextFormField(
+                                        controller: cityController,
                                         decoration: const InputDecoration(
                                             border: OutlineInputBorder(
                                                 borderRadius: BorderRadius.all(
@@ -191,6 +184,7 @@ class PatientReachedFormState extends State<PatientReachedForm> {
                                         height: height * 0.03,
                                       ),
                                       TextFormField(
+                                        controller: addressController,
                                         decoration: const InputDecoration(
                                             border: OutlineInputBorder(
                                                 borderRadius: BorderRadius.all(
@@ -212,6 +206,7 @@ class PatientReachedFormState extends State<PatientReachedForm> {
                                         height: height * 0.03,
                                       ),
                                       TextFormField(
+                                        controller: ageController,
                                         keyboardType: TextInputType.number,
                                         decoration: const InputDecoration(
                                             border: OutlineInputBorder(
@@ -255,6 +250,7 @@ class PatientReachedFormState extends State<PatientReachedForm> {
                                         height: height * 0.02,
                                       ),
                                       TextFormField(
+                                        controller: latitudeController,
                                         keyboardType: TextInputType.number,
                                         decoration: const InputDecoration(
                                             border: OutlineInputBorder(
@@ -277,6 +273,7 @@ class PatientReachedFormState extends State<PatientReachedForm> {
                                         height: height * 0.03,
                                       ),
                                       TextFormField(
+                                        controller: longitudeController,
                                         keyboardType: TextInputType.number,
                                         decoration: const InputDecoration(
                                             border: OutlineInputBorder(
@@ -384,6 +381,7 @@ class PatientReachedFormState extends State<PatientReachedForm> {
                                           height: height * 0.03,
                                         ),
                                         TextFormField(
+                                          controller: emerDescController,
                                           decoration: const InputDecoration(
                                               border: OutlineInputBorder(
                                                   borderRadius: BorderRadius.all(
@@ -426,7 +424,6 @@ class PatientReachedFormState extends State<PatientReachedForm> {
                                           emergencyDescription: emerDescController.text,
                                         ));
                                       }
-                                    submit(controller);
                                   },
                                   child: const Text(
                                     'Submit',
