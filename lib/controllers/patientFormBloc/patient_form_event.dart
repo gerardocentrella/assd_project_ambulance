@@ -15,7 +15,7 @@ class PatientFormEventSubmit extends PatientFormEvent {
   final int age;
   final double latitude;
   final double longitude;
-  final EmergencyCodeLabel emerCode;
+  final EmergencyCode emerCode;
   final EmergencyType type;
   final String emergencyDescription;
 
