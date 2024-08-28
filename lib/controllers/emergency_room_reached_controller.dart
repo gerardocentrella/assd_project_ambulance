@@ -1,5 +1,5 @@
-import 'package:assd_project_ambulance/controllers/services/HttpResult.dart';
 import 'package:assd_project_ambulance/controllers/services/emergency_room_reached_service.dart';
+import 'package:assd_project_ambulance/utils/http_result.dart';
 
 class EmergencyRoomReachedController {
   final EmergencyRoomReachedService _service;
