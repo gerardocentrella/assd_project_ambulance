@@ -1,8 +1,14 @@
-// Classe per la seconda Card: card dell'operatore
+import 'package:assd_project_ambulance/controllers/emergency_room_reached_controller.dart';
+import 'package:assd_project_ambulance/controllers/services/emergency_room_reached_service.dart';
+import 'package:assd_project_ambulance/utils/http_result.dart';
 import 'package:flutter/material.dart';
 
 class OperatorCard extends StatelessWidget {
-  const OperatorCard({super.key});
+  final String emergencyId = 'CUSTOM ID';
+  final EmergencyRoomReachedController _controller =
+  EmergencyRoomReachedController(EmergencyRoomReachedService());
+
+  OperatorCard({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,207 +21,146 @@ class OperatorCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(15.0),
         ),
         child: Column(children: [
-          //const Padding(padding: EdgeInsets.all(10.0),),
-          Container(
-            width: double.infinity,
+          Padding(
             padding: const EdgeInsets.all(20.0),
-            decoration: BoxDecoration(
-                boxShadow: const [
-                  BoxShadow(color: Colors.grey, spreadRadius: 1, blurRadius: 15)
-                ],
-                //border: Border.all(width: 2.0),
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(15.0)),
-            //padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(100, 50),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      )),
-                  child: const Text('Patient reached',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      )),
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/patientreached');
-                  },
+                _buildActionButton(
+                  context,
+                  label: 'Patient reached',
+                  routeName: '/patientreached',
                 ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      minimumSize: const Size(100, 50),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                      )),
-                  child: const Text('PS Reached',
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      )),
-                  onPressed: () {
-                    // se la chiamata alla CO va a buon fine: showDialog con successo
-                    // adesso è un dialog di prova per il bottone
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) => const Dialog(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              SizedBox(height: 30),
-                              Text('Emergency Room Reached!',
-                                  style: TextStyle(
-                                    color: Colors.red,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 20,
-                                  ),
-                                  textAlign: TextAlign.center),
-                              SizedBox(height: 30),
-
-                            ],
-                          ),
-                        ));
+                _buildActionButton(
+                  context,
+                  label: 'ER Reached',
+                  onPressed: () async {
+                    String textDialog = await _sendNotification();
+                    _showDialog(context, textDialog);
                   },
                 ),
               ],
             ),
           ),
-          const SizedBox(
-            height: 20,
-          ),
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.all(20.0),
-            decoration: BoxDecoration(
-                boxShadow: const [
-                  BoxShadow(color: Colors.grey, spreadRadius: 1, blurRadius: 15)
-                ],
-                //border: Border.all(width: 2.0),
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(15.0)),
-            child: const Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Emergency Information',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: Colors.red,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 28.0),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'ID',
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20.0),
-                    ),
-                    Text(
-                      'sd',
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 20.0),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Code',
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20.0),
-                    ),
-                    Text(
-                      'ads',
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 20.0),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Status',
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20.0),
-                    ),
-                    Text(
-                      'ads',
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 20.0),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      'Description',
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20.0),
-                    ),
-                    Text(
-                      'ads',
-                      textAlign: TextAlign.start,
-                      style: TextStyle(
-                          color: Colors.black,
-                          fontStyle: FontStyle.italic,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 20.0),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                )
-              ],
-            ),
-          )
+          const SizedBox(height: 20),
+          _buildEmergencyInformation(),
         ]),
       ),
+    );
+  }
+
+  ElevatedButton _buildActionButton(BuildContext context,
+      {required String label, String? routeName, VoidCallback? onPressed}) {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        minimumSize: const Size(100, 50),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+      ),
+      onPressed: routeName != null ? () {
+        Navigator.pushNamed(context, routeName);
+      } : onPressed,
+      child: Text(
+        label,
+        style: const TextStyle(
+          color: Colors.black,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+
+  Future<String> _sendNotification() async {
+    HttpResult result = await _controller.sendEmergencyRoomReachedNotification(emergencyId);
+    return (result.data != null && result.httpStatusCode == 200)
+        ? 'Notify Successfully!'
+        : 'Notify Failed, Try Again..';
+  }
+
+  void _showDialog(BuildContext context, String textDialog) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) => Dialog(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const SizedBox(height: 30),
+            Text(
+              textDialog,
+              style: const TextStyle(
+                color: Colors.red,
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 30),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildEmergencyInformation() {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(20.0),
+      decoration: BoxDecoration(
+        boxShadow: const [
+          BoxShadow(color: Colors.grey, spreadRadius: 1, blurRadius: 15),
+        ],
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15.0),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const Text(
+            'Emergency Information',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.red,
+              fontWeight: FontWeight.bold,
+              fontSize: 28.0,
+            ),
+          ),
+          const SizedBox(height: 10),
+          _buildInfoRow('ID', emergencyId),
+          _buildInfoRow('Code', 'ads'),
+          _buildInfoRow('Status', 'ads'),
+          _buildInfoRow('Description', 'ads'),
+          const SizedBox(height: 10),
+        ],
+      ),
+    );
+  }
+
+  Row _buildInfoRow(String title, String value) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(
+          title,
+          textAlign: TextAlign.start,
+          style: const TextStyle(
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+            fontSize: 20.0,
+          ),
+        ),
+        Text(
+          value,
+          textAlign: TextAlign.start,
+          style: const TextStyle(
+            color: Colors.black,
+            fontStyle: FontStyle.italic,
+            fontWeight: FontWeight.w500,
+            fontSize: 20.0,
+          ),
+        ),
+      ],
     );
   }
 }

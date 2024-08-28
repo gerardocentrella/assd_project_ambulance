@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'package:assd_project_ambulance/controllers/patient_controller.dart';
 import 'package:assd_project_ambulance/controllers/services/patient_reached_service.dart';
+import 'package:assd_project_ambulance/utils/http_result.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
+import '../../models/dto/PathDTO.dart';
 import '../../models/entities/Emergency.dart';
 import '../../utils/enum_menu_code.dart';
 
@@ -31,8 +33,9 @@ class PatientFormBloc extends Bloc<PatientFormEvent, PatientFormState> {
   ) async {
     emit(PatientFormLoading());
     try {
+      final HttpResult<PathDTO> result;
       // Qui dovresti chiamare un servizio che invia i dati a un backend o lo salva localmente
-      await _controller.sendNotification2(
+      result = await _controller.sendNotification2(
           event.emerCode,
           event.emergencyDescription,
           event.type,
@@ -43,10 +46,12 @@ class PatientFormBloc extends Bloc<PatientFormEvent, PatientFormState> {
           event.city,
           event.address,
           event.age);
-      print("Nel bloc nuovo Dopo la chiama REst ");
-      await Future.delayed(
-          const Duration(seconds: 2)); // Simulazione di una richiesta di rete
-      emit(PatientFormSuccess());
+
+      if (result.data != null && result.httpStatusCode == 200) {
+        // successo
+      } else {
+        // fallimento
+      }
     } catch (error) {
       emit(PatientFormFailure(error: error.toString()));
     }

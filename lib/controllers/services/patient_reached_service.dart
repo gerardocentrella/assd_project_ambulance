@@ -28,8 +28,6 @@ class PatientReachedService {
     };
     final body = jsonEncode(dataToSend);
 
-    final response = await http.patch(url, headers: headers, body: body);
-
     try {
       final response = await http.patch(url, headers: headers, body: body);
       return _handleResponse(response);
