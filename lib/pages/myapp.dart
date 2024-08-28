@@ -1,4 +1,5 @@
 import 'package:assd_project_ambulance/pages/cards/patient_reached_form.dart';
+import 'package:assd_project_ambulance/pages/cardsinprova/patient_reached_form2.dart';
 import 'package:assd_project_ambulance/pages/splash_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -49,7 +50,7 @@ class _AppViewState extends State<MyApp> {
   @override
   Widget build(BuildContext context) => DependencyInjector(child:
   MaterialApp(
-      routes: {'/patientreached' : (context) => const PatientReachedForm(),},
+      routes: {'/patientreached' : (context) => const PatientReachedForm2(),},
       navigatorKey: _navigatorKey,
       builder: (context, child) {
         return BlocListener<AuthenticationBloc, AuthState>(

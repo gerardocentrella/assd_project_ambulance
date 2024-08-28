@@ -17,14 +17,12 @@ class PatientReachedBloc extends Bloc<PatientReachedEvent, PatientReachedState> 
 
   void _onSubmitPatientData(SubmitPatientData event, Emitter<PatientReachedState> emit) async {
 
-    emit(PatientReachedLoading());
     try {
       //chiamata Restful
       await _patientController.sendNotification2(event.emerCode!, event.emergencyDescription, event.type, event.latitude, event.longitude,
       event.name, event.surname, event.city, event.address, event.age);
       print("Nel bloc Dopo la chiama REst ");
       //await Future.delayed(const Duration(seconds: 2)); // Simulazione di attesa
-
       emit(PatientReachedSuccess());
 
     } catch (e) {

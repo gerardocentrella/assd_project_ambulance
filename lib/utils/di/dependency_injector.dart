@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 
 import '../../controllers/auth/bloc/auth_bloc.dart';
 import '../../controllers/emergency_room_reached_controller.dart';
+import '../../controllers/patientFormBloc/patient_form_bloc.dart';
 import '../../controllers/patient_controller.dart';
 import '../../controllers/patient_reached/patient_reached_bloc.dart';
 import '../../controllers/services/emergency_room_reached_service.dart';
@@ -91,6 +92,9 @@ class DependencyInjector extends StatelessWidget {
           ),
           BlocProvider<PatientReachedBloc>(
             create: (context) => PatientReachedBloc(context.read<PatientReachedController>()),
+          ),
+          BlocProvider<PatientFormBloc>(
+            create: (context) => PatientFormBloc(),
           ),
         ],
         child: child,
