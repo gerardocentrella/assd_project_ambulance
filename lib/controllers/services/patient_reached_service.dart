@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:assd_project_ambulance/controllers/services/HttpResult.dart';
+import 'package:assd_project_ambulance/utils/http_result.dart';
 import 'package:assd_project_ambulance/models/dto/PathDTO.dart';
 import 'package:assd_project_ambulance/models/dto/PatientReachedNotificationDTO.dart';
 import 'package:http/http.dart' as http;

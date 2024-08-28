@@ -33,7 +33,7 @@ class PatientFormBloc extends Bloc<PatientFormEvent, PatientFormState> {
     try {
       // Qui dovresti chiamare un servizio che invia i dati a un backend o lo salva localmente
       await _controller.sendNotification2(
-          event.emerCode! as EmergencyCode,
+          event.emerCode,
           event.emergencyDescription,
           event.type,
           event.latitude,
@@ -45,7 +45,7 @@ class PatientFormBloc extends Bloc<PatientFormEvent, PatientFormState> {
           event.age);
       print("Nel bloc nuovo Dopo la chiama REst ");
       await Future.delayed(
-          Duration(seconds: 2)); // Simulazione di una richiesta di rete
+          const Duration(seconds: 2)); // Simulazione di una richiesta di rete
       emit(PatientFormSuccess());
     } catch (error) {
       emit(PatientFormFailure(error: error.toString()));

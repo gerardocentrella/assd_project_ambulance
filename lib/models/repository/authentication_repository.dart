@@ -5,7 +5,7 @@ updates which will be used to notify the application when a user signs in or out
  */
 import 'dart:async';
 
-import 'package:assd_project_ambulance/controllers/services/HttpResult.dart';
+import 'package:assd_project_ambulance/utils/http_result.dart';
 import 'package:assd_project_ambulance/controllers/services/login_service.dart';
 import 'package:assd_project_ambulance/models/repository/token_repository.dart';
 

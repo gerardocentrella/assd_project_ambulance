@@ -1,4 +1,4 @@
-import 'package:assd_project_ambulance/controllers/services/HttpResult.dart';
+import 'package:assd_project_ambulance/utils/http_result.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 

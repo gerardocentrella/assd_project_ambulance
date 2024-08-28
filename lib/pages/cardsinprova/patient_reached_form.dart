@@ -5,16 +5,16 @@ import '../../controllers/patientFormBloc/patient_form_bloc.dart';
 import '../../models/entities/Emergency.dart';
 import '../../utils/enum_menu_code.dart';
 
-class PatientReachedForm2 extends StatefulWidget {
-  const PatientReachedForm2({super.key});
+class PatientReachedForm extends StatefulWidget {
+  const PatientReachedForm({super.key});
 
   @override
-  PatientReachedForm2State createState() {
-    return PatientReachedForm2State();
+  PatientReachedFormState createState() {
+    return PatientReachedFormState();
   }
 }
 
-class PatientReachedForm2State extends State<PatientReachedForm2> {
+class PatientReachedFormState extends State<PatientReachedForm> {
   final _formKey = GlobalKey<FormState>();
   EmergencyCodeLabel? selectedCode;
   EmergencyType? selectedType;

@@ -1,4 +1,4 @@
-import 'package:assd_project_ambulance/controllers/services/HttpResult.dart';
+import 'package:assd_project_ambulance/utils/http_result.dart';
 import 'package:assd_project_ambulance/controllers/services/patient_reached_service.dart';
 import 'package:assd_project_ambulance/models/dto/PatientReachedNotificationDTO.dart';
 import 'package:assd_project_ambulance/models/entities/Position.dart';
