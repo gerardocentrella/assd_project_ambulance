@@ -74,6 +74,8 @@ class PatientReachedFormState extends State<PatientReachedForm> {
               ),
             );
             _resetForm(); // Pulisce il form
+
+            Navigator.pop(context);
           } else if (state is PatientFormFailure) {
             print("Errore: ${state.error}");
             ScaffoldMessenger.of(context).showSnackBar(
