@@ -60,107 +60,109 @@ class PatientReachedForm2State extends State<PatientReachedForm2> {
                 bottomRight: Radius.circular(15.0))),
       ),
       body: BlocListener<PatientFormBloc, PatientFormState>(
-          listener: (context, state) {
-            if (state is PatientFormLoading) {
-              // Potresti voler mostrare un indicatore di caricamento
-              print("Loading...");
-            } else if (state is PatientFormSuccess) {
-              print("Dati inviati con successo!");
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(
-                  content: Text('Data submitted successfully!'),
-                  duration: Duration(seconds: 2), // Durata di visualizzazione dello Snackbar
+        listener: (context, state) {
+          if (state is PatientFormLoading) {
+            // Potresti voler mostrare un indicatore di caricamento
+            print("Loading...");
+          } else if (state is PatientFormSuccess) {
+            print("Dati inviati con successo!");
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text('Data submitted successfully!'),
+                duration: Duration(
+                    seconds: 2), // Durata di visualizzazione dello Snackbar
+              ),
+            );
+            _resetForm(); // Pulisce il form
+          } else if (state is PatientFormFailure) {
+            print("Errore: ${state.error}");
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text('Error: ${state.error}')),
+            );
+          }
+        },
+        child: Scrollbar(
+          thickness: 15,
+          thumbVisibility: true,
+          trackVisibility: true,
+          radius: const Radius.circular(10.0),
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(20.0),
+            child: Form(
+              key: _formKey,
+              child: Container(
+                decoration: BoxDecoration(
+                  boxShadow: const [
+                    BoxShadow(
+                      color: Colors.grey,
+                      spreadRadius: 1,
+                      blurRadius: 15,
+                    )
+                  ],
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15.0),
                 ),
-              );
-              _resetForm(); // Pulisce il form
-            } else if (state is PatientFormFailure) {
-              print("Errore: ${state.error}");
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(content: Text('Error: ${state.error}')),
-              );
-            }
-          },
-          child: Scrollbar(
-            thickness: 15,
-            thumbVisibility: true,
-            trackVisibility: true,
-            radius: const Radius.circular(10.0),
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.all(20.0),
-              child: Form(
-                key: _formKey,
-                child: Container(
-                  decoration: BoxDecoration(
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Colors.grey,
-                        spreadRadius: 1,
-                        blurRadius: 15,
-                      )
-                    ],
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(15.0),
-                  ),
-                  padding: const EdgeInsets.all(10.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      _buildSectionTitle("Insert patient data", height),
-                      _buildTextField(
-                          controller: nameController,
-                          labelText: 'Patient name'),
-                      _buildTextField(
-                          controller: surnameController,
-                          labelText: 'Patient Surname'),
-                      _buildTextField(
-                          controller: cityController, labelText: 'City'),
-                      _buildTextField(
-                          controller: addressController, labelText: 'Address'),
-                      _buildTextField(
-                          controller: ageController,
-                          labelText: 'Age',
-                          keyboardType: TextInputType.number),
-                      _buildSectionTitle("Insert current position", height),
-                      _buildTextField(
-                          controller: latitudeController,
-                          labelText: 'Latitude',
-                          keyboardType: TextInputType.number),
-                      _buildTextField(
-                          controller: longitudeController,
-                          labelText: 'Longitude',
-                          keyboardType: TextInputType.number),
-                      _buildSectionTitle("Insert emergency data", height),
-                      _buildDropdownMenu<EmergencyCodeLabel>(
-                        label: 'Code',
-                        selectedValue: selectedCode,
-                        onChanged: (EmergencyCodeLabel? code) {
-                          setState(() {
-                            selectedCode = code!;
-                          });
-                        },
-                        items: EmergencyCodeLabel.values,
-                      ),
-                      _buildDropdownMenu<EmergencyType>(
-                        label: 'Type',
-                        selectedValue: selectedType,
-                        onChanged: (EmergencyType? type) {
-                          setState(() {
-                            selectedType = type!;
-                          });
-                        },
-                        items: EmergencyType.values,
-                      ),
-                      _buildTextField(
-                          controller: emerDescController,
-                          labelText: 'Emergency Description'),
-                      _buildSubmitButton(context),
-                    ],
-                  ),
+                padding: const EdgeInsets.all(10.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    _buildSectionTitle("Insert patient data", height),
+                    _buildTextField(
+                        controller: nameController, labelText: 'Patient name'),
+                    _buildTextField(
+                        controller: surnameController,
+                        labelText: 'Patient Surname'),
+                    _buildTextField(
+                        controller: cityController, labelText: 'City'),
+                    _buildTextField(
+                        controller: addressController, labelText: 'Address'),
+                    _buildTextField(
+                        controller: ageController,
+                        labelText: 'Age',
+                        keyboardType: TextInputType.number),
+                    _buildSectionTitle("Insert current position", height),
+                    _buildTextField(
+                        controller: latitudeController,
+                        labelText: 'Latitude',
+                        keyboardType: TextInputType.number),
+                    _buildTextField(
+                        controller: longitudeController,
+                        labelText: 'Longitude',
+                        keyboardType: TextInputType.number),
+                    _buildSectionTitle("Insert emergency data", height),
+                    _buildDropdownMenu<EmergencyCodeLabel>(
+                      hint: const Text('Code'),
+                      label: 'Code',
+                      selectedValue: selectedCode,
+                      onChanged: (EmergencyCodeLabel? code) {
+                        setState(() {
+                          selectedCode = code!;
+                        });
+                      },
+                      items: EmergencyCodeLabel.values,
+                    ),
+                    _buildDropdownMenu<EmergencyType>(
+                      hint: const Text('Type'),
+                      label: 'Type',
+                      selectedValue: selectedType,
+                      onChanged: (EmergencyType? type) {
+                        setState(() {
+                          selectedType = type!;
+                        });
+                      },
+                      items: EmergencyType.values,
+                    ),
+                    _buildTextField(
+                        controller: emerDescController,
+                        labelText: 'Emergency Description'),
+                    _buildSubmitButton(context),
+                  ],
                 ),
               ),
             ),
           ),
         ),
+      ),
     );
   }
 
@@ -197,19 +199,16 @@ class PatientReachedForm2State extends State<PatientReachedForm2> {
     required TextEditingController controller,
     required String labelText,
     TextInputType? keyboardType,
+    //required String hint
   }) {
     return Column(
       children: [
         TextFormField(
           controller: controller,
           decoration: InputDecoration(
+            hintText: labelText,
             border: const OutlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(15.0)),
-            ),
-            labelText: labelText,
-            labelStyle: const TextStyle(
-              color: Colors.black,
-              fontStyle: FontStyle.normal,
             ),
           ),
           keyboardType: keyboardType,
@@ -230,6 +229,7 @@ class PatientReachedForm2State extends State<PatientReachedForm2> {
     required T? selectedValue,
     required ValueChanged<T?> onChanged,
     required List<T> items,
+    required Text hint,
   }) {
     return Column(
       children: [
@@ -244,14 +244,65 @@ class PatientReachedForm2State extends State<PatientReachedForm2> {
             ),
           ),
           child: DropdownButton<T>(
+            hint: hint,
             value: selectedValue,
             isExpanded: true,
             onChanged: onChanged,
             items: items.map<DropdownMenuItem<T>>((T item) {
-              return DropdownMenuItem<T>(
-                value: item,
-                child: Text(item.toString()),
-              );
+              if (item is EmergencyCodeLabel) {
+                return DropdownMenuItem<T>(
+                  value: item,
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: Colors.black12,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(
+                          Icons.warning,
+                          color: item.color,
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          item.label,
+                          style: TextStyle(color: item.color),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              } else if(item is EmergencyType) {
+                return DropdownMenuItem<T>(
+                  value: item,
+                  child: Container(
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      color: Colors.black12,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Row(
+                      children: [
+                        const Icon(
+                          Icons.type_specimen_rounded,
+                          color: Colors.black54,
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          item.description,
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              } else {
+                return DropdownMenuItem<T>(
+                  value: item,
+                  child: Text(
+                      item.toString()), // Mostra il toString() per altri tipi
+                );
+              }
             }).toList(),
           ),
         ),
@@ -273,25 +324,24 @@ class PatientReachedForm2State extends State<PatientReachedForm2> {
         onPressed: () {
           if (_formKey.currentState!.validate()) {
             context.read<PatientFormBloc>().add(
-              PatientFormEventSubmit(
-                name: nameController.text,
-                surname: surnameController.text,
-                city: cityController.text,
-                address: addressController.text,
-                age: int.parse(ageController.text),
-                latitude: double.parse(latitudeController.text),
-                longitude: double.parse(longitudeController.text),
-                emerCode: selectedCode!,
-                type: selectedType!,
-                emergencyDescription: emerDescController.text,
-              ),
-            );
+                  PatientFormEventSubmit(
+                    name: nameController.text,
+                    surname: surnameController.text,
+                    city: cityController.text,
+                    address: addressController.text,
+                    age: int.parse(ageController.text),
+                    latitude: double.parse(latitudeController.text),
+                    longitude: double.parse(longitudeController.text),
+                    emerCode: getEmergencyCode(selectedCode!.label),
+                    type: selectedType!,
+                    emergencyDescription: emerDescController.text,
+                  ),
+                );
           }
         },
         child: const Text(
           'Submit',
-          style: TextStyle(
-              color: Colors.black, fontStyle: FontStyle.normal),
+          style: TextStyle(color: Colors.black, fontStyle: FontStyle.normal),
         ),
       ),
     );
