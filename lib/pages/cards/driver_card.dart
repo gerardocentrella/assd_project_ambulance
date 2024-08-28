@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:assd_project_ambulance/models/dto/PathDTO.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -7,7 +8,7 @@ import '../../controllers/gps/gps_bloc.dart';
 import '../../models/repository/position_repository.dart';
 
 class DriverCard extends StatefulWidget {
-  const DriverCard({Key? key}) : super(key: key);
+  const DriverCard({Key? key, PathDTO? path}) : super(key: key);
 
   @override
   _DriverCardState createState() => _DriverCardState();

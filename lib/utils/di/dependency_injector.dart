@@ -1,5 +1,7 @@
-
+import 'package:assd_project_ambulance/controllers/emergency/emergency_bloc.dart';
 import 'package:assd_project_ambulance/controllers/gps/gps_bloc.dart';
+import 'package:assd_project_ambulance/controllers/message_controller.dart';
+import 'package:assd_project_ambulance/controllers/services/websocket_manager.dart';
 import 'package:assd_project_ambulance/models/repository/emergency_repository.dart';
 import 'package:assd_project_ambulance/models/repository/position_repository.dart';
 import 'package:flutter/material.dart';
@@ -30,20 +32,26 @@ class DependencyInjector extends StatelessWidget {
   }
 
   Widget _controllers({required Widget child}) => MultiProvider(
-    providers: [
-      Provider<PatientReachedService>(
-          create: (context) => PatientReachedService()),
-      ProxyProvider<PatientReachedService, PatientReachedController>(
-          update: (context, service, previous) =>
-              PatientReachedController(service)),
-      Provider<EmergencyRoomReachedService>(
-          create: (context) => EmergencyRoomReachedService()),
-      ProxyProvider<EmergencyRoomReachedService, EmergencyRoomReachedController>(
-          update: (context, service, previous) =>
-              EmergencyRoomReachedController(service)),
-    ],
-    child: child,
-  );
+        providers: [
+          Provider<PatientReachedService>(
+              create: (context) => PatientReachedService()),
+          ProxyProvider<PatientReachedService, PatientReachedController>(
+              update: (context, service, previous) =>
+                  PatientReachedController(service)),
+          Provider<EmergencyRoomReachedService>(
+              create: (context) => EmergencyRoomReachedService()),
+          ProxyProvider<EmergencyRoomReachedService,
+                  EmergencyRoomReachedController>(
+              update: (context, service, previous) =>
+                  EmergencyRoomReachedController(service)),
+          Provider<WebSocketManager>(create: (context) => WebSocketManager()),
+          ProxyProvider<WebSocketManager, MessageController>(
+              update: (context, service, previous) =>
+                  MessageController(service))
+        ],
+        child: child,
+      );
+
   /*
   Widget _providers({required Widget child}) => MultiProvider(
     providers:const [
@@ -60,7 +68,8 @@ class DependencyInjector extends StatelessWidget {
   Widget _repositories({required Widget child}) => MultiRepositoryProvider(
         providers: [
           RepositoryProvider(create: (context) => PositionRepository()),
-          RepositoryProvider(create: (context) => EmergencyRepository("baseURL")),
+          RepositoryProvider(
+              create: (context) => EmergencyRepository("baseURL")),
           RepositoryProvider(create: (context) => AuthenticationRepository()),
           RepositoryProvider(create: (context) => TokenRepository()),
         ],
@@ -78,10 +87,10 @@ class DependencyInjector extends StatelessWidget {
         providers: [
           BlocProvider<AuthenticationBloc>(
             create: (context) => AuthenticationBloc(
-              authenticationRepository:
-                  context.read<AuthenticationRepository>(),
-              tokenRepository: context.read<TokenRepository>()
-            )..add(AuthenticationSubscriptionRequested()),
+                authenticationRepository:
+                    context.read<AuthenticationRepository>(),
+                tokenRepository: context.read<TokenRepository>())
+              ..add(AuthenticationSubscriptionRequested()),
           ),
           BlocProvider<GpsBloc>(
             create: (context) => GpsBloc(
@@ -91,6 +100,9 @@ class DependencyInjector extends StatelessWidget {
           ),
           BlocProvider<PatientFormBloc>(
             create: (context) => PatientFormBloc(),
+          ),
+          BlocProvider<EmergencyBloc>(
+            create: (context) => EmergencyBloc(),
           ),
         ],
         child: child,

@@ -1,17 +1,23 @@
 import 'package:assd_project_ambulance/controllers/emergency_room_reached_controller.dart';
 import 'package:assd_project_ambulance/controllers/services/emergency_room_reached_service.dart';
+import 'package:assd_project_ambulance/models/dto/EmergencyDTO.dart';
 import 'package:assd_project_ambulance/utils/http_result.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../controllers/emergency/emegency_event.dart';
+import '../../controllers/emergency/emergency_bloc.dart';
 
 class OperatorCard extends StatelessWidget {
-  final String emergencyId = 'CUSTOM ID';
-  final EmergencyRoomReachedController _controller =
-  EmergencyRoomReachedController(EmergencyRoomReachedService());
+  final EmergencyDTO? emergency;
 
-  OperatorCard({super.key});
+  OperatorCard({super.key, this.emergency});
 
   @override
   Widget build(BuildContext context) {
+    // ottengo controller
+    final controller = context.read<EmergencyRoomReachedController>();
+
     return Center(
       child: Card(
         color: Colors.white,
@@ -30,14 +36,17 @@ class OperatorCard extends StatelessWidget {
                   context,
                   label: 'Patient reached',
                   routeName: '/patientreached',
+                  isEnabled: emergency != null, // Attivo se c'è emergenza
                 ),
                 _buildActionButton(
                   context,
                   label: 'ER Reached',
-                  onPressed: () async {
-                    String textDialog = await _sendNotification();
+                  isEnabled: emergency != null, // Attivo se c'è emergenza
+                  onPressed: emergency != null ? () async {
+                    String textDialog = await _sendNotification(controller);
                     _showDialog(context, textDialog);
-                  },
+                    BlocProvider.of<EmergencyBloc>(context).add(EmergencyEnded());
+                  } : null,
                 ),
               ],
             ),
@@ -49,30 +58,12 @@ class OperatorCard extends StatelessWidget {
     );
   }
 
-  ElevatedButton _buildActionButton(BuildContext context,
-      {required String label, String? routeName, VoidCallback? onPressed}) {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        minimumSize: const Size(100, 50),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-      ),
-      onPressed: routeName != null ? () {
-        Navigator.pushNamed(context, routeName);
-      } : onPressed,
-      child: Text(
-        label,
-        style: const TextStyle(
-          color: Colors.black,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    );
-  }
-
-  Future<String> _sendNotification() async {
-    HttpResult result = await _controller.sendEmergencyRoomReachedNotification(emergencyId);
+  Future<String> _sendNotification(
+      EmergencyRoomReachedController controller) async {
+    String emergencyId =
+        emergency?.id ?? 'CUSTOM ID'; // Usa l'ID dall'emergenza ricevuta
+    HttpResult result =
+    await controller.sendEmergencyRoomReachedNotification(emergencyId);
     return (result.data != null && result.httpStatusCode == 200)
         ? 'Notify Successfully!'
         : 'Notify Failed, Try Again..';
@@ -97,13 +88,54 @@ class OperatorCard extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 30),
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text('OK'),
+            )
           ],
         ),
       ),
     );
   }
 
+  ElevatedButton _buildActionButton(BuildContext context,
+      {required String? label, String? routeName, VoidCallback? onPressed, bool isEnabled = true}) {
+    return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        minimumSize: const Size(100, 50),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        backgroundColor: isEnabled ? Colors.red : Colors.grey, // Cambia il colore qui
+      ),
+      onPressed: isEnabled ? (routeName != null ? () {
+        Navigator.pushNamed(context, routeName);
+      } : onPressed) : null, // Disabilita il pulsante se non è abilitato
+      child: Text(
+        label!,
+        style: const TextStyle(
+          color: Colors.black,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+
   Widget _buildEmergencyInformation() {
+    if (emergency == null) {
+      return const Padding(
+        padding: EdgeInsets.all(20.0),
+        child: Text(
+          ''
+              'No Emergency Information Available',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              color: Colors.red, fontWeight: FontWeight.bold, fontSize: 20),
+        ),
+      );
+    }
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(20.0),
@@ -127,10 +159,10 @@ class OperatorCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 10),
-          _buildInfoRow('ID', emergencyId),
-          _buildInfoRow('Code', 'ads'),
-          _buildInfoRow('Status', 'ads'),
-          _buildInfoRow('Description', 'ads'),
+          _buildInfoRow('ID', emergency?.id ?? 'N/A'),
+          _buildInfoRow('Code', emergency?.emergencyCode.name ?? 'N/A'),
+          _buildInfoRow('Status', emergency?.emergencyStatus.name ?? 'N/A'),
+          _buildInfoRow('Description', emergency?.description ?? 'N/A'),
           const SizedBox(height: 10),
         ],
       ),

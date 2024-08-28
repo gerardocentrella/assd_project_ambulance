@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:assd_project_ambulance/controllers/services/websocket_manager.dart';
-
 import '../models/dto/EmergencyDTO.dart';
 import '../models/dto/PathDTO.dart';
 
@@ -10,18 +9,21 @@ class MessageController {
   final StreamController<EmergencyDTO> _emergencyStreamController = StreamController.broadcast();
   final StreamController<PathDTO> _pathStreamController = StreamController.broadcast();
 
-  MessageController(this._webSocketManager) {
-    // Ascolta i flussi del WebSocketManager
-    _webSocketManager.openEmergencyUpdateStream().then((_) {
-      _webSocketManager.streamEmergencyController.stream.listen((emergency) {
-        _emergencyStreamController.add(emergency);
-      });
-    });
+  MessageController(this._webSocketManager);
 
-    _webSocketManager.openPathUpdateStream().then((_) {
-      _webSocketManager.streamPathController.stream.listen((path) {
-        _pathStreamController.add(path);
-      });
+  // Metodo per aprire il flusso di aggiornamento delle emergenze
+  Future<void> openEmergencyStream(String emergencyUrl) async {
+    await _webSocketManager.openEmergencyUpdateStream(emergencyUrl);
+    _webSocketManager.streamEmergencyController.stream.listen((emergency) {
+      _emergencyStreamController.add(emergency);
+    });
+  }
+
+  // Metodo per aprire il flusso di aggiornamento dei percorsi
+  Future<void> openPathStream(String pathUrl) async {
+    await _webSocketManager.openPathUpdateStream(pathUrl);
+    _webSocketManager.streamPathController.stream.listen((path) {
+      _pathStreamController.add(path);
     });
   }
 
@@ -35,8 +37,4 @@ class MessageController {
     _emergencyStreamController.close();
     _pathStreamController.close();
   }
-  
 }
-
-
-
