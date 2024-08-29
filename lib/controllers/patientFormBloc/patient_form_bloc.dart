@@ -7,7 +7,7 @@ import 'package:equatable/equatable.dart';
 
 import '../../models/dto/PathDTO.dart';
 import '../../models/entities/Emergency.dart';
-import '../../utils/enum_menu_code.dart';
+import '../../models/entities/Position.dart';
 
 // Eventi per il PatientFormBloc
 part 'patient_form_event.dart';
@@ -22,6 +22,8 @@ class PatientFormBloc extends Bloc<PatientFormEvent, PatientFormState> {
     on<PatientFormEventSuccess>(_onSuccess);
     on<PatientFormEventFailure>(_onFailure);
   }
+
+  PathDTO? pdto = null;
 
   final PatientReachedController _controller =
       PatientReachedController(PatientReachedService());
@@ -48,6 +50,7 @@ class PatientFormBloc extends Bloc<PatientFormEvent, PatientFormState> {
           event.age);
 
       if (result.data != null && result.httpStatusCode == 200) {
+        pdto = result.data;
         // successo
       } else {
         // fallimento
@@ -71,5 +74,13 @@ class PatientFormBloc extends Bloc<PatientFormEvent, PatientFormState> {
     Emitter<PatientFormState> emit,
   ) async {
     emit(PatientFormFailure(error: event.error));
+  }
+
+  List<Position>? getPath(){
+    if(pdto == null) {
+      return null;
+    } else {
+      return pdto!.path;
+    }
   }
 }
