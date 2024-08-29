@@ -2,12 +2,20 @@ import 'package:assd_project_ambulance/utils/http_result.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../models/repository/token_repository.dart';
+
 class EmergencyRoomReachedService {
+  final TokenRepository _tokenRepository; // Aggiungi una proprietà private
+
+  EmergencyRoomReachedService(this._tokenRepository); // Inietta il TokenRepositor
+
   Future<HttpResult> sendEmergencyRoomReachedNotification(
       String emergencyId) async {
-    // Recupera il token da SharedPreferences
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString('user_token');
+    // Recupera il token da SharedPreferences tramite apposito repository
+
+    //SharedPreferences prefs = await SharedPreferences.getInstance();
+    //String? token = prefs.getString('user_token');
+    String? token = await _tokenRepository.getToken();
 
     final url = Uri.parse(
         'http://example.com/api/endpoint/emergencies/$emergencyId/status');

@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:assd_project_ambulance/models/repository/token_repository.dart';
 import 'package:assd_project_ambulance/utils/http_result.dart';
 import 'package:assd_project_ambulance/models/dto/PathDTO.dart';
 import 'package:assd_project_ambulance/models/dto/PatientReachedNotificationDTO.dart';
@@ -7,15 +8,17 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PatientReachedService {
-  PatientReachedService();
+  final TokenRepository _tokenRepository;
+
+  PatientReachedService(this._tokenRepository);
 
 
-  // terzo approccio
   Future<HttpResult<PathDTO>> sendPatientReachedNotification2(
       PatientReachedNotificationDTO dataToSend, String emergencyId) async {
     // Recupera il token da SharedPreferences
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString('user_token');
+    //SharedPreferences prefs = await SharedPreferences.getInstance();
+    //String? token = prefs.getString('user_token');
+    String? token = await _tokenRepository.getToken();
 
     print("Sono in PatientReachedService");
 

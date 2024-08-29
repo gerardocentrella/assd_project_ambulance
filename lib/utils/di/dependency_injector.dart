@@ -2,6 +2,7 @@ import 'package:assd_project_ambulance/controllers/emergency/emergency_bloc.dart
 import 'package:assd_project_ambulance/controllers/gps/gps_bloc.dart';
 import 'package:assd_project_ambulance/controllers/message_controller.dart';
 import 'package:assd_project_ambulance/controllers/services/websocket_manager.dart';
+import 'package:assd_project_ambulance/models/repository/ambulance_repository.dart';
 import 'package:assd_project_ambulance/models/repository/emergency_repository.dart';
 import 'package:assd_project_ambulance/models/repository/position_repository.dart';
 import 'package:flutter/material.dart';
@@ -34,12 +35,14 @@ class DependencyInjector extends StatelessWidget {
   Widget _controllers({required Widget child}) => MultiProvider(
         providers: [
           Provider<PatientReachedService>(
-              create: (context) => PatientReachedService()),
+              create: (context) =>
+                  PatientReachedService(context.read<TokenRepository>())),
           ProxyProvider<PatientReachedService, PatientReachedController>(
               update: (context, service, previous) =>
                   PatientReachedController(service)),
           Provider<EmergencyRoomReachedService>(
-              create: (context) => EmergencyRoomReachedService()),
+              create: (context) =>
+                  EmergencyRoomReachedService(context.read<TokenRepository>())),
           ProxyProvider<EmergencyRoomReachedService,
                   EmergencyRoomReachedController>(
               update: (context, service, previous) =>
@@ -47,7 +50,7 @@ class DependencyInjector extends StatelessWidget {
           Provider<WebSocketManager>(create: (context) => WebSocketManager()),
           ProxyProvider<WebSocketManager, MessageController>(
               update: (context, service, previous) =>
-                  MessageController(service))
+                  MessageController(service)),
         ],
         child: child,
       );
@@ -72,6 +75,7 @@ class DependencyInjector extends StatelessWidget {
               create: (context) => EmergencyRepository("baseURL")),
           RepositoryProvider(create: (context) => AuthenticationRepository()),
           RepositoryProvider(create: (context) => TokenRepository()),
+          RepositoryProvider(create: (context) => AmbulanceIdRepository()),
         ],
         child: child,
       );
@@ -96,14 +100,21 @@ class DependencyInjector extends StatelessWidget {
             create: (context) => GpsBloc(
               positionRepository: context.read<PositionRepository>(),
               emergencyRepository: context.read<EmergencyRepository>(),
+              // aggiunta di controller
+              //controller: context.read<MessageController>(),
             ),
           ),
           BlocProvider<PatientFormBloc>(
-            create: (context) => PatientFormBloc(),
+            create: (context) => PatientFormBloc(
+              context.read<PatientReachedController>(),
+            ),
           ),
           BlocProvider<EmergencyBloc>(
-            create: (context) => EmergencyBloc(),
-          ),
+            create: (context) => EmergencyBloc(
+              context.read<MessageController>(),
+              context.read<AmbulanceIdRepository>(),
+            ),
+          )
         ],
         child: child,
       );
