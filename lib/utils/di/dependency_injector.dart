@@ -100,8 +100,6 @@ class DependencyInjector extends StatelessWidget {
             create: (context) => GpsBloc(
               positionRepository: context.read<PositionRepository>(),
               emergencyRepository: context.read<EmergencyRepository>(),
-              // aggiunta di controller
-              //controller: context.read<MessageController>(),
             ),
           ),
           BlocProvider<PatientFormBloc>(

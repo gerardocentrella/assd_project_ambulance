@@ -16,17 +16,16 @@ part 'patient_form_event.dart';
 part 'patient_form_state.dart';
 
 class PatientFormBloc extends Bloc<PatientFormEvent, PatientFormState> {
+  final PatientReachedController _controller;
+
   // Costruttore con stato iniziale
-  PatientFormBloc() : super(PatientFormInitial()) {
+  PatientFormBloc(this._controller) : super(PatientFormInitial()) {
     on<PatientFormEventSubmit>(_onSubmit);
     on<PatientFormEventSuccess>(_onSuccess);
     on<PatientFormEventFailure>(_onFailure);
   }
 
   PathDTO? pdto = null;
-
-  final PatientReachedController _controller =
-      PatientReachedController(PatientReachedService());
 
   // Logica per l'evento di submit
   Future<void> _onSubmit(
@@ -54,6 +53,7 @@ class PatientFormBloc extends Bloc<PatientFormEvent, PatientFormState> {
         // successo
       } else {
         // fallimento
+
       }
     } catch (error) {
       emit(PatientFormFailure(error: error.toString()));
