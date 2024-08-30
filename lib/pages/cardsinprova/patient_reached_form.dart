@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../controllers/path/path_bloc.dart';
+import '../../controllers/path/path_event.dart';
 import '../../controllers/patientFormBloc/patient_form_bloc.dart';
 import '../../models/entities/Emergency.dart';
 import '../../utils/enum_menu_code.dart';
@@ -339,6 +341,8 @@ class PatientReachedFormState extends State<PatientReachedForm> {
                     emergencyDescription: emerDescController.text,
                   ),
                 );
+            // invalido il path per raggiungere il paziente in quanto non serve più; ritorno in ascolto
+            BlocProvider.of<PathBloc>(context).add(PathEnded());
           }
         },
         child: const Text(

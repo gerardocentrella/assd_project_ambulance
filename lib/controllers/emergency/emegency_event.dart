@@ -1,5 +1,6 @@
 // events/emergency_event.dart
 import '../../models/dto/EmergencyDTO.dart';
+import '../../models/dto/PathDTO.dart';
 
 abstract class EmergencyEvent {}
 
@@ -10,6 +11,3 @@ class EmergencyReceived extends EmergencyEvent {
 }
 
 class EmergencyEnded extends EmergencyEvent {}
-
-// evento per gestire chiusura  canale alla chiusura dell'app
-//class EmergencyDispose extends EmergencyEvent {}

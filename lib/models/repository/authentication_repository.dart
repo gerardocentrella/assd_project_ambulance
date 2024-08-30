@@ -75,8 +75,9 @@ class AuthenticationRepository {
   }
 
   void logOut() {
-    // Rimuovi l'utente dal UserRepository
+
     tokenRepository.removeToken();
+    ambulanceIdRepository.removeAmbulanceId();
     _controller.add(AuthenticationStatus.unauthenticated);
   }
 

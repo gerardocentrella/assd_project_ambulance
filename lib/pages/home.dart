@@ -8,15 +8,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../controllers/auth/bloc/auth_bloc.dart';
 import '../controllers/emergency/emergency_bloc.dart';
 import '../controllers/emergency/emergency_state.dart';
+import '../controllers/path/path_bloc.dart';
+import '../controllers/path/path_state.dart';
 import '../models/dto/PathDTO.dart';
 
 class Home extends StatefulWidget {
+  /*
   static const ambulanceId = "AMB00001";
   static String emergencyURL =
       'ws://172.31.4.63:31656/emergencyNotifier/websocket/ambulances/$ambulanceId/emergencies';
   static String pathURL =
       'ws://172.31.4.63:30202/pathNotifier/websocket/ambulances/$ambulanceId/path';
 
+
+   */
   Home({super.key});
 
   static Route<void> route() {
@@ -30,8 +35,8 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  EmergencyDTO? lastEmergency;
-  PathDTO? lastPath;
+  //EmergencyDTO? lastEmergency;
+  //PathDTO? lastPath;
   //late MessageController _messageController;
 
   int _currentCardIndex = 0;
@@ -201,22 +206,23 @@ class _HomeState extends State<Home> {
       body: IndexedStack(
         index: _currentCardIndex,
         children: [
-          DriverCard(path: lastPath), // Passa solo il path alla DriverCard
+          //DriverCard(path: lastPath), // Passa solo il path alla DriverCard
+          BlocBuilder<PathBloc, PathState>(
+            builder: (context, state) {
+              if(state is PathListening) {
+                return  DriverCard(path: null);
+              }
+              else if (state is PathProcessing){
+                return DriverCard(path: state.path);
+              }
+              else {
+                return DriverCard(path: null);
+              }
+            },
+          ),
           // gestione bloc emergenza
           BlocBuilder<EmergencyBloc, EmergencyState>(
             builder: (context, state) {
-              /*
-              if (state is EmergencyListening) {
-                return const Center(child: CircularProgressIndicator());
-              } else if (state is EmergencyProcessing) {
-                return OperatorCard(emergency: state.emergency);
-              } else {
-                return OperatorCard(emergency: null); // Mostra "no emergency" quando non ci sono emergenze
-              }
-
-
-               */
-
               if(state is EmergencyListening) {
                 return OperatorCard(emergency: null);
               }

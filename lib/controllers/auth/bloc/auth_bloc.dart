@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:assd_project_ambulance/controllers/message_controller.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
@@ -7,16 +8,17 @@ import '../../../models/repository/authentication_repository.dart';
 import '../../../models/repository/token_repository.dart';
 
 part 'auth_event.dart';
+
 part 'auth_state.dart';
 
-
 class AuthenticationBloc extends Bloc<AuthEvent, AuthState> {
-
   AuthenticationBloc({
     required AuthenticationRepository authenticationRepository,
     required TokenRepository tokenRepository,
+    required MessageController messageController,
   })  : _authenticationRepository = authenticationRepository,
         _tokenRepository = tokenRepository,
+        _messageController = messageController,
         super(const AuthState.unknown()) {
     on<AuthenticationSubscriptionRequested>(_onSubscriptionRequested);
     on<AuthenticationLogoutPressed>(_onLogoutPressed);
@@ -24,11 +26,12 @@ class AuthenticationBloc extends Bloc<AuthEvent, AuthState> {
 
   final AuthenticationRepository _authenticationRepository;
   final TokenRepository _tokenRepository;
+  final MessageController _messageController;
 
   Future<void> _onSubscriptionRequested(
-      AuthenticationSubscriptionRequested event,
-      Emitter<AuthState> emit,
-      ) {
+    AuthenticationSubscriptionRequested event,
+    Emitter<AuthState> emit,
+  ) {
     return emit.onEach(
       _authenticationRepository.status,
       onData: (status) async {
@@ -36,7 +39,6 @@ class AuthenticationBloc extends Bloc<AuthEvent, AuthState> {
           case AuthenticationStatus.unauthenticated:
             return emit(const AuthState.unauthenticated());
           case AuthenticationStatus.authenticated:
-
             // cambiare qui per effettuare la chiamata
             //final token = await _tryGetToken();
 
@@ -56,9 +58,11 @@ class AuthenticationBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   void _onLogoutPressed(
-      AuthenticationLogoutPressed event,
-      Emitter<AuthState> emit,
-      ) {
+    AuthenticationLogoutPressed event,
+    Emitter<AuthState> emit,
+  ) {
+    // provare chiusura dei canali
+    _messageController.dispose();
     _authenticationRepository.logOut();
   }
 

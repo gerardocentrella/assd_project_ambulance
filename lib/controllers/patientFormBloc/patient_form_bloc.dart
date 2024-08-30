@@ -53,7 +53,6 @@ class PatientFormBloc extends Bloc<PatientFormEvent, PatientFormState> {
         // successo
       } else {
         // fallimento
-
       }
     } catch (error) {
       emit(PatientFormFailure(error: error.toString()));

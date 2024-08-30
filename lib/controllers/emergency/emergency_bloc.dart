@@ -108,8 +108,6 @@ class EmergencyBloc extends Bloc<EmergencyEvent, EmergencyState> {
       add(EmergencyReceived(emergency));
     });
 
-    // Apro stream per path
-
 
   }
 

@@ -9,7 +9,10 @@ import '../../models/repository/position_repository.dart';
 
 class DriverCard extends StatefulWidget {
   final PathDTO? path;
-  const DriverCard({Key? key, this.path}) : super(key: key);
+  late final List<Position>? positions;
+  DriverCard({Key? key, this.path}) : super(key: key) {
+    positions = path?.path.cast<Position>();
+  }
 
   @override
   _DriverCardState createState() => _DriverCardState();

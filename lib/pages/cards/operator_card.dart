@@ -1,4 +1,6 @@
 import 'package:assd_project_ambulance/controllers/emergency_room_reached_controller.dart';
+import 'package:assd_project_ambulance/controllers/path/path_bloc.dart';
+import 'package:assd_project_ambulance/controllers/path/path_event.dart';
 import 'package:assd_project_ambulance/controllers/services/emergency_room_reached_service.dart';
 import 'package:assd_project_ambulance/models/dto/EmergencyDTO.dart';
 import 'package:assd_project_ambulance/utils/http_result.dart';
@@ -46,6 +48,7 @@ class OperatorCard extends StatelessWidget {
                     String textDialog = await _sendNotification(controller);
                     _showDialog(context, textDialog);
                     BlocProvider.of<EmergencyBloc>(context).add(EmergencyEnded());
+                    BlocProvider.of<PathBloc>(context).add(PathEnded());
                   } : null,
                 ),
               ],
