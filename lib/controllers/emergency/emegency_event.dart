@@ -10,3 +10,6 @@ class EmergencyReceived extends EmergencyEvent {
 }
 
 class EmergencyEnded extends EmergencyEvent {}
+
+// evento per gestire chiusura  canale alla chiusura dell'app
+//class EmergencyDispose extends EmergencyEvent {}

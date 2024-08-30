@@ -7,7 +7,7 @@ class EmergencyRoomReachedController {
   // iniezione servizio nel costruttore
   EmergencyRoomReachedController(this._service);
 
-  String emergencyId = '';
+  //String emergencyId = '';
   late String _error;
 
   Future<HttpResult> sendEmergencyRoomReachedNotification(

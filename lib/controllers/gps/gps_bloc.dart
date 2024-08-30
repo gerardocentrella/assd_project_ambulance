@@ -1,3 +1,5 @@
+
+
 import 'dart:async';
 import 'package:assd_project_ambulance/models/repository/emergency_repository.dart';
 import 'package:bloc/bloc.dart';
@@ -105,3 +107,4 @@ class GpsBloc extends Bloc<GpsEvent, GpsState> {
     return markers;
   }
 }
+

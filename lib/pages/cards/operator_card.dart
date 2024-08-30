@@ -125,15 +125,24 @@ class OperatorCard extends StatelessWidget {
 
   Widget _buildEmergencyInformation() {
     if (emergency == null) {
-      return const Padding(
-        padding: EdgeInsets.all(20.0),
-        child: Text(
-          ''
+      return const Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Padding(
+            padding: EdgeInsets.all(20.0),
+            child: Text(
               'No Emergency Information Available',
-          textAlign: TextAlign.center,
-          style: TextStyle(
-              color: Colors.red, fontWeight: FontWeight.bold, fontSize: 20),
-        ),
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.red,
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+            ),
+          ),
+          SizedBox(height: 20), // Spazio tra il testo e il caricamento
+          CircularProgressIndicator(), // Indicatore di caricamento
+        ],
       );
     }
     return Container(

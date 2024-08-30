@@ -8,7 +8,8 @@ import '../../controllers/gps/gps_bloc.dart';
 import '../../models/repository/position_repository.dart';
 
 class DriverCard extends StatefulWidget {
-  const DriverCard({Key? key, PathDTO? path}) : super(key: key);
+  final PathDTO? path;
+  const DriverCard({Key? key, this.path}) : super(key: key);
 
   @override
   _DriverCardState createState() => _DriverCardState();

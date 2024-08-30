@@ -26,3 +26,11 @@ class GpsOnPause extends GpsState {
   @override
   List<Object> get props => [];
 }
+
+// parte aggiunta inizializzazione
+class GpsInitial extends GpsState {
+  const GpsInitial() : super(const {}); // Passa un insieme vuoto di marker
+
+  @override
+  List<Object> get props => [];
+}

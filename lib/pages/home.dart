@@ -1,19 +1,14 @@
 import 'package:assd_project_ambulance/controllers/message_controller.dart';
-import 'package:assd_project_ambulance/controllers/services/websocket_manager.dart';
 import 'package:assd_project_ambulance/models/dto/EmergencyDTO.dart';
 import 'package:flutter/material.dart';
-import 'package:assd_project_ambulance/widgets/appbar.dart';
 import 'package:assd_project_ambulance/pages/cards/driver_card.dart';
 import 'package:assd_project_ambulance/pages/cards/operator_card.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../controllers/auth/bloc/auth_bloc.dart';
-import '../controllers/emergency/emegency_event.dart';
 import '../controllers/emergency/emergency_bloc.dart';
 import '../controllers/emergency/emergency_state.dart';
 import '../models/dto/PathDTO.dart';
-import '../models/entities/Emergency.dart';
-import '../models/entities/Position.dart';
 
 class Home extends StatefulWidget {
   static const ambulanceId = "AMB00001";
@@ -37,31 +32,39 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   EmergencyDTO? lastEmergency;
   PathDTO? lastPath;
-  late MessageController _messageController;
+  //late MessageController _messageController;
 
   int _currentCardIndex = 0;
 
   @override
   void initState() {
     super.initState();
-    // ottengo l'instanza del message controller tramite dependency injection
+    /*
     _messageController = context.read<MessageController>();
 
-    // apertura canali e avvio dei flussi di aggiornamento
     _messageController.openEmergencyStream(Home.emergencyURL);
     _messageController.openPathStream(Home.pathURL);
 
-    // ascolto dei flussi di aggiornamento
+
     _messageController.emergencyStream.listen((EmergencyDTO emergency) {
-      // Invia gli eventi al bloc all'atto della ricezione dell'emergenza.
       context.read<EmergencyBloc>().add(EmergencyReceived(emergency));
     });
 
-    // simuliamo ricezione emergenza
-    _simulateEmergencyReceiving();
+    _messageController.pathStream.listen((PathDTO path) {
+      setState(() {
+        lastPath = path; // Aggiorna il lastPath con quello ricevuto
+      });
+    });
 
+    // Simuliamo ricezione emergenza e path
+    _simulateEmergencyReceiving();
+    //_simulatePathReceiving(); // Nuova funzione di simulazione per il path
+
+
+     */
   }
 
+  /*
   // Funzione di simulazione d'emergenza
   void _simulateEmergencyReceiving() {
     print("HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
@@ -84,6 +87,10 @@ class _HomeState extends State<Home> {
       context.read<EmergencyBloc>().add(EmergencyReceived(emergency));
     });
   }
+
+
+   */
+
 
   void _onNavigationButtonPressed(int index) {
     if (index == 2) {
@@ -142,13 +149,15 @@ class _HomeState extends State<Home> {
       });
     }
   }
-
+/*
   @override
   void dispose() {
     // chiusura stream
     _messageController.dispose();
     super.dispose();
   }
+
+ */
 
   @override
   Widget build(BuildContext context) {
@@ -196,12 +205,26 @@ class _HomeState extends State<Home> {
           // gestione bloc emergenza
           BlocBuilder<EmergencyBloc, EmergencyState>(
             builder: (context, state) {
-              if (state is EmergencyLoading) {
+              /*
+              if (state is EmergencyListening) {
                 return const Center(child: CircularProgressIndicator());
-              } else if (state is EmergencyLoaded) {
+              } else if (state is EmergencyProcessing) {
                 return OperatorCard(emergency: state.emergency);
               } else {
                 return OperatorCard(emergency: null); // Mostra "no emergency" quando non ci sono emergenze
+              }
+
+
+               */
+
+              if(state is EmergencyListening) {
+                return OperatorCard(emergency: null);
+              }
+              else if (state is EmergencyProcessing){
+                return OperatorCard(emergency: state.emergency);
+              }
+              else {
+                return OperatorCard(emergency: null);
               }
             },
           ),
