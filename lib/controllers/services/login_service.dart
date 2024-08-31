@@ -6,19 +6,17 @@ import 'package:http/http.dart' as http;
 class LoginService {
   Future<HttpResult<String>> signIn(String userId, String password) async {
     final url =
-        Uri.parse('http://example.com/api/endpoint/users/$userId/sessions');
+        Uri.parse('http://172.31.4.63:31417/authenticationService/users/$userId/sessions');
     final headers = {
-      'Content-Type': 'text/plain',
-      //'Accept': 'application/json'
+      'Content-Type': '*/*',
+      'Accept': '*/*'
     };
-    //final body = jsonEncode(<String, String>{'password': password});
     final body = password;
 
     try {
       final response = await http.post(url, headers: headers, body: body);
 
       if (response.statusCode == 200) {
-
         //final data = jsonDecode(response.body);
         //String token = data['token'];
         String token = response.body;

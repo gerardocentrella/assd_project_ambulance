@@ -57,7 +57,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       emit(state.copyWith(status: FormzSubmissionStatus.inProgress));
       try {
         // cambiare da logInMok a logIn per fare effettivamente una chiamata
-        await _authenticationRepository.logInMok(
+        await _authenticationRepository.logIn(
           username: state.username.value,
           password: state.password.value,
         );
