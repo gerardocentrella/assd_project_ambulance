@@ -63,8 +63,15 @@ class EmergencyBloc extends Bloc<EmergencyEvent, EmergencyState> {
     });
 
     // Gestore per l'evento EmergencyEnded
-    on<EmergencyEnded>((event, emit) {
-      emit(EmergencyListening()); // Ritorna allo stato di ascolto
+    on<EmergencyEnded>((event, emit) async {
+      try {
+        // Rimuovi emergencyId dalle shared preferences
+        await _emergencyIdRepository.removeEmergencyId();
+
+        emit(EmergencyListening()); // Ritorna allo stato di ascolto
+      } catch (e) {
+        emit(EmergencyError(e.toString())); // Gestisci eventuali errori
+      }
     });
   }
 
