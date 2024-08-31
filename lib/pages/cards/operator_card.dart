@@ -48,7 +48,7 @@ class OperatorCard extends StatelessWidget {
                     String textDialog = await _sendNotification(controller);
                     _showDialog(context, textDialog);
                     BlocProvider.of<EmergencyBloc>(context).add(EmergencyEnded());
-                    BlocProvider.of<PathBloc>(context).add(PathEnded());
+                    //BlocProvider.of<PathBloc>(context).add(PathEnded());
                   } : null,
                 ),
               ],

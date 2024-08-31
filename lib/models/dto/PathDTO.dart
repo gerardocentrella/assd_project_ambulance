@@ -24,7 +24,7 @@ class PathDTO{
       path = pathList;
     }
 
-    // Metodo toJson per PathDTO
+    // Metodo toJson per PathDTO: noi non usiamo
     Map<String, dynamic> toJson() {
       return {
         'path': _path.map((position) => position.toJson()).toList(),

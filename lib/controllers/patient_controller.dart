@@ -6,14 +6,26 @@ import '../models/dto/PathDTO.dart';
 import '../models/entities/Emergency.dart';
 import '../models/entities/Patient.dart';
 
+/*
+Classe intermedia che adopera un service specifico per compiere una richiesta all'API remota per comunicare che l'ambulanza ha
+raggiunto il paziente. Ha lo scopo di wrappare codice specifico da richiamare in un bloc specifico.
+ */
+
 class PatientReachedController {
   // Iniettiamo il servizio tramite il costruttore: dependency injection
   final PatientReachedService _service;
 
   PatientReachedController(this._service);
 
+
+
   String emergencyId = '';
   late String _error;
+
+  // Metodo per impostare l'emergencyId
+  void setEmergencyId(String id) {
+    emergencyId = id;
+  }
 
   Future<HttpResult<PathDTO>> sendNotification2(
       EmergencyCode emrcode,

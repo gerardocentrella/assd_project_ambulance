@@ -1,12 +1,11 @@
 import 'dart:async';
-import 'package:assd_project_ambulance/models/repository/emergency_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../models/dto/PathDTO.dart';
-import '../../models/repository/ambulance_repository.dart';
+import '../../models/repository/ambulanceId_repository.dart';
 import '../../models/repository/position_repository.dart';
 import '../message_controller.dart';
 
@@ -68,6 +67,7 @@ class GpsBloc extends Bloc<GpsEvent, GpsState> {
   // apertura canale ricezione path e messa in ascolto
   void _initializeStreams() {
     // Apro stream per percorsi
+    // Per testare con emulatore android usare path --> ws://10.0.2.2:8765/pathNotifier
     _messageController.openPathStream(pathURL);
 
     // Ascolta lo stream dei percorsi

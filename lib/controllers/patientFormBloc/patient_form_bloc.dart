@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:assd_project_ambulance/controllers/patient_controller.dart';
 import 'package:assd_project_ambulance/controllers/services/patient_reached_service.dart';
+import 'package:assd_project_ambulance/models/repository/emergencyId_repository.dart';
 import 'package:assd_project_ambulance/utils/http_result.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -17,9 +18,12 @@ part 'patient_form_state.dart';
 
 class PatientFormBloc extends Bloc<PatientFormEvent, PatientFormState> {
   final PatientReachedController _controller;
+  final EmergencyIdRepository _emergencyIdRepository;
+  String? emergencyId;
 
   // Costruttore con stato iniziale
-  PatientFormBloc(this._controller) : super(PatientFormInitial()) {
+  PatientFormBloc(this._controller, this._emergencyIdRepository)
+      : super(PatientFormInitial()) {
     on<PatientFormEventSubmit>(_onSubmit);
     on<PatientFormEventSuccess>(_onSuccess);
     on<PatientFormEventFailure>(_onFailure);
@@ -33,6 +37,17 @@ class PatientFormBloc extends Bloc<PatientFormEvent, PatientFormState> {
     Emitter<PatientFormState> emit,
   ) async {
     emit(PatientFormLoading());
+
+// Recupera l'emergencyId dal repository
+    String? emergencyId = await _emergencyIdRepository.getEmergencyId();
+    if (emergencyId == null) {
+      emit(PatientFormFailure(error: "Emergency ID not found."));
+      return;
+    }
+
+// Imposta l'emergencyId nel controller
+    _controller.setEmergencyId(emergencyId);
+
     try {
       final HttpResult<PathDTO> result;
       // Qui dovresti chiamare un servizio che invia i dati a un backend o lo salva localmente
@@ -75,8 +90,8 @@ class PatientFormBloc extends Bloc<PatientFormEvent, PatientFormState> {
     emit(PatientFormFailure(error: event.error));
   }
 
-  List<Position>? getPath(){
-    if(pdto == null) {
+  List<Position>? getPath() {
+    if (pdto == null) {
       return null;
     } else {
       return pdto!.path;

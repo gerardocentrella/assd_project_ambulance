@@ -16,8 +16,6 @@ class PatientReachedService {
   Future<HttpResult<PathDTO>> sendPatientReachedNotification2(
       PatientReachedNotificationDTO dataToSend, String emergencyId) async {
     // Recupera il token da SharedPreferences
-    //SharedPreferences prefs = await SharedPreferences.getInstance();
-    //String? token = prefs.getString('user_token');
     String? token = await _tokenRepository.getToken();
 
     print("Sono in PatientReachedService");

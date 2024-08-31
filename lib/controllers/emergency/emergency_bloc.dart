@@ -30,7 +30,8 @@ class EmergencyBloc extends Bloc<EmergencyEvent, EmergencyState> {
  */
 
 // bloc/emergency_bloc.dart
-import 'package:assd_project_ambulance/models/repository/ambulance_repository.dart';
+import 'package:assd_project_ambulance/models/repository/ambulanceId_repository.dart';
+import 'package:assd_project_ambulance/models/repository/emergencyId_repository.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../models/entities/Emergency.dart';
 import '../../models/entities/Position.dart';
@@ -42,17 +43,23 @@ import '../../controllers/message_controller.dart';
 class EmergencyBloc extends Bloc<EmergencyEvent, EmergencyState> {
   final MessageController _messageController;
   final AmbulanceIdRepository _ambulanceIdRepository;
+  // aggiunta repository
+  final EmergencyIdRepository _emergencyIdRepository;
   String? ambulanceId;
 
   //static const ambulanceId = "AMB00001";
 
-  EmergencyBloc(this._messageController, this._ambulanceIdRepository)
+  EmergencyBloc(this._messageController, this._ambulanceIdRepository, this._emergencyIdRepository)
       : super(EmergencyInitial()) {
     // Inizializzazione e ascolto dello stream
     _initialize();
 
-    on<EmergencyReceived>((event, emit) {
+    on<EmergencyReceived>((event, emit) async {
       emit(EmergencyProcessing(event.emergency));
+
+      // Memorizza l'emergencyId
+      await _emergencyIdRepository.saveEmergencyId(event.emergency.id); // Salva l'emergencyId
+
     });
 
     // Gestore per l'evento EmergencyEnded
@@ -83,13 +90,6 @@ class EmergencyBloc extends Bloc<EmergencyEvent, EmergencyState> {
   String get emergencyURL {
     if (ambulanceId != null) {
       return 'ws://172.31.4.63:31656/emergencyNotifier/websocket/ambulances/$ambulanceId/emergencies';
-    }
-    throw Exception('Ambulance ID is not initialized');
-  }
-
-  String get pathURL {
-    if (ambulanceId != null) {
-      return 'ws://172.31.4.63:30202/pathNotifier/websocket/ambulances/$ambulanceId/path';
     }
     throw Exception('Ambulance ID is not initialized');
   }

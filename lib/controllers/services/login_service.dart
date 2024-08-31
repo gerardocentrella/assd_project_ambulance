@@ -8,18 +8,21 @@ class LoginService {
     final url =
         Uri.parse('http://example.com/api/endpoint/users/$userId/sessions');
     final headers = {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json'
+      'Content-Type': 'text/plain',
+      //'Accept': 'application/json'
     };
-    final body = jsonEncode(<String, String>{'password': password});
+    //final body = jsonEncode(<String, String>{'password': password});
+    final body = password;
 
     try {
       final response = await http.post(url, headers: headers, body: body);
 
-      if (response.statusCode == 201) {
-        final data = jsonDecode(response.body);
-        String token = data['token'];
-        return HttpResult<String>(data: token, httpStatusCode: 201);
+      if (response.statusCode == 200) {
+
+        //final data = jsonDecode(response.body);
+        //String token = data['token'];
+        String token = response.body;
+        return HttpResult<String>(data: token, httpStatusCode: 200);
       } else {
         // Additional error handling based on status code
         return HttpResult<String>(

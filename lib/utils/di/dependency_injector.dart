@@ -2,8 +2,8 @@ import 'package:assd_project_ambulance/controllers/emergency/emergency_bloc.dart
 import 'package:assd_project_ambulance/controllers/gps/gps_bloc.dart';
 import 'package:assd_project_ambulance/controllers/message_controller.dart';
 import 'package:assd_project_ambulance/controllers/services/websocket_manager.dart';
-import 'package:assd_project_ambulance/models/repository/ambulance_repository.dart';
-import 'package:assd_project_ambulance/models/repository/emergency_repository.dart';
+import 'package:assd_project_ambulance/models/repository/ambulanceId_repository.dart';
+import 'package:assd_project_ambulance/models/repository/emergencyId_repository.dart';
 import 'package:assd_project_ambulance/models/repository/position_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -72,11 +72,10 @@ class DependencyInjector extends StatelessWidget {
   Widget _repositories({required Widget child}) => MultiRepositoryProvider(
         providers: [
           RepositoryProvider(create: (context) => PositionRepository()),
-          RepositoryProvider(
-              create: (context) => EmergencyRepository("baseURL")),
           RepositoryProvider(create: (context) => AuthenticationRepository()),
           RepositoryProvider(create: (context) => TokenRepository()),
           RepositoryProvider(create: (context) => AmbulanceIdRepository()),
+          RepositoryProvider(create: (context) => EmergencyIdRepository())
         ],
         child: child,
       );
@@ -105,23 +104,30 @@ class DependencyInjector extends StatelessWidget {
               ambulanceIdRepository: context.read<AmbulanceIdRepository>(),
             ),
           ),
+          BlocProvider<EmergencyBloc>(
+            create: (context) => EmergencyBloc(
+                context.read<MessageController>(),
+                context.read<AmbulanceIdRepository>(),
+                context.read<EmergencyIdRepository>()
+            ),
+          ),
           BlocProvider<PatientFormBloc>(
             create: (context) => PatientFormBloc(
               context.read<PatientReachedController>(),
+              context.read<EmergencyIdRepository>(),
             ),
           ),
-          BlocProvider<EmergencyBloc>(
-            create: (context) => EmergencyBloc(
-              context.read<MessageController>(),
-              context.read<AmbulanceIdRepository>(),
-            ),
-          ),
+
+          /*
           BlocProvider<PathBloc>(
             create: (context) => PathBloc(
               context.read<MessageController>(),
               context.read<AmbulanceIdRepository>(),
             ),
           ),
+
+           */
+
         ],
         child: child,
       );

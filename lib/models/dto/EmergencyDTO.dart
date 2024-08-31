@@ -88,7 +88,7 @@ class EmergencyDTO {
     erId = json['erId'] ?? ''; // Valore di default
   }
 
-
+// Metodo per conversione in JSON di un EmergencyDTO
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;

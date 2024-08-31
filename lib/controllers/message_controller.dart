@@ -4,6 +4,16 @@ import 'package:assd_project_ambulance/controllers/services/websocket_manager.da
 import '../models/dto/EmergencyDTO.dart';
 import '../models/dto/PathDTO.dart';
 
+/*
+La classe MessageController che hai fornito funge da intermediario tra la gestione dei dati ricevuti tramite WebSocket e le parti
+della tua applicazione che necessitano di questi dati (come ad esempio i widget dell'interfaccia utente).
+Specificatamente questa classe funge da intermediario tra i bloc reponsabili di gestire la logica di business che guida
+gli aggiornamenti delle view, e il manager/service delle WebSocket.
+Classe wrapper incapsulante quel codice specifico della logica di business per gestire l'impiego del manager.
+Questa classe organizza la gestione degli aggiornamenti delle emergenze e dei percorsi, utilizzando un'istanza di WebSocketManager
+per stabilire connessioni e ascoltare gli stream di dati.
+ */
+
 class MessageController {
   final WebSocketManager _webSocketManager;
   final StreamController<EmergencyDTO> _emergencyStreamController = StreamController.broadcast();

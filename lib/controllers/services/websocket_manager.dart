@@ -5,6 +5,16 @@ import 'package:assd_project_ambulance/models/dto/EmergencyDTO.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 import '../../models/dto/PathDTO.dart';
+/*
+La classe WebSocketManager gestisce le connessioni WebSocket in un'applicazione Dart.
+Funziona come un service per stabilire e mantenere una comunicazione in tempo reale, attraverso un protocollo di comunicazione
+full-duplex. Si prevede impiego di StreamControllers per gestire stream di dati con il tipo EmergencyDTO e PathDTO.
+Tramite questi stream controller è possibile ricevere i messaggi.
+Gli oggetti/messaggi verranno deserializzati tramite apposita callback di deserializzazione(fromJson) e in seguito
+aggiunti ai rispettivi stream controller da cui sarà possibile prelevarli.
+Questa classe non viene impiegata direttamente: funge da service per interoperare con la CO remota ma viene adoperata da uno
+specifico controller dei messaggi.
+ */
 
 class WebSocketManager {
   late WebSocketChannel channel;

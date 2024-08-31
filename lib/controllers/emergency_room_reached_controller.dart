@@ -1,6 +1,8 @@
 import 'package:assd_project_ambulance/controllers/services/emergency_room_reached_service.dart';
 import '../utils/http_result.dart';
-
+/*
+Classe intermedia per impiegare un service specifico per comunicare alla CO che l'ambulanza ha raggiunto il pronto soccorso.
+ */
 class EmergencyRoomReachedController {
   final EmergencyRoomReachedService _service;
 

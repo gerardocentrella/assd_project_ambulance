@@ -34,17 +34,17 @@ class PatientFormEventSubmit extends PatientFormEvent {
 
   @override
   List<Object?> get props => [
-    name,
-    surname,
-    city,
-    address,
-    age,
-    latitude,
-    longitude,
-    emerCode,
-    type,
-    emergencyDescription,
-  ];
+        name,
+        surname,
+        city,
+        address,
+        age,
+        latitude,
+        longitude,
+        emerCode,
+        type,
+        emergencyDescription,
+      ];
 }
 
 class PatientFormEventSuccess extends PatientFormEvent {}

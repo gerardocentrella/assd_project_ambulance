@@ -5,7 +5,7 @@ updates which will be used to notify the application when a user signs in or out
 import 'dart:async';
 
 import 'package:assd_project_ambulance/controllers/message_controller.dart';
-import 'package:assd_project_ambulance/models/repository/ambulance_repository.dart';
+import 'package:assd_project_ambulance/models/repository/ambulanceId_repository.dart';
 import 'package:assd_project_ambulance/utils/http_result.dart';
 import 'package:assd_project_ambulance/controllers/services/login_service.dart';
 import 'package:assd_project_ambulance/models/repository/token_repository.dart';
@@ -45,7 +45,7 @@ class AuthenticationRepository {
       // Chiama il service specico per effettuare la chiamata API di login
       HttpResult<String> result = await httpService.signIn(username, password);
 
-      if (result.httpStatusCode == 201 && result.data != null) {
+      if (result.httpStatusCode == 200 && result.data != null) {
         String token = result.data!;
         tokenRepository.saveToken(token);
         ambulanceIdRepository.saveAmbulanceId(username);

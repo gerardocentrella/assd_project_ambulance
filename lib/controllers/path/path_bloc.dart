@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../controllers/message_controller.dart';
 import '../../models/dto/PathDTO.dart';
 import '../../models/entities/Position.dart';
-import '../../models/repository/ambulance_repository.dart';
+import '../../models/repository/ambulanceId_repository.dart';
 import 'path_event.dart';
 import 'path_state.dart';
 

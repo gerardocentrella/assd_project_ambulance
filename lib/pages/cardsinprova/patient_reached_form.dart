@@ -8,6 +8,7 @@ import '../../models/entities/Emergency.dart';
 import '../../utils/enum_menu_code.dart';
 
 class PatientReachedForm extends StatefulWidget {
+  // aggiunta emergencyId
   const PatientReachedForm({super.key});
 
   @override
@@ -342,7 +343,7 @@ class PatientReachedFormState extends State<PatientReachedForm> {
                   ),
                 );
             // invalido il path per raggiungere il paziente in quanto non serve più; ritorno in ascolto
-            BlocProvider.of<PathBloc>(context).add(PathEnded());
+            //BlocProvider.of<PathBloc>(context).add(PathEnded());
           }
         },
         child: const Text(
