@@ -10,12 +10,3 @@ final class PSReached extends GpsEvent {}
 
 final class InitEmergency extends GpsEvent {}
 
-// aggiunta
-/*
-class PathUpdated extends GpsEvent {
-  final PathDTO path;
-
-  PathUpdated(this.path);
-}
-
- */

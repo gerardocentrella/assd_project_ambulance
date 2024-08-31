@@ -1,4 +1,5 @@
 // blocs/path_bloc.dart
+import 'package:assd_project_ambulance/controllers/gps/gps_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../controllers/message_controller.dart';
 import '../../models/dto/PathDTO.dart';
@@ -12,11 +13,13 @@ class PathBloc extends Bloc<PathEvent, PathState> {
   final AmbulanceIdRepository _ambulanceIdRepository;
   String? ambulanceId;
 
+
   PathBloc(this._messageController, this._ambulanceIdRepository) : super(PathInitial()) {
     _initialize(); // inizializzazione stream e ascolto
 
     on<PathReceived>((event, emit) {
       emit(PathProcessing(event.path));
+
     });
 
     on<PathEnded>((event, emit) {
@@ -57,10 +60,10 @@ class PathBloc extends Bloc<PathEvent, PathState> {
     // Ascolta lo stream dei percorsi
     _messageController.pathStream.listen((path) {
       add(PathReceived(path));
+
     });
   }
 
-  // Funzione di simulazione di ricezione del percorso
   // Funzione di simulazione di ricezione del percorso
   void _simulatePathReceiving() {
     print("Simulazione di ricezione del percorso avviata...");

@@ -154,15 +154,6 @@ class _HomeState extends State<Home> {
       });
     }
   }
-/*
-  @override
-  void dispose() {
-    // chiusura stream
-    _messageController.dispose();
-    super.dispose();
-  }
-
- */
 
   @override
   Widget build(BuildContext context) {
@@ -206,7 +197,9 @@ class _HomeState extends State<Home> {
       body: IndexedStack(
         index: _currentCardIndex,
         children: [
-          //DriverCard(path: lastPath), // Passa solo il path alla DriverCard
+          DriverCard(),
+
+/*
           BlocBuilder<PathBloc, PathState>(
             builder: (context, state) {
               if(state is PathListening) {
@@ -220,6 +213,10 @@ class _HomeState extends State<Home> {
               }
             },
           ),
+
+
+ */
+
           // gestione bloc emergenza
           BlocBuilder<EmergencyBloc, EmergencyState>(
             builder: (context, state) {
