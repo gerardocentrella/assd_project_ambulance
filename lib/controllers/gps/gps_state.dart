@@ -6,10 +6,9 @@ abstract class GpsState extends Equatable {
    const GpsState(this.markers);
 }
 
-// aggiunta di uno stato iniziale di inizializzazione
+// aggiunta di uno stato di inizializzazione
 class GpsInitial extends GpsState {
   GpsInitial(super.markers);
-
 
   @override
   List<Object> get props => [];
@@ -37,13 +36,12 @@ class GpsOnPause extends GpsState {
   List<Object> get props => [];
 }
 
-
 // nuovo stato aggiunto per errori
 // Stato di errore
 class GpsError extends GpsState {
   final String message;
 
-  GpsError(this.message, super.markers);
+  const GpsError(this.message, super.markers);
 
   @override
   List<Object> get props => [message];

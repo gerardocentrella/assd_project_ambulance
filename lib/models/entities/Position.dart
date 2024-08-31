@@ -24,11 +24,20 @@ class Position {
     return 'Position{_latitude: $_latitude, _longitude: $_longitude}';
   }
 
-
+/*
  Position.fromJson(Map<String, dynamic> json) {
-   latitude = json['latitude'];
-   longitude = json['longitude'];
+   latitude = json['latitude'] as double;
+   longitude = json['longitude'] as double;
  }
+
+ */
+
+  factory Position.fromJson(Map<String, dynamic> json) {
+    return Position(
+      latitude: json['latitude'],
+      longitude: json['longitude'],
+    );
+  }
 
  Map<String, dynamic> toJson() {
    final Map<String, dynamic> data = <String, dynamic>{};

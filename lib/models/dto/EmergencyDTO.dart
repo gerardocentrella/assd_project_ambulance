@@ -1,9 +1,8 @@
 import 'package:assd_project_ambulance/models/entities/Emergency.dart';
 import 'package:assd_project_ambulance/models/entities/Position.dart';
-
+import 'package:assd_project_ambulance/utils/enum_menu_code.dart';
 
 class EmergencyDTO {
-
   late String _id;
   late Position _userPosition;
   late EmergencyCode _emergencyCode;
@@ -13,21 +12,15 @@ class EmergencyDTO {
   late String _ambulanceId;
   late String _erId; // emergency Room
 
-
-
-  EmergencyDTO(
-      {required Emergency emergency}
-      ) :
-    _id = emergency.id,
-    _userPosition = emergency.userPosition,
-    _emergencyCode = emergency.emergencyCode,
-    _description = emergency.description,
-    _emergencyStatus = emergency.emergencyStatus,
-    _emergencyType = emergency.emergencyType,
-    _ambulanceId = emergency.ambulanceId,
-    _erId = emergency.erId;
-
-
+  EmergencyDTO({required Emergency emergency})
+      : _id = emergency.id,
+        _userPosition = emergency.userPosition,
+        _emergencyCode = emergency.emergencyCode,
+        _description = emergency.description,
+        _emergencyStatus = emergency.emergencyStatus,
+        _emergencyType = emergency.emergencyType,
+        _ambulanceId = emergency.ambulanceId,
+        _erId = emergency.erId;
 
   // getters & setters
 
@@ -79,25 +72,28 @@ class EmergencyDTO {
     _emergencyCode = value;
   }
 
-
+  // Costruttore per la costruzione dell'oggetto da JSON
   EmergencyDTO.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    userPosition = (json['userPosition'] != null
+    id = json['id'] ?? '';
+    userPosition = json['userPosition'] != null
         ? Position.fromJson(json['userPosition'])
-        : null)!;
-    emergencyCode = json['emergencyCode'];
-    emergencyStatus = json['emergencyStatus'];
-    description = json['emergencyDescription'];
-    emergencyType = json['emergencyType'];
-    ambulanceId = json['ambulanceId'];
-    erId = json['erId'];
+        : Position(latitude: 0.0, longitude: 0.0); // Valori di default se null
+
+    emergencyCode = getEmergencyCode(json['emergencyCode'] ?? '');
+    emergencyStatus = getEmergencyStatus(json['emergencyStatus'] ?? '');
+    description = json['emergencyDescription'] ?? ''; // Valore di default
+    emergencyType = getEmergencyType(json['emergencyType'] ?? '');
+
+    ambulanceId = json['ambulanceId'] ?? ''; // Valore di default
+    erId = json['erId'] ?? ''; // Valore di default
   }
+
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id;
     data['userPosition'] = userPosition.toJson();
-      data['emergencyCode'] = emergencyCode;
+    data['emergencyCode'] = emergencyCode;
     data['emergencyStatus'] = emergencyStatus;
     data['emergencyDescription'] = description;
     data['emergencyType'] = emergencyType;
@@ -106,40 +102,4 @@ class EmergencyDTO {
     return data;
   }
 
-/* codice originale
-  EmergencyDTO.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    userPosition = json['userPosition'] != null
-        ? new UserPosition.fromJson(json['userPosition'])
-        : null;
-    emergencyCode = json['emergencyCode'];
-    emergencyStatus = json['emergencyStatus'];
-    emergencyDescription = json['emergencyDescription'];
-    emergencyType = json['emergencyType'];
-    ambulanceId = json['ambulanceId'];
-    emergencyid = json['emergencyid'];
-    emergencyUpdateURL = json['emergencyUpdateURL'];
-    ambulancePositionUpdateURL = json['ambulancePositionUpdateURL'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    if (this.userPosition != null) {
-      data['userPosition'] = this.userPosition!.toJson();
-    }
-    data['emergencyCode'] = this.emergencyCode;
-    data['emergencyStatus'] = this.emergencyStatus;
-    data['emergencyDescription'] = this.emergencyDescription;
-    data['emergencyType'] = this.emergencyType;
-    data['ambulanceId'] = this.ambulanceId;
-    data['emergencyid'] = this.emergencyid;
-    data['emergencyUpdateURL'] = this.emergencyUpdateURL;
-    data['ambulancePositionUpdateURL'] = this.ambulancePositionUpdateURL;
-    return data;
-  }
-
- */
 }
-
-

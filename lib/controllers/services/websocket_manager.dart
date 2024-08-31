@@ -28,13 +28,18 @@ class WebSocketManager {
 
   Future<void> _openStream(
       String url, Function fromJson, StreamController streamController) async {
+    print("SONO NELLA FUNZIONE DI OPENSTREAM PRIMA DI CONNECT__________________________________________________________________________");
     channel = WebSocketChannel.connect(Uri.parse(url));
+    print("SONO NELLA FUNZIONE OPENSTREAM DOPO CONNECT DI WEBSOCKET MANAGER__________________________________________________________________________");
 
     await channel.ready;
+    print("CANALE PRONTOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
 
     channel.stream.listen((message) {
+      print("Messaggio ricevuto dal WebSocket-----------------------------------------------------------------------------------: $message"); // Verifica il formato del messaggio
       try {
         Map<String, dynamic> jsonMessage = jsonDecode(message);
+        print("SONO IN WEBSOCKET MANAGER LISTEN:___________________________________________________________Messaggio ricevuto: $jsonMessage");
         var msg = fromJson(jsonMessage);
         streamController.add(msg);
       } catch (e) {
@@ -52,7 +57,9 @@ class WebSocketManager {
 
   // metodo per richiedere alla CO l'apertura di un canale full-duplex per ricevere gli update dell'emergenza
   Future<void> openEmergencyUpdateStream(String url) async {
+    print("SONO IN APERTURA CANALE DI WEBSOCKET MANAGER PRIMA DI OPEN STREAM__________________________________________________________________________");
     await _openStream(url, EmergencyDTO.fromJson, _streamEmergencyController);
+    print("SONO IN APERTURA CANALE DI WEBSOCKET MANAGER DOPO DI OPEN STREAM__________________________________________________________________________");
   }
 
   // metodo per richiedere alla CO apertura canale full-duplex per ricevere update sul path da seguire

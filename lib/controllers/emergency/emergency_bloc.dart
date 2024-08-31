@@ -44,11 +44,10 @@ class EmergencyBloc extends Bloc<EmergencyEvent, EmergencyState> {
   final AmbulanceIdRepository _ambulanceIdRepository;
   String? ambulanceId;
 
-
   //static const ambulanceId = "AMB00001";
 
-
-  EmergencyBloc(this._messageController, this._ambulanceIdRepository) : super(EmergencyInitial())  {
+  EmergencyBloc(this._messageController, this._ambulanceIdRepository)
+      : super(EmergencyInitial()) {
     // Inizializzazione e ascolto dello stream
     _initialize();
 
@@ -60,12 +59,10 @@ class EmergencyBloc extends Bloc<EmergencyEvent, EmergencyState> {
     on<EmergencyEnded>((event, emit) {
       emit(EmergencyListening()); // Ritorna allo stato di ascolto
     });
-
   }
 
   Future<void> _initialize() async {
     try {
-
       // Recupera l'ID dell'ambulanza
       await _ambulanceIdRepository.saveAmbulanceId("AMB00001");
       ambulanceId = await _ambulanceIdRepository.getAmbulanceId();
@@ -76,12 +73,11 @@ class EmergencyBloc extends Bloc<EmergencyEvent, EmergencyState> {
 
       // Procedi con l'inizializzazione ora che l'ID è stato recuperato
       _initializeStreams();
-      _simulateEmergencyReceiving();
+      //_simulateEmergencyReceiving();
     } catch (e) {
       emit(EmergencyError(e.toString()));
     }
   }
-
 
   // Metodi per costruire gli URL
   String get emergencyURL {
@@ -98,17 +94,20 @@ class EmergencyBloc extends Bloc<EmergencyEvent, EmergencyState> {
     throw Exception('Ambulance ID is not initialized');
   }
 
-
   void _initializeStreams() {
     // Apro stream per emergenze
-    _messageController.openEmergencyStream(emergencyURL);
-
+    print(
+        "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
+    _messageController
+        .openEmergencyStream("ws://10.0.2.2:8765/emergencyNotifier");
+    print(
+        "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd");
     // Ascolta lo stream delle emergenze
     _messageController.emergencyStream.listen((emergency) {
+      print("Emergency: $emergency");
       add(EmergencyReceived(emergency));
+
     });
-
-
   }
 
   // Funzione di simulazione d'emergenza

@@ -13,8 +13,10 @@ class MessageController {
 
   // Metodo per aprire il flusso di aggiornamento delle emergenze
   Future<void> openEmergencyStream(String emergencyUrl) async {
+    print("SONO IN MESSAGE CONTROLLER_____________________________________________________________________________________________");
     await _webSocketManager.openEmergencyUpdateStream(emergencyUrl);
     _webSocketManager.streamEmergencyController.stream.listen((emergency) {
+      print("SONO IN MESSAGE CONTROLLER NEL LISTEN________________________________________________________________________________");
       _emergencyStreamController.add(emergency);
     });
   }

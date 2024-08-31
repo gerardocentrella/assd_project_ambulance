@@ -96,6 +96,14 @@ enum EmergencyStatus {
   FAILED
 }
 
+
+// Funzione per convertire EmergencyStatus da stringa a enum
+EmergencyStatus getEmergencyStatus(String label) {
+  return EmergencyStatus.values.firstWhere(
+          (status) => status.toString().split('.').last == label,
+      orElse: () => throw Exception('Status di emergenza sconosciuto: $label'));
+}
+
 // enum type
 enum EmergencyType {
   C01_TRAUMATICA,
@@ -154,7 +162,12 @@ enum EmergencyType {
         return 'C20_PATOLOGIA_NON_IDENTIFICATA';
     }
   }
-
 }
 
 
+// Funzione per convertire EmergencyType da stringa a enum
+EmergencyType getEmergencyType(String label) {
+  return EmergencyType.values.firstWhere(
+          (type) => type.toString().split('.').last == label,
+      orElse: () => throw Exception('Tipo di emergenza sconosciuto: $label'));
+}

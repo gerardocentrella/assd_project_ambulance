@@ -44,7 +44,7 @@ class GpsBloc extends Bloc<GpsEvent, GpsState> {
       await _ambulanceIdRepository.saveAmbulanceId("AMB00001");
       ambulanceId = await _ambulanceIdRepository.getAmbulanceId();
       if (ambulanceId == null) {
-        emit(GpsError('Ambulance ID not found', const {}));
+        emit(const GpsError('Ambulance ID not found', const {}));
         return;
       }
 
