@@ -11,7 +11,10 @@ class PatientFormInitial extends PatientFormState {}
 
 class PatientFormLoading extends PatientFormState {}
 
-class PatientFormSuccess extends PatientFormState {}
+class PatientFormSuccess extends PatientFormState {
+
+
+}
 
 class PatientFormFailure extends PatientFormState {
   final String error;

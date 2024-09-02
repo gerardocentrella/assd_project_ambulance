@@ -39,16 +39,12 @@ class AuthenticationBloc extends Bloc<AuthEvent, AuthState> {
           case AuthenticationStatus.unauthenticated:
             return emit(const AuthState.unauthenticated());
           case AuthenticationStatus.authenticated:
-            // cambiare qui per effettuare la chiamata
-            //final token = await _tryGetToken();
-
-            const token = "prova";
+            final token = await _tryGetToken();
             return emit(
               token != null
                   ? AuthState.authenticated(token)
                   : const AuthState.unauthenticated(),
             );
-
           case AuthenticationStatus.unknown:
             return emit(const AuthState.unknown());
         }

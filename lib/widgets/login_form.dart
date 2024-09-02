@@ -20,15 +20,15 @@ class LoginForm extends StatelessWidget {
             );
         }
       },
-      child: Align(
-        alignment: const Alignment(0, -1 / 3),
+      child: const Align(
+        alignment: Alignment(0, -1 / 3),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             _UsernameInput(),
-            const Padding(padding: EdgeInsets.all(12)),
+            SizedBox(height: 12),
             _PasswordInput(),
-            const Padding(padding: EdgeInsets.all(12)),
+            SizedBox(height: 12),
             _LoginButton(),
           ],
         ),
@@ -38,6 +38,8 @@ class LoginForm extends StatelessWidget {
 }
 
 class _UsernameInput extends StatelessWidget {
+  const _UsernameInput({super.key});
+
   @override
   Widget build(BuildContext context) {
     final displayError = context.select(
@@ -51,13 +53,15 @@ class _UsernameInput extends StatelessWidget {
       },
       decoration: InputDecoration(
         labelText: 'Ambulance-id',
-        errorText: displayError != null ? 'invalid id' : null,
+        errorText: displayError != null ? 'Invalid id' : null,
       ),
     );
   }
 }
 
 class _PasswordInput extends StatelessWidget {
+  const _PasswordInput({super.key});
+
   @override
   Widget build(BuildContext context) {
     final displayError = context.select(
@@ -71,14 +75,16 @@ class _PasswordInput extends StatelessWidget {
       },
       obscureText: true,
       decoration: InputDecoration(
-        labelText: 'password',
-        errorText: displayError != null ? 'invalid password' : null,
+        labelText: 'Password',
+        errorText: displayError != null ? 'Invalid password' : null,
       ),
     );
   }
 }
 
 class _LoginButton extends StatelessWidget {
+  const _LoginButton({super.key});
+
   @override
   Widget build(BuildContext context) {
     final isInProgressOrSuccess = context.select(
@@ -98,7 +104,7 @@ class _LoginButton extends StatelessWidget {
         minimumSize: const Size(100, 50),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
-        )
+        ),
       ),
       child: const Text('Login'),
     );

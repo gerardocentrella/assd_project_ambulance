@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../controllers/path/path_bloc.dart';
-import '../../controllers/path/path_event.dart';
 import '../../controllers/patientFormBloc/patient_form_bloc.dart';
 import '../../models/entities/Emergency.dart';
 import '../../utils/enum_menu_code.dart';
@@ -328,22 +326,37 @@ class PatientReachedFormState extends State<PatientReachedForm> {
         ),
         onPressed: () {
           if (_formKey.currentState!.validate()) {
-            context.read<PatientFormBloc>().add(
-                  PatientFormEventSubmit(
-                    name: nameController.text,
-                    surname: surnameController.text,
-                    city: cityController.text,
-                    address: addressController.text,
-                    age: int.parse(ageController.text),
-                    latitude: double.parse(latitudeController.text),
-                    longitude: double.parse(longitudeController.text),
-                    emerCode: getEmergencyCode(selectedCode!.label),
-                    type: selectedType!,
-                    emergencyDescription: emerDescController.text,
-                  ),
-                );
-            // invalido il path per raggiungere il paziente in quanto non serve più; ritorno in ascolto
-            //BlocProvider.of<PathBloc>(context).add(PathEnded());
+            if (selectedCode == null || selectedType == null) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Please select both a code and a type')),
+              );
+              return;
+            }
+
+            try {
+              final age = int.parse(ageController.text);
+              final latitude = double.parse(latitudeController.text);
+              final longitude = double.parse(longitudeController.text);
+
+              context.read<PatientFormBloc>().add(
+                PatientFormEventSubmit(
+                  name: nameController.text,
+                  surname: surnameController.text,
+                  city: cityController.text,
+                  address: addressController.text,
+                  age: age,
+                  latitude: latitude,
+                  longitude: longitude,
+                  emerCode: getEmergencyCode(selectedCode!.label),
+                  type: selectedType!,
+                  emergencyDescription: emerDescController.text,
+                ),
+              );
+            } catch (e) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text('Please enter valid numeric values')),
+              );
+            }
           }
         },
         child: const Text(
@@ -353,4 +366,5 @@ class PatientReachedFormState extends State<PatientReachedForm> {
       ),
     );
   }
+
 }

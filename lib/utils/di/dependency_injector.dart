@@ -11,7 +11,6 @@ import 'package:provider/provider.dart';
 
 import '../../controllers/auth/bloc/auth_bloc.dart';
 import '../../controllers/emergency_room_reached_controller.dart';
-import '../../controllers/path/path_bloc.dart';
 import '../../controllers/patientFormBloc/patient_form_bloc.dart';
 import '../../controllers/patient_controller.dart';
 import '../../controllers/services/emergency_room_reached_service.dart';

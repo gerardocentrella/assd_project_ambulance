@@ -1,49 +1,48 @@
+
 part of 'gps_bloc.dart';
 
 abstract class GpsState extends Equatable {
-
   final Set<Marker> markers;
-   const GpsState(this.markers);
-}
 
-// aggiunta di uno stato di inizializzazione
-class GpsInitial extends GpsState {
-  GpsInitial(super.markers);
+  const GpsState(this.markers);
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [markers];
+}
 
+class GpsInitial extends GpsState {
+  GpsInitial(Set<Marker> markers) : super(markers);
+
+  @override
+  List<Object> get props => [markers];
 }
 
 class GpsOnPatient extends GpsState {
-  @override
-  List<Object> get props => [];
+  GpsOnPatient(Set<Marker> markers) : super(markers);
 
-  GpsOnPatient(super.markers);
+  @override
+  List<Object> get props => [markers];
 }
 
 class GpsOnPS extends GpsState {
-  @override
-  List<Object> get props => [];
+  GpsOnPS(Set<Marker> markers) : super(markers);
 
-  GpsOnPS(super.markers);
+  @override
+  List<Object> get props => [markers];
 }
 
 class GpsOnPause extends GpsState {
-  GpsOnPause(super.markers);
+  GpsOnPause(Set<Marker> markers) : super(markers);
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [markers];
 }
 
-// nuovo stato aggiunto per errori
-// Stato di errore
 class GpsError extends GpsState {
   final String message;
 
-  const GpsError(this.message, super.markers);
+  const GpsError(this.message, Set<Marker> markers) : super(markers);
 
   @override
-  List<Object> get props => [message];
-
+  List<Object> get props => [message, markers];
 }

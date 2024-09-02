@@ -1,7 +1,4 @@
 import 'package:assd_project_ambulance/controllers/emergency_room_reached_controller.dart';
-import 'package:assd_project_ambulance/controllers/path/path_bloc.dart';
-import 'package:assd_project_ambulance/controllers/path/path_event.dart';
-import 'package:assd_project_ambulance/controllers/services/emergency_room_reached_service.dart';
 import 'package:assd_project_ambulance/models/dto/EmergencyDTO.dart';
 import 'package:assd_project_ambulance/utils/http_result.dart';
 import 'package:flutter/material.dart';
@@ -104,20 +101,20 @@ class OperatorCard extends StatelessWidget {
   }
 
   ElevatedButton _buildActionButton(BuildContext context,
-      {required String? label, String? routeName, VoidCallback? onPressed, bool isEnabled = true}) {
+      {required String label, String? routeName, VoidCallback? onPressed, bool isEnabled = true}) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         minimumSize: const Size(100, 50),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
-        backgroundColor: isEnabled ? Colors.red : Colors.grey, // Cambia il colore qui
+        backgroundColor: isEnabled ? Colors.red : Colors.grey,
       ),
       onPressed: isEnabled ? (routeName != null ? () {
         Navigator.pushNamed(context, routeName);
-      } : onPressed) : null, // Disabilita il pulsante se non è abilitato
+      } : onPressed) : null,
       child: Text(
-        label!,
+        label,
         style: const TextStyle(
           color: Colors.black,
           fontWeight: FontWeight.bold,
