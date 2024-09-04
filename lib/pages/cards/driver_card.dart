@@ -16,6 +16,7 @@ class DriverCard extends StatefulWidget {
   @override
   _DriverCardState createState() => _DriverCardState();
 }
+
 class _DriverCardState extends State<DriverCard> {
   Set<Marker> _markers = {};
   Set<Polyline> _polylines = {};
@@ -40,40 +41,32 @@ class _DriverCardState extends State<DriverCard> {
       final LatLng currentPosition = LatLng(position.latitude, position.longitude);
 
       if (_initialPosition == null) {
-        _initialPosition = currentPosition;
-        _generateRoute();
+        _initialPosition = currentPosition; // Set the initial position
+        _generateRoute(); // Generate the route based on the initial position
       }
 
       setState(() {
-        _updateMarkersAndPolylines(currentPosition);
+        _markers.add(
+          Marker(
+            markerId: const MarkerId('current_position'),
+            position: currentPosition,
+            infoWindow: const InfoWindow(title: 'Ambulanza'),
+          ),
+        );
+
+        if (_mapController != null) {
+          _mapController!.animateCamera(CameraUpdate.newLatLng(currentPosition));
+        }
       });
-
-      if (_mapController != null) {
-        _mapController!.animateCamera(CameraUpdate.newLatLng(currentPosition));
-      }
-    });
-  }
-
-  void _updateMarkersAndPolylines(LatLng currentPosition) {
-    setState(() {
-      _markers = {
-        Marker(
-          markerId: const MarkerId('current_position'),
-          position: currentPosition,
-          infoWindow: const InfoWindow(title: 'Ambulanza'),
-        ),
-      };
-      _polylines = _createPolylineFromMarkers(_markers);
     });
   }
 
   void _generateRoute() {
     if (_initialPosition == null) return;
 
+    // Define a few waypoints for the route as an example
     List<LatLng> routePoints = [
       _initialPosition!,
-      LatLng(40.682441, 14.505223),
-      LatLng(40.630387, 14.602920),
     ];
 
     setState(() {
@@ -85,15 +78,17 @@ class _DriverCardState extends State<DriverCard> {
           width: 5,
         ),
       };
-      _markers.addAll(routePoints.asMap().entries.map((entry) {
-        int index = entry.key;
-        LatLng point = entry.value;
-        return Marker(
-          markerId: MarkerId('marker_$index'),
-          position: point,
-          infoWindow: InfoWindow(title: 'Point ${index + 1}'),
+
+      // Create markers for the route
+      for (var i = 0; i < routePoints.length; i++) {
+        _markers.add(
+          Marker(
+            markerId: MarkerId('marker_$i'),
+            position: routePoints[i],
+            infoWindow: InfoWindow(title: 'Point ${i + 1}'),
+          ),
         );
-      }));
+      }
     });
   }
 
@@ -153,28 +148,29 @@ class _DriverCardState extends State<DriverCard> {
     );
   }
 
+  // Funzione per creare una polilinea dai markers
   Set<Polyline> _createPolylineFromMarkers(Set<Marker> markers) {
     final polylineCoordinates = markers.map((marker) => marker.position).toList();
 
-    return {
-      Polyline(
-        polylineId: const PolylineId('route'),
-        color: Colors.blueAccent,
-        points: polylineCoordinates,
-        width: 5,
-      ),
-    };
+    final polyline = Polyline(
+      polylineId: const PolylineId('route'),
+      color: Colors.blueAccent,
+      points: polylineCoordinates,
+      width: 5,
+    );
+
+    return {polyline};
   }
 
+  // Funzione per avviare la navigazione basata sui markers
   Future<void> _startNavigation(Set<Marker> markers) async {
     if (_mapController == null || markers.isEmpty) return;
 
-    for (var marker in markers) {
+    List<Marker> sortedMarkers = markers.toList();
+
+    for (var marker in sortedMarkers) {
       await Future.delayed(const Duration(seconds: 2));
-      if (_mapController != null) {
-        await _mapController!.animateCamera(CameraUpdate.newLatLng(marker.position));
-      }
+      await _mapController!.animateCamera(CameraUpdate.newLatLng(marker.position));
     }
   }
 }
-
