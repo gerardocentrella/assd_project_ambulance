@@ -1,5 +1,7 @@
+import 'package:assd_project_ambulance/models/repository/position_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geolocator/geolocator.dart';
 
 import '../../controllers/patientFormBloc/patient_form_bloc.dart';
 import '../../models/entities/Emergency.dart';
@@ -124,14 +126,43 @@ class PatientReachedFormState extends State<PatientReachedForm> {
                         labelText: 'Age',
                         keyboardType: TextInputType.number),
                     _buildSectionTitle("Insert current position", height),
-                    _buildTextField(
-                        controller: latitudeController,
-                        labelText: 'Latitude',
-                        keyboardType: TextInputType.number),
-                    _buildTextField(
-                        controller: longitudeController,
-                        labelText: 'Longitude',
-                        keyboardType: TextInputType.number),
+
+                  StreamBuilder<Position>(
+                    stream: context.watch<PositionRepository>().positionStream,
+                    builder: (BuildContext context, AsyncSnapshot<Position> snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        // Mostra un indicatore di caricamento mentre il flusso è in attesa dei dati
+                        return const Center(child: CircularProgressIndicator());
+                      } else if (snapshot.hasError) {
+                        // Mostra un messaggio di errore se c'è un errore nel flusso
+                        return Center(child: Text('Errore: ${snapshot.error}'));
+                      } else if (snapshot.hasData) {
+                        // Se ci sono dati nel flusso, costruisci il widget in base ai dati
+                        Position position = snapshot.data!;
+                        latitudeController.value.copyWith(text: position.latitude.toString());
+                        longitudeController.value.copyWith(text: position.longitude.toString());
+                        return Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              _buildTextField(
+                                  controller: latitudeController,
+                                  labelText: 'Latitude',
+                                  keyboardType: TextInputType.number),
+                              _buildTextField(
+                                  controller: longitudeController,
+                                  labelText: 'Longitude',
+                                  keyboardType: TextInputType.number),
+                            ],
+                          ),
+                        );
+                      } else {
+                        // Caso in cui non ci sono dati disponibili (dovrebbe essere raro)
+                        return const Center(child: Text('Nessun dato disponibile.'));
+                      }
+                    },
+                  ),
+
                     _buildSectionTitle("Insert emergency data", height),
                     _buildDropdownMenu<EmergencyCodeLabel>(
                       hint: const Text('Code'),
