@@ -83,7 +83,7 @@ class Emergency {
   }
 }
 
-enum EmergencyCode { RED, ORANGE, BLUE, GREEN, WHITE }
+enum EmergencyCode { RED, ORANGE, BLUE, GREEN, WHITE, UNDEFINED }
 
 // enum code
 
@@ -93,12 +93,16 @@ enum EmergencyStatus {
   AMBULANCE_SELECTED,
   ER_SELECTED,
   FULFILLED,
-  FAILED
+  FAILED,
+  UNDEFINED
 }
 
 
 // Funzione per convertire EmergencyStatus da stringa a enum
 EmergencyStatus getEmergencyStatus(String label) {
+ if(label == ''){
+   return EmergencyStatus.UNDEFINED;
+ }
   return EmergencyStatus.values.firstWhere(
           (status) => status.toString().split('.').last == label,
       orElse: () => throw Exception('Status di emergenza sconosciuto: $label'));
@@ -122,7 +126,8 @@ enum EmergencyType {
   C14_OSTETRICO_GINECOLOGICA,
   C15_INFETTIVA,
   C19_ALTRA_PATOLOGIA,
-  C20_PATOLOGIA_NON_IDENTIFICATA;
+  C20_PATOLOGIA_NON_IDENTIFICATA,
+  UNDEFINED;
 
   String get description {
     switch (this) {
@@ -160,6 +165,7 @@ enum EmergencyType {
         return 'C19_ALTRA_PATOLOGIA';
       case EmergencyType.C20_PATOLOGIA_NON_IDENTIFICATA:
         return 'C20_PATOLOGIA_NON_IDENTIFICATA';
+      case EmergencyType.UNDEFINED: return 'type undefined';
     }
   }
 }
@@ -167,6 +173,9 @@ enum EmergencyType {
 
 // Funzione per convertire EmergencyType da stringa a enum
 EmergencyType getEmergencyType(String label) {
+  if(label == ''){
+    return EmergencyType.UNDEFINED;
+  }
   return EmergencyType.values.firstWhere(
           (type) => type.toString().split('.').last == label,
       orElse: () => throw Exception('Tipo di emergenza sconosciuto: $label'));

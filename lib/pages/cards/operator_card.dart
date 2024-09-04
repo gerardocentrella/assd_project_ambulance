@@ -64,7 +64,7 @@ class OperatorCard extends StatelessWidget {
         emergency?.id ?? 'CUSTOM ID'; // Usa l'ID dall'emergenza ricevuta
     HttpResult result =
     await controller.sendEmergencyRoomReachedNotification(emergencyId);
-    return (result.data != null && result.httpStatusCode == 200)
+    return (result.httpStatusCode == 200)
         ? 'Notify Successfully!'
         : 'Notify Failed, Try Again..';
   }

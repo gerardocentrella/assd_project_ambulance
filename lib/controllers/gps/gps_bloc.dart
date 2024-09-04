@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../models/dto/PathDTO.dart';
+import '../../models/entities/Position.dart';
 import '../../models/repository/ambulanceId_repository.dart';
 import '../message_controller.dart';
 
@@ -28,15 +28,16 @@ class GpsBloc extends Bloc<GpsEvent, GpsState> {
     on<PatientReached>(_onPatientReached);
     on<PSReached>(_onPSReached);
 
-    _initialize();
+    on<GpsInitialization>((event, emit) async{
+      await _initialize(emit);
+    });
   }
 
-  Future<void> _initialize() async {
+  Future<void> _initialize(Emitter<GpsState> emit) async {
     try {
-      await _ambulanceIdRepository.saveAmbulanceId("AMB00001");
       ambulanceId = await _ambulanceIdRepository.getAmbulanceId();
       if (ambulanceId == null) {
-        emit(const GpsError('Ambulance ID not found', const {}));
+        emit(const GpsError('Ambulance ID not found', {}));
         return;
       }
 
@@ -57,8 +58,10 @@ class GpsBloc extends Bloc<GpsEvent, GpsState> {
     try {
       _messageController.openPathStream(pathURL);
       _messageController.pathStream.listen((path) {
+        print("in gps_bloc");
+        print(path);
         if (path.path.isNotEmpty) {
-          markers = _createMarkersFromPositions(path.path.cast<Position>());
+          markers = _createMarkersFromPositions(path.path);
           add(InitEmergency());
         } else {
           emit(const GpsError('Path data is empty', const {}));

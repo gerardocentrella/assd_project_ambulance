@@ -27,7 +27,7 @@ class PatientReachedController {
     emergencyId = id;
   }
 
-  Future<HttpResult<PathDTO>> sendNotification2(
+  Future<HttpResult<String>> sendNotification2(
       EmergencyCode emrcode,
       String emrdesc,
       EmergencyType emrtype,
@@ -48,6 +48,7 @@ class PatientReachedController {
     try {
       final result =
           await _service.sendPatientReachedNotification2(pdto, emergencyId);
+
       return result; // Restituire il risultato
     } catch (e) {
       _error = e.toString(); // Gestire il possibile errore

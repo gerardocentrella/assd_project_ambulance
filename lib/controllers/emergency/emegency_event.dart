@@ -11,3 +11,5 @@ class EmergencyReceived extends EmergencyEvent {
 }
 
 class EmergencyEnded extends EmergencyEvent {}
+
+class EmergencyInitialization extends EmergencyEvent {}

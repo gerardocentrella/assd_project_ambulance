@@ -52,7 +52,10 @@ class EmergencyBloc extends Bloc<EmergencyEvent, EmergencyState> {
   EmergencyBloc(this._messageController, this._ambulanceIdRepository, this._emergencyIdRepository)
       : super(EmergencyInitial()) {
     // Inizializzazione e ascolto dello stream
-    _initialize();
+
+    on<EmergencyInitialization>((event, emit) async{
+      await _initialize(emit);
+    });
 
     on<EmergencyReceived>((event, emit) async {
       emit(EmergencyProcessing(event.emergency));
@@ -75,10 +78,9 @@ class EmergencyBloc extends Bloc<EmergencyEvent, EmergencyState> {
     });
   }
 
-  Future<void> _initialize() async {
+  Future<void> _initialize(Emitter<EmergencyState> emit) async {
     try {
       // Recupera l'ID dell'ambulanza
-      await _ambulanceIdRepository.saveAmbulanceId("AMB00001");
       ambulanceId = await _ambulanceIdRepository.getAmbulanceId();
       if (ambulanceId == null) {
         emit(const EmergencyError('Ambulance ID not found'));
@@ -103,42 +105,13 @@ class EmergencyBloc extends Bloc<EmergencyEvent, EmergencyState> {
 
   void _initializeStreams() {
     // Apro stream per emergenze
-    print(
-        "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
-    _messageController
-        .openEmergencyStream("ws://10.0.2.2:8765/emergencyNotifier");
-    print(
-        "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd");
-    // Ascolta lo stream delle emergenze
+      _messageController
+        .openEmergencyStream(emergencyURL);
+      // Ascolta lo stream delle emergenze
     _messageController.emergencyStream.listen((emergency) {
       print("Emergency: $emergency");
       add(EmergencyReceived(emergency));
 
-    });
-  }
-
-  // Funzione di simulazione d'emergenza
-  void _simulateEmergencyReceiving() {
-    print(
-        "HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH");
-    // Simula la ricezione di un'emergenza dopo 2 secondi
-    Future.delayed(const Duration(seconds: 5), () {
-      print(
-          "SSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSSS");
-      EmergencyDTO emergency = EmergencyDTO(
-        emergency: Emergency(
-          id: '12345',
-          userPosition: Position(latitude: 45.0, longitude: 9.0),
-          emergencyCode: EmergencyCode.WHITE,
-          description: 'Boh!!.',
-          emergencyStatus: EmergencyStatus.ER_SELECTED,
-          emergencyType: EmergencyType.C19_ALTRA_PATOLOGIA,
-          ambulanceId: 'AMB',
-          erId: '001',
-        ),
-      );
-      // Invia gli eventi al bloc all'atto della ricezione dell'emergenza.
-      add(EmergencyReceived(emergency));
     });
   }
 }

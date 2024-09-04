@@ -10,6 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 
 import '../../controllers/auth/bloc/auth_bloc.dart';
+import '../../controllers/emergency/emegency_event.dart';
 import '../../controllers/emergency_room_reached_controller.dart';
 import '../../controllers/patientFormBloc/patient_form_bloc.dart';
 import '../../controllers/patient_controller.dart';
@@ -88,33 +89,44 @@ class DependencyInjector extends StatelessWidget {
 
   Widget _block({required Widget child}) => MultiBlocProvider(
         providers: [
-          BlocProvider<AuthenticationBloc>(
-            create: (context) => AuthenticationBloc(
-              messageController: context.read<MessageController>(),
-                authenticationRepository:
-                    context.read<AuthenticationRepository>(),
-                tokenRepository: context.read<TokenRepository>())
-              ..add(AuthenticationSubscriptionRequested()),
-          ),
           BlocProvider<GpsBloc>(
-            create: (context) => GpsBloc(
-              // aggiunta per controller e repository
-              messageController: context.read<MessageController>(),
-              ambulanceIdRepository: context.read<AmbulanceIdRepository>(),
-            ),
+              create: (context) {
+                final gps = GpsBloc(
+                  // aggiunta per controller e repository
+                  messageController: context.read<MessageController>(),
+                  ambulanceIdRepository: context.read<AmbulanceIdRepository>(),
+                );
+                //gps.add(GpsInitialization());
+                return gps;
+              }
           ),
           BlocProvider<EmergencyBloc>(
-            create: (context) => EmergencyBloc(
-                context.read<MessageController>(),
-                context.read<AmbulanceIdRepository>(),
-                context.read<EmergencyIdRepository>()
-            ),
+              create: (context) {
+                final emergency = EmergencyBloc(
+                  context.read<MessageController>(),
+                  context.read<AmbulanceIdRepository>(),
+                  context.read<EmergencyIdRepository>(),
+                );
+                //emergency.add(EmergencyInitialization());
+                return emergency;
+              }
           ),
           BlocProvider<PatientFormBloc>(
             create: (context) => PatientFormBloc(
               context.read<PatientReachedController>(),
               context.read<EmergencyIdRepository>(),
             ),
+          ),
+          BlocProvider<AuthenticationBloc>(
+            create: (context) => AuthenticationBloc(
+              messageController: context.read<MessageController>(),
+                authenticationRepository:
+                    context.read<AuthenticationRepository>(),
+                tokenRepository: context.read<TokenRepository>(),
+                gpsBloc: context.read<GpsBloc>(),
+                emergencyBloc: context.read<EmergencyBloc>()
+              )
+              ..add(AuthenticationSubscriptionRequested()),
           ),
 
           /*

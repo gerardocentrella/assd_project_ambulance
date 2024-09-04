@@ -1,11 +1,12 @@
 import 'dart:convert';
 
-import 'package:assd_project_ambulance/models/repository/token_repository.dart';
 import 'package:assd_project_ambulance/utils/http_result.dart';
 import 'package:assd_project_ambulance/models/dto/PathDTO.dart';
 import 'package:assd_project_ambulance/models/dto/PatientReachedNotificationDTO.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../models/repository/token_repository.dart';
 
 class PatientReachedService {
   final TokenRepository _tokenRepository;
@@ -13,7 +14,7 @@ class PatientReachedService {
   PatientReachedService(this._tokenRepository);
 
 
-  Future<HttpResult<PathDTO>> sendPatientReachedNotification2(
+  Future<HttpResult<String>> sendPatientReachedNotification2(
       PatientReachedNotificationDTO dataToSend, String emergencyId) async {
     // Recupera il token da SharedPreferences
     String? token = await _tokenRepository.getToken();
@@ -21,7 +22,7 @@ class PatientReachedService {
     print("Sono in PatientReachedService");
 
     final url =
-    Uri.parse('http://example.com/api/endpoint/emergencies/$emergencyId');
+    Uri.parse('http://172.31.4.63:32225/emergencyService/emergencies/$emergencyId');
     final headers = {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
@@ -37,15 +38,19 @@ class PatientReachedService {
     }
   }
 
-  HttpResult<PathDTO> _handleResponse(http.Response response) {
+  HttpResult<String> _handleResponse(http.Response response) {
     if (response.statusCode == 200) {
-      return HttpResult<PathDTO>(
+      /*return HttpResult<PathDTO>(
           data: PathDTO.fromJson(
               jsonDecode(response.body) as Map<String, dynamic>),
-          httpStatusCode: 200);
+          httpStatusCode: 200);*/
+      return HttpResult<String>(
+        data: response.body,
+          httpStatusCode: 200
+      );
     } else {
       // Gestisci gli errori HTTP con il tuo metodo
-      return HttpResult<PathDTO>(
+      return HttpResult<String>(
           httpStatusCode: response.statusCode,
           error: _handleHttpError(response.statusCode));
     }
@@ -66,13 +71,13 @@ class PatientReachedService {
     }
   }
 
-  HttpResult<PathDTO> _handleException(dynamic e) {
+  HttpResult<String> _handleException(dynamic e) {
     if (e is http.ClientException) {
-      return HttpResult<PathDTO>(
+      return HttpResult<String>(
           httpStatusCode: 0,
           error: 'Network error: ${e.message}');
     } else {
-      return HttpResult<PathDTO>(
+      return HttpResult<String>(
           httpStatusCode: -1, // Unknown errors
           error: 'An unknown error occurred: ${e.toString()}');
     }

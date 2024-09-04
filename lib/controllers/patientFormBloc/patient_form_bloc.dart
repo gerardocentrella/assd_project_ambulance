@@ -49,7 +49,7 @@ class PatientFormBloc extends Bloc<PatientFormEvent, PatientFormState> {
     _controller.setEmergencyId(emergencyId);
 
     try {
-      final HttpResult<PathDTO> result;
+      final HttpResult<String> result;
       // Qui dovresti chiamare un servizio che invia i dati a un backend o lo salva localmente
       result = await _controller.sendNotification2(
           event.emerCode,
@@ -64,10 +64,9 @@ class PatientFormBloc extends Bloc<PatientFormEvent, PatientFormState> {
           event.age);
 
       if (result.data != null && result.httpStatusCode == 200) {
-        pdto = result.data;
-        // successo
+        //pdto = result.data;
+        emit(PatientFormSuccess());
       } else {
-        // fallimento
       }
     } catch (error) {
       emit(PatientFormFailure(error: error.toString()));

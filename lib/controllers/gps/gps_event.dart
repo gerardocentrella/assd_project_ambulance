@@ -10,3 +10,5 @@ final class PSReached extends GpsEvent {}
 
 final class InitEmergency extends GpsEvent {}
 
+final class GpsInitialization extends GpsEvent{}
+

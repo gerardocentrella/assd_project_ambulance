@@ -22,6 +22,7 @@ EmergencyCode getEmergencyCode(String label){
     case 'BLUE': return EmergencyCode.BLUE;
     case 'GREEN': return EmergencyCode.GREEN;
     case 'WHITE': return EmergencyCode.WHITE;
+    case '': return EmergencyCode.UNDEFINED;
     default: throw Exception();
   }
 }

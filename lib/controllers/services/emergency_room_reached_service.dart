@@ -18,16 +18,14 @@ class EmergencyRoomReachedService {
     String? token = await _tokenRepository.getToken();
 
     final url = Uri.parse(
-        'http://example.com/api/endpoint/emergencies/$emergencyId/status');
+        'http://172.31.4.63:32225/emergencyService/emergencies/$emergencyId/status');
     final headers = {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
+      'Accept': '*/*',
       'Authorization': 'Bearer $token',
     };
 
     try {
-      final response = await http.post(url, headers: headers);
-
+      final response = await http.patch(url, headers: headers);
       return _handleResponse(response);
     } catch (e) {
       return _handleException(e);

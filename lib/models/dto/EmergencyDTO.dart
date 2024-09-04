@@ -78,14 +78,18 @@ class EmergencyDTO {
     userPosition = json['userPosition'] != null
         ? Position.fromJson(json['userPosition'])
         : Position(latitude: 0.0, longitude: 0.0); // Valori di default se null
+    emergencyCode = getEmergencyCode(json['code'] ?? '');
 
-    emergencyCode = getEmergencyCode(json['emergencyCode'] ?? '');
-    emergencyStatus = getEmergencyStatus(json['emergencyStatus'] ?? '');
-    description = json['emergencyDescription'] ?? ''; // Valore di default
-    emergencyType = getEmergencyType(json['emergencyType'] ?? '');
+    description = json['description'] ?? ''; // Valore di default
+
+    emergencyStatus = getEmergencyStatus(json['status'] ?? '');
+
+    emergencyType = getEmergencyType(json['type'] ?? '');
 
     ambulanceId = json['ambulanceId'] ?? ''; // Valore di default
+
     erId = json['erId'] ?? ''; // Valore di default
+
   }
 
 // Metodo per conversione in JSON di un EmergencyDTO
