@@ -141,6 +141,10 @@ class PatientReachedFormState extends State<PatientReachedForm> {
                         Position position = snapshot.data!;
                         latitudeController.value.copyWith(text: position.latitude.toString());
                         longitudeController.value.copyWith(text: position.longitude.toString());
+
+                        latitudeController.text = position.latitude.toString();
+                        longitudeController.text = position.longitude.toString();
+
                         return Center(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
